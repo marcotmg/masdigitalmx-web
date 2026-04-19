@@ -280,6 +280,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   object-fit: contain;
   display: block;
+  background: transparent;
 }
 
 @media (min-width: 900px) {
