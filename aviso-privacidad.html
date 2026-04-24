@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aviso de Privacidad — +Digital MX</title>
+  <meta name="description" content="Aviso de Privacidad de +Digital MX. Conoce cómo tratamos tus datos personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares." />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Aviso de Privacidad — estilos específicos ───────────── */
+    .legal-hero {
+      background: var(--navy);
+      color: var(--white);
+      padding-block: 4rem 3rem;
+    }
+
+    .legal-hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.15;
+      margin-bottom: .75rem;
+    }
+
+    .legal-hero p {
+      color: rgba(255,255,255,.6);
+      font-size: 1rem;
+    }
+
+    .legal-body {
+      padding-block: 4rem;
+    }
+
+    .legal-layout {
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 900px) {
+      .legal-layout {
+        grid-template-columns: 220px 1fr;
+        align-items: start;
+      }
+    }
+
+    /* Índice lateral */
+    .legal-toc {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .legal-toc-title {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1rem;
+    }
+
+    .legal-toc ol {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+    }
+
+    .legal-toc a {
+      display: block;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      padding: .375rem .5rem;
+      border-radius: 6px;
+      transition: color .2s, background .2s;
+    }
+
+    .legal-toc a:hover {
+      color: var(--blue);
+      background: var(--blue-100);
+    }
+
+    /* Contenido */
+    .legal-content {
+      max-width: 720px;
+    }
+
+    .legal-section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 5.5rem;
+    }
+
+    .legal-section h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--blue-100);
+    }
+
+    .legal-section h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 1.5rem;
+      margin-bottom: .5rem;
+    }
+
+    .legal-section p {
+      font-size: .9375rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: .875rem;
+    }
+
+    .legal-section ul,
+    .legal-section ol {
+      padding-left: 1.25rem;
+      margin-bottom: .875rem;
+    }
+
+    .legal-section li {
+      font-size: .9375rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: .25rem;
+    }
+
+    .legal-section strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    /* Tabla de transferencias */
+    .legal-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+
+    .legal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .875rem;
+    }
+
+    .legal-table th {
+      text-align: left;
+      background: var(--gray-100);
+      color: var(--navy);
+      font-weight: 700;
+      padding: .625rem .875rem;
+      border-bottom: 2px solid var(--blue-100);
+    }
+
+    .legal-table td {
+      padding: .625rem .875rem;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-600);
+      vertical-align: top;
+    }
+
+    .legal-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Aviso IA */
+    .ai-notice {
+      background: #eff6ff;
+      border: 1.5px solid var(--blue);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .ai-notice p {
+      margin-bottom: 0;
+      color: var(--navy);
+    }
+
+    .ai-notice strong {
+      color: var(--blue-600);
+    }
+
+    /* Tarjeta de contacto ARCO */
+    .arco-card {
+      background: var(--gray-50);
+      border: 1.5px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .arco-card p {
+      margin-bottom: .375rem;
+    }
+
+    .arco-card a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Fecha */
+    .legal-date {
+      font-size: .8125rem;
+      color: var(--gray-400);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--gray-100);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+  <header class="nav-wrapper">
+    <nav class="nav container">
+      <a href="index.html" class="logo">+Digital</a>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#para-quien">¿Para quién?</a></li>
+        <li><a href="index.html#como-funciona">Cómo funciona</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+      <a href="https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio" target="_blank" rel="noopener" class="btn btn-primary nav-cta">
+        Habla con nosotros
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════ ENCABEZADO ════════════════════ -->
+    <section class="legal-hero">
+      <div class="container">
+        <h1>Aviso de Privacidad</h1>
+        <p>Última actualización: 23 de abril de 2026</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ CUERPO ════════════════════════ -->
+    <section class="legal-body">
+      <div class="container legal-layout">
+
+        <!-- Índice lateral (visible en desktop) -->
+        <aside class="legal-toc" aria-label="Índice del aviso">
+          <p class="legal-toc-title">Contenido</p>
+          <ol>
+            <li><a href="#responsable">1. Responsable</a></li>
+            <li><a href="#datos">2. Datos que recabamos</a></li>
+            <li><a href="#finalidades">3. Finalidades</a></li>
+            <li><a href="#arco">4. Derechos ARCO</a></li>
+            <li><a href="#cookies">5. Cookies</a></li>
+            <li><a href="#cambios">6. Cambios al aviso</a></li>
+            <li><a href="#contacto">7. Contacto</a></li>
+          </ol>
+        </aside>
+
+        <!-- Contenido legal -->
+        <div class="legal-content">
+
+          <div class="legal-section" id="responsable">
+            <h2>1. Identidad y domicilio del responsable</h2>
+            <p>
+              <strong>Servicios +Digital MX</strong> (en adelante, "+Digital" o el "Responsable"),
+              con domicilio en <strong>San José Insurgentes, Ciudad de México, México</strong>,
+              y correo electrónico <strong>contacto@masdigitalmx.com</strong>, es el responsable
+              del tratamiento de los datos personales que recaba a través del sitio web
+              <strong>masdigitalmx.com</strong> y de los canales de comunicación asociados
+              (WhatsApp Business y correo electrónico).
+            </p>
+            <p>
+              El presente Aviso de Privacidad se emite en cumplimiento de la
+              <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares</strong>
+              (LFPDPPP, publicada en el DOF el 5 de julio de 2010, con reforma publicada el 14 de
+              noviembre de 2025) y su Reglamento.
+            </p>
+          </div>
+
+          <div class="legal-section" id="datos">
+            <h2>2. Datos personales que recabamos</h2>
+            <p>Según el canal de contacto, recabamos las siguientes categorías de datos:</p>
+
+            <h3>Sitio web y correo electrónico</h3>
+            <ul>
+              <li>Nombre y apellidos</li>
+              <li>Correo electrónico</li>
+              <li>Número de teléfono (móvil o fijo)</li>
+              <li>Nombre de la empresa o negocio</li>
+              <li>Contenido del mensaje o consulta</li>
+            </ul>
+
+            <h3>Canal de WhatsApp Business</h3>
+            <ul>
+              <li>Número de teléfono móvil</li>
+              <li>Nombre de perfil de WhatsApp</li>
+              <li>Mensajes de texto, notas de voz, imágenes y documentos que el titular nos envíe</li>
+              <li>Historial de conversación almacenado temporalmente para dar continuidad al servicio</li>
+            </ul>
+
+            <h3>Datos técnicos (recabados automáticamente)</h3>
+            <ul>
+              <li>Dirección IP y datos de navegación en el sitio web</li>
+              <li>Tipo de dispositivo y navegador</li>
+              <li>Fecha y hora de interacción</li>
+            </ul>
+
+            <p>
+              <strong>No recabamos datos sensibles</strong> (salud, origen étnico, ideología, etc.)
+              ni datos financieros directamente. Si por la naturaleza de una conversación el titular
+              comparte voluntariamente información de esa índole, se limitará su uso estrictamente
+              a resolver la consulta planteada.
+            </p>
+          </div>
+
+          <div class="legal-section" id="finalidades">
+            <h2>3. Finalidades del tratamiento</h2>
+
+            <h3>Finalidades primarias — necesarias para el servicio</h3>
+            <p>Sin el tratamiento para estas finalidades no es posible prestar el servicio:</p>
+            <ul>
+              <li>Responder consultas y solicitudes de información sobre nuestros servicios.</li>
+              <li>Agendar y realizar demostraciones del servicio (demos).</li>
+              <li>Prestar el servicio contratado de automatización mediante chatbot de WhatsApp
+                  y/o agente de voz con Inteligencia Artificial.</li>
+              <li>Gestionar la relación comercial, emitir cotizaciones y formalizar contratos.</li>
+              <li>Atender requerimientos legales o de autoridades competentes.</li>
+            </ul>
+
+            <h3>Finalidades secundarias — opcionales</h3>
+            <p>
+              Estas finalidades no son necesarias para la prestación del servicio. Si no
+              deseas que tus datos sean tratados para estos fines, puedes manifestarlo en
+              cualquier momento al correo <strong>contacto@masdigitalmx.com</strong>:
+            </p>
+            <ul>
+              <li>Envío de comunicaciones comerciales, promociones y novedades de +Digital.</li>
+              <li>Análisis estadístico agregado para la mejora del servicio.</li>
+              <li>Elaboración de casos de éxito (siempre con tu consentimiento explícito previo).</li>
+            </ul>
+          </div>
+
+          <div class="legal-section" id="arco">
+            <h2>4. Derechos ARCO y revocación del consentimiento</h2>
+            <p>
+              Como titular de datos personales, tienes derecho a <strong>Acceder, Rectificar,
+              Cancelar u Oponerte</strong> al tratamiento de tus datos (derechos ARCO),
+              así como a <strong>revocar el consentimiento</strong> otorgado para finalidades
+              secundarias, conforme a los artículos 8 al 15 de la LFPDPPP.
+            </p>
+
+            <h3>Para ejercer tus derechos</h3>
+            <p>Envía una solicitud que incluya:</p>
+            <ol>
+              <li>Nombre completo y número de teléfono o correo de contacto registrado.</li>
+              <li>Descripción clara del derecho que deseas ejercer y los datos a los que se refiere.</li>
+              <li>Copia de tu identificación oficial vigente (INE, pasaporte).</li>
+              <li>Cualquier documento que facilite la localización de tus datos (fecha de conversación, número de WhatsApp, etc.).</li>
+            </ol>
+
+            <div class="arco-card">
+              <p><strong>Canal de atención ARCO:</strong></p>
+              <p>Correo: <a href="mailto:contacto@masdigitalmx.com">contacto@masdigitalmx.com</a></p>
+              <p><strong>Plazo de respuesta:</strong> 20 días hábiles a partir de la recepción,
+                 ampliable por 10 días más cuando así lo justifiquen las circunstancias
+                 (Art. 28 LFPDPPP).</p>
+            </div>
+
+            <p>
+              Si consideras que tu solicitud no fue atendida correctamente, tienes derecho
+              a acudir a la autoridad competente en materia de protección de datos personales
+              conforme a la normativa vigente.
+            </p>
+          </div>
+
+          <div class="legal-section" id="cookies">
+            <h2>5. Uso de cookies y tecnologías de seguimiento</h2>
+            <p>
+              El sitio web <strong>masdigitalmx.com</strong> utiliza únicamente
+              <strong>cookies técnicas esenciales</strong> para el correcto funcionamiento
+              de la página (preferencias de idioma, navegación). No utilizamos cookies de
+              rastreo de terceros, pixels de retargeting ni herramientas de analítica
+              de comportamiento en esta etapa del servicio.
+            </p>
+            <p>
+              Puedes configurar tu navegador para bloquear o eliminar cookies en cualquier
+              momento, aunque esto podría afectar la funcionalidad del sitio.
+            </p>
+          </div>
+
+          <div class="legal-section" id="cambios">
+            <h2>6. Cambios al aviso de privacidad</h2>
+            <p>
+              +Digital se reserva el derecho de actualizar el presente Aviso de Privacidad
+              en cualquier momento para reflejar cambios en el servicio, en la legislación
+              aplicable o en nuestras prácticas de tratamiento de datos.
+            </p>
+            <p>
+              Cualquier modificación será publicada en esta misma página con la fecha de
+              actualización correspondiente. Para cambios sustanciales que afecten tus
+              derechos, te notificaremos directamente al correo que tengamos
+              registrado, con al menos 15 días de anticipación a su entrada en vigor.
+            </p>
+          </div>
+
+          <div class="legal-section" id="contacto">
+            <h2>7. Contacto</h2>
+            <p>
+              Para cualquier duda, comentario o solicitud relacionada con este Aviso de
+              Privacidad o con el tratamiento de tus datos personales, puedes contactarnos a través de:
+            </p>
+            <div class="arco-card">
+              <p><strong>Servicios +Digital MX</strong></p>
+              <p>Correo: <a href="mailto:contacto@masdigitalmx.com">contacto@masdigitalmx.com</a></p>
+              <p>Sitio web: <a href="https://masdigitalmx.com">masdigitalmx.com</a></p>
+            </div>
+          </div>
+
+          <p class="legal-date">
+            Aviso de Privacidad de Servicios +Digital MX — Versión 1.1 — Última actualización: 23 de abril de 2026.<br />
+            Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares
+            (DOF 05-07-2010, reforma DOF 14-11-2025) y su Reglamento (DOF 21-12-2011).
+          </p>
+
+        </div><!-- /.legal-content -->
+      </div><!-- /.legal-layout -->
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">+Digital</a>
+        <p>Automatización empresarial con IA para negocios en México.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html#servicios">Servicios</a>
+        <a href="index.html#para-quien">¿Para quién?</a>
+        <a href="index.html#como-funciona">Cómo funciona</a>
+        <a href="mailto:contacto@masdigitalmx.com">Contacto</a>
+      </nav>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Servicios +Digital MX. Todos los derechos reservados. &nbsp;·&nbsp;
+        <a href="aviso-privacidad.html" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Aviso de Privacidad</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav toggle mobile
+    const toggle = document.getElementById('nav-toggle');
+    const menu   = document.getElementById('nav-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        const open = menu.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+    }
+  </script>
+
+</body>
+</html>
