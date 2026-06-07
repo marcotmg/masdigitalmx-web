@@ -4,6 +4,7 @@ export type Sector = {
   subVerticals: string;
   problema: string;
   solucion: string;
+  bullets?: string[];
   metrica: string;
   color: string;
   wide: boolean;
@@ -13,30 +14,17 @@ export type Sector = {
 
 export const sectores: Sector[] = [
   {
-    slug: "servicios",
-    nombre: "Servicios",
-    subVerticals: "Salones, spas, despachos, consultorios",
-    problema: "Citas perdidas cuando la línea está ocupada",
-    solucion: "Agente atiende y agenda 24/7, sin perder una llamada",
-    metrica: "−30% no-shows",
-    color: "var(--color-primary-light)",
-    wide: true,
-    descripcion:
-      "Para negocios de servicios, cada llamada perdida es un cliente que fue con la competencia. Nuestro agente de voz atiende, agenda y confirma citas automáticamente — sin importar la hora.",
-    beneficios: [
-      "Agenda de citas automatizada con Cal.com",
-      "Confirmaciones y recordatorios por WhatsApp",
-      "Atención 24/7 sin costo adicional de personal",
-      "Reducción de no-shows con recordatorios automáticos",
-      "Reportes de llamadas y métricas de conversión",
-    ],
-  },
-  {
     slug: "salud",
     nombre: "Salud",
     subVerticals: "Clínicas, dentistas, hospitales, veterinarias",
     problema: "40–50% no-shows en horario pico",
     solucion: "Confirmación automática la noche anterior",
+    bullets: [
+      "40–50% de no-shows destruyen tu agenda y tus ingresos.",
+      "Citas agendadas 24/7, sin que el teléfono suene.",
+      "Recordatorios automáticos: confirmación, cancelación, reprogramación.",
+      "Todo gestionado por un único agente.",
+    ],
     metrica: "ROI en 3 semanas",
     color: "#34D399",
     wide: false,
@@ -51,11 +39,70 @@ export const sectores: Sector[] = [
     ],
   },
   {
+    slug: "finanzas",
+    nombre: "Finanzas",
+    subVerticals: "Bancos, aseguradoras, fintech",
+    problema: "Alto volumen de consultas, transacciones y tareas administrativas",
+    solucion: "Agente para FAQs con escalamiento automático",
+    bullets: [
+      "Alto volumen de consultas, transacciones y tareas administrativas.",
+      "Resolución automática con escalamiento inteligente.",
+      "Revisión de errores de captura y verificación de datos.",
+      "Integración de datos entre procesos y sistemas.",
+      "Cumplimiento regulatorio y protección de datos, automatizados.",
+    ],
+    metrica: "−40% en llamadas",
+    color: "#A78BFA",
+    wide: true,
+    descripcion:
+      "Los clientes de servicios financieros exigen respuestas rápidas y precisas. Nuestro agente responde FAQs, califica prospectos y escala casos complejos al equipo humano correcto.",
+    beneficios: [
+      "Resolución automática de consultas de saldo y productos",
+      "Escalamiento inteligente a asesor especializado",
+      "Calificación de prospectos para créditos y seguros",
+      "Registro y seguimiento de reclamaciones",
+      "Reportes de satisfacción y tiempo de resolución",
+    ],
+  },
+  {
+    slug: "bienes-raices",
+    nombre: "Bienes Raíces",
+    subVerticals: "Inmobiliarias, constructoras, arrendadoras",
+    problema: "Leads perdidos por respuesta lenta",
+    solucion: "Agente califica leads y agenda tours de inmediato",
+    bullets: [
+      "Leads perdidos por respuesta lenta.",
+      "Respuesta inmediata: califica prospectos y agenda visitas al instante.",
+      "Información completa de propiedades, disponible en segundos.",
+      "Documentación gestionada: contratos, finanzas, trámites legales.",
+      "Convierte prospectos en clientes.",
+      "Cierre de ventas.",
+    ],
+    metrica: "+35% de conversión",
+    color: "#FB923C",
+    wide: true,
+    descripcion:
+      "En bienes raíces, el primer agente que responde gana. Con +Digital tu negocio responde en segundos, califica el interés del prospecto y agenda una visita antes de que llame a la competencia.",
+    beneficios: [
+      "Respuesta inmediata a leads 24/7",
+      "Calificación automática de prospectos",
+      "Agendado de tours y visitas a propiedades",
+      "Seguimiento automatizado post-visita",
+      "CRM integrado con historial de conversaciones",
+    ],
+  },
+  {
     slug: "comercio",
     nombre: "Comercio",
     subVerticals: "Restaurantes, retail, ecommerce",
     problema: "Ventas perdidas fuera de horario",
     solucion: "ChatBot 24/7 para pedidos y reservas",
+    bullets: [
+      "Ventas perdidas fuera de horario.",
+      "ChatBot 24/7 para pedidos, reservas y pagos.",
+      "Catálogo, precios, horarios y políticas: todo al instante.",
+      "Vende en WhatsApp o dirige tráfico a tu sitio.",
+    ],
     metrica: "+20% conversión",
     color: "#FBBF24",
     wide: false,
@@ -70,22 +117,28 @@ export const sectores: Sector[] = [
     ],
   },
   {
-    slug: "finanzas",
-    nombre: "Finanzas",
-    subVerticals: "Bancos, aseguradoras, fintech",
-    problema: "Alto volumen de consultas repetitivas",
-    solucion: "Agente para FAQs con escalamiento automático",
-    metrica: "−40% carga en call center",
-    color: "#A78BFA",
+    slug: "servicios",
+    nombre: "Servicios",
+    subVerticals: "Despachos, consultorios, salones, spas",
+    problema: "Citas perdidas cuando la línea está ocupada",
+    solucion: "Agente atiende y registra citas 24/7, sin perder una llamada",
+    bullets: [
+      "Citas perdidas cuando la línea está ocupada.",
+      "Agente atiende y registra citas 24/7, sin excepción.",
+      "Responde preguntas frecuentes al instante.",
+      "Gestiona recordatorios, pagos y documentos.",
+    ],
+    metrica: "−30% no-shows",
+    color: "var(--color-primary-light)",
     wide: false,
     descripcion:
-      "Los clientes de servicios financieros exigen respuestas rápidas y precisas. Nuestro agente responde FAQs, califica prospectos y escala casos complejos al equipo humano correcto.",
+      "Para negocios de servicios, cada llamada perdida es un cliente que fue con la competencia. Nuestro agente de voz atiende, agenda y confirma citas automáticamente — sin importar la hora.",
     beneficios: [
-      "Resolución automática de consultas de saldo y productos",
-      "Escalamiento inteligente a asesor especializado",
-      "Calificación de prospectos para créditos y seguros",
-      "Registro y seguimiento de reclamaciones",
-      "Reportes de satisfacción y tiempo de resolución",
+      "Agenda de citas automatizada con Cal.com",
+      "Confirmaciones y recordatorios por WhatsApp",
+      "Atención 24/7 sin costo adicional de personal",
+      "Reducción de no-shows con recordatorios automáticos",
+      "Reportes de llamadas y métricas de conversión",
     ],
   },
   {
@@ -94,9 +147,15 @@ export const sectores: Sector[] = [
     subVerticals: "Construcción, IT, supply chain",
     problema: "Hotline saturada, coordinación compleja",
     solucion: "Agente clasifica urgencias y escala al equipo correcto",
+    bullets: [
+      "Hotline saturada, coordinación compleja.",
+      "Agente clasifica urgencias y escala al equipo correcto.",
+      "Gestiona prioridades y documenta en la herramienta correcta.",
+      "Tareas, proyectos, fechas de entrega. Todo en su lugar.",
+    ],
     metrica: "−50% tiempo de respuesta",
     color: "var(--color-primary)",
-    wide: true,
+    wide: false,
     descripcion:
       "En infraestructura, los tiempos de respuesta son críticos. Nuestro agente clasifica incidencias por prioridad, notifica al equipo correcto y hace seguimiento hasta la resolución.",
     beneficios: [
@@ -105,25 +164,6 @@ export const sectores: Sector[] = [
       "Seguimiento de tickets hasta cierre",
       "Notificaciones de estado en tiempo real",
       "Reportes de tiempos de resolución y SLA",
-    ],
-  },
-  {
-    slug: "bienes-raices",
-    nombre: "Bienes Raíces",
-    subVerticals: "Inmobiliarias, constructoras, arrendadoras",
-    problema: "Leads perdidos por respuesta lenta",
-    solucion: "Agente califica leads y agenda tours de inmediato",
-    metrica: "+35% captura de leads",
-    color: "#FB923C",
-    wide: false,
-    descripcion:
-      "En bienes raíces, el primer agente que responde gana. Con +Digital tu negocio responde en segundos, califica el interés del prospecto y agenda una visita antes de que llame a la competencia.",
-    beneficios: [
-      "Respuesta inmediata a leads 24/7",
-      "Calificación automática de prospectos",
-      "Agendado de tours y visitas a propiedades",
-      "Seguimiento automatizado post-visita",
-      "CRM integrado con historial de conversaciones",
     ],
   },
 ];
