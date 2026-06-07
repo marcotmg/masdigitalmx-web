@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand */
+  --color-primary:        #1B6EF3;
+  --color-primary-light:  #60A5FA;
+  --color-cta:            #F97316;
+  --color-cta-hover:      #EA580C;
+
+  /* Canvas unificado — un solo fondo oscuro.
+     Las secciones se diferencian con bordes, espaciado y layout, no con colores de fondo. */
+  --color-canvas:         #060B18;
+  --color-surface:        #0D1526;   /* cards y elementos elevados */
+  --color-surface-2:      #122040;   /* cards destacadas (highlight) */
+
+  /* Bordes con tinte azul — visibles pero no saturados */
+  --color-border:         rgba(27,110,243,0.18);
+  --color-border-strong:  rgba(27,110,243,0.42);
+
+  /* Texto con tinte azul en los muteds — no grises genéricos */
+  --color-text-base:      #EEF2F8;
+  --color-text-muted:     #7A9BC0;
+  --color-text-caption:   #4A6A94;
+
+  /* Semánticos */
+  --color-success:        #10B981;
+  --color-danger:         #EF4444;
+
+  /* Fuentes */
+  --font-heading: var(--font-brand);     /* Chakra Petch — angular, terminales rectos */
+  --font-body:    var(--font-body);      /* Barlow — body legible */
+
+  /* Sombras */
+  --shadow-card:       0 1px 2px rgba(0,0,0,0.5), 0 0 0 1px rgba(27,110,243,0.15);
+  --shadow-card-hover: 0 8px 32px rgba(27,110,243,0.22), 0 0 0 1px rgba(27,110,243,0.38);
+  --shadow-cta:        0 4px 20px rgba(249,115,22,0.45);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-text-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading), system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,216 +1,230 @@
 # CLAUDE.md — Proyecto: masdigitalmx-web
 
-> Sitio web institucional de +Digital MX y base de identidad digital del negocio.
-Para contexto de infraestructura compartida (VPS, n8n, chatbot), ver CLAUDE.md en /Desarrollos/
-> 
+> Sitio web institucional de +Digital MX — Redesign V2 (Next.js).
+> Para estado actual y contexto completo, leer Obsidian vía MCP obsidian-Claude.
 
 ---
 
 ## Instrucciones para Claude Code
 
-- **No agregar Co-Authored-By en commits.** Omitir completamente la línea `Co-Authored-By: Claude <noreply@anthropic.com>` de todos los mensajes de commit.
+- No agregar Co-Authored-By en commits.
 - Verificar fuentes oficiales antes de proponer soluciones o hacer trial-and-error.
-- Para errores: análisis de causa raíz primero, luego solución.
+- Para errores: causa raíz primero, solución después.
 - No modificar archivos fuera del scope del task sin confirmación explícita.
+- Respuestas con explicación del "por qué", no solo el "qué".
+
+---
+
+## Protocolo de seguridad — OBLIGATORIO
+
+NUNCA instalar dependencias sin verificar seguridad primero.
+
+Antes de cualquier `pnpm add`, `pnpm install`, `npx skills add`, o instalación de repo externo:
+1. Ejecutar el script de seguridad del proyecto:
+   ```bash
+   ./pre-install.sh <nombre-paquete-o-repo>
+   ```
+2. Verificar el paquete en npmjs.com (descargas, mantenedor, última actualización).
+3. Correr `pnpm audit` después de instalar.
+4. No instalar paquetes con menos de 1,000 descargas semanales sin aprobación explícita de Marco.
+5. Para repos externos (skills, herramientas): revisar manualmente que no hagan llamadas de red ni accedan a credenciales.
+
+Aplica también a skills instalados en `.claude/skills/` — no son "inocuos" por defecto.
 
 ---
 
 ## Qué es este proyecto
 
-Sitio web institucional de **Servicios +Digital MX** — empresa de automatización empresarial con IA para negocios en México. Es el activo de identidad digital principal: da credibilidad ante clientes, proveedores y Meta para Business Verification.
-
-**URL en producción:** `https://masdigitalmx.com`**Repositorio GitHub:** privado — rama principal `main`**Hosting:** Vercel (deploy automático en push a `main`)
+Sitio web institucional de Servicios +Digital MX — Redesign completo (V2).
+URL en producción: https://masdigitalmx.com
+Repositorio GitHub: masdigitalmx-web (privado) — rama principal main
+Hosting: Vercel (deploy automático en push a main)
+Sin staging — cambios van directo a producción. Verificar en móvil y desktop después de cada deploy.
 
 ---
 
-## Stack técnico
+## Stack técnico V2
 
 | Capa | Tecnología | Notas |
-| --- | --- | --- |
-| Hosting | **Vercel** | Deploy automático desde GitHub. Sin servidor propio para el sitio. |
-| Repositorio | **GitHub** (privado) | Rama `main` → deploy automático a producción |
-| Frontend | **HTML + CSS + JS vanilla** | Sin frameworks. `styles.css` compartido entre páginas. |
-| Fuentes | Google Fonts — Inter | Pesos: 400, 500, 600, 700, 800, 900 |
-| Dominio | `masdigitalmx.com` | Adquirido y activo. DNS apuntando a Vercel. |
-| Correo | `contacto@masdigitalmx.com` | Canal de contacto principal del negocio |
+|------|-----------|-------|
+| Framework | Next.js 16.2.7 — App Router | TypeScript strict |
+| CSS | Tailwind CSS v4 | `@theme` en `app/globals.css`, sin tailwind.config.ts |
+| Package manager | pnpm | NUNCA usar npm ni yarn |
+| Fuentes | Barlow Semi Condensed (600/700/800) + Barlow (400/500/600) | via `next/font/google` |
+| Formulario | Formsubmit.co | AJAX a `contacto@masdigitalmx.com` — sin cuenta ni ID |
+| Hosting | Vercel | Deploy automático desde GitHub |
+| QA | Playwright | Pendiente instalar — verificar con pre-install.sh |
 
 ---
 
-## Estructura del repositorio
+## Estructura del repositorio V2
 
 ```
 masdigitalmx-web/
-├── index.html            ← Landing page principal
-├── aviso-privacidad.html ← Aviso de Privacidad (v1.1)
-├── styles.css            ← Estilos globales compartidos (variables CSS, nav, footer, etc.)
-├── CLAUDE.md             ← Este archivo
-└── assets/               ← Imágenes, íconos (si aplica)
+├── app/
+│   ├── globals.css          ← tokens @theme + base styles
+│   ├── layout.tsx           ← root layout + Google Fonts
+│   └── page.tsx             ← home page (ensambla secciones)
+├── components/
+│   ├── Header.tsx           ← nav fija con scroll-blur, "use client"
+│   ├── Footer.tsx           ← footer, "use client"
+│   ├── WhatsAppButton.tsx   ← botón flotante esquina inferior derecha
+│   └── sections/
+│       ├── HeroSection.tsx       ← layout asimétrico + chat mockup
+│       ├── ProblemasSection.tsx  ← lista editorial con números decorativos
+│       ├── ProductosSection.tsx  ← 4 cards, sin eyebrows en mayúsculas
+│       ├── SectoresSection.tsx   ← bento grid 4 columnas
+│       ├── PricingSection.tsx    ← 2 planes, cards sólidas
+│       └── ContactoSection.tsx   ← formulario Formspree, "use client"
+├── assets/                  ← imágenes, mascota Mati (pendiente integrar)
+├── design-system/           ← generado por skill ui-ux-pro-max
+├── .claude/skills/          ← impeccable, ui-ux-pro-max, design-taste-frontend, huashu-design
+├── CLAUDE.md                ← este archivo
+├── PRODUCT.md               ← requerido por skill Impeccable (register: brand)
+├── pre-install.sh           ← protocolo de seguridad — ejecutar antes de instalar
+├── pnpm-workspace.yaml
+├── package.json
+└── tsconfig.json
 ```
 
 ---
 
-## Variables CSS globales (definidas en styles.css)
+## Design tokens — siempre usar variables CSS, nunca hardcodear
 
-Usar siempre estas variables — no hardcodear colores ni valores:
+Definidos en `app/globals.css` bajo `@theme`:
 
-```css
---navy         /* Color principal oscuro */
---blue         /* Acento principal */
---blue-100     /* Azul muy claro — bordes, fondos sutiles */
---blue-600     /* Azul oscuro — énfasis en texto */
---white
---gray-50      /* Fondos de tarjetas */
---gray-100     /* Bordes sutiles */
---gray-400     /* Texto secundario débil */
---gray-600     /* Texto body */
---radius       /* Border radius estándar */
---radius-lg    /* Border radius grande */
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `--color-primary` | `#1B6EF3` | Azul marca principal |
+| `--color-primary-light` | `#60A5FA` | Azul claro — acentos, métricas |
+| `--color-cta` | `#F97316` | Naranja — único elemento que compite con azul |
+| `--color-cta-hover` | `#EA580C` | CTA hover |
+| `--color-canvas` | `#060B18` | Fondo único — no usar múltiples niveles de fondo |
+| `--color-surface` | `#0D1526` | Cards y elementos elevados |
+| `--color-surface-2` | `#122040` | Cards destacadas (highlight) |
+| `--color-border` | `rgba(27,110,243,0.18)` | Bordes con tinte azul |
+| `--color-border-strong` | `rgba(27,110,243,0.42)` | Bordes de énfasis |
+| `--color-text-base` | `#EEF2F8` | Texto principal |
+| `--color-text-muted` | `#7A9BC0` | Texto secundario — azul-tintado, no gris genérico |
+| `--color-text-caption` | `#4A6A94` | Texto terciario / captions |
+| `--color-success` | `#10B981` | Estado positivo |
+| `--color-danger` | `#EF4444` | Estado de error |
+
+---
+
+## Diseño — principios activos (Impeccable audit)
+
+- **Un solo canvas** `#060B18`. Las secciones se distinguen por bordes, espaciado y layout — no por fondos diferentes.
+- **Líneas azules horizontales** (`rgba(27,110,243,0.5)` con gradiente) separan secciones.
+- **Cero gradientes teal→púrpura** — eliminados completamente.
+- **Cero bg-clip-text** — texto sólido siempre.
+- **Cero glassmorphism** — cards con `background: var(--color-surface)` sólido.
+- **Cero eyebrows en MAYÚSCULAS** por sección — los nombres de producto van en `<h3>`.
+- **Bento grid** en SectoresSection — 4 columnas, tarjetas "wide" en col-span-2.
+- **Barlow Semi Condensed** para headings — carácter tipográfico propio, fuera de la reflex-reject list.
+
+---
+
+## Páginas V2
+
+```
+masdigitalmx.com/
+├── /                         Home (landing principal)
+├── /sector/servicios
+├── /sector/salud
+├── /sector/comercio
+├── /sector/infraestructura
+├── /sector/finanzas
+├── /sector/bienes-raices
+├── /pricing
+├── /privacidad
+└── /terminos
 ```
 
----
-
-## Convenciones de código
-
-- **HTML semántico** — usar `<section>`, `<aside>`, `<nav>`, `<header>`, `<footer>` correctamente
-- **CSS modular** — estilos específicos de página van en `<style>` dentro del `<head>` de cada HTML, nunca inline
-- **JS mínimo** — solo para interacciones UI (ej. mobile nav toggle). Sin dependencias externas.
-- **No usar frameworks** — ni React, ni Vue, ni Tailwind. El sitio es HTML/CSS/JS puro.
-- **Responsive** — breakpoint principal en `900px`. Mobile-first no requerido pero sí compatible.
+Páginas de sector y /pricing están pendientes — solo existe `/`.
 
 ---
 
-## Convenciones de commits
+## Secciones de Home (en orden)
 
-- Formato: `tipo: descripción breve en español`
-- Tipos: `feat`, `fix`, `content`, `legal`, `style`, `docs`
-- Ejemplos:
-    - `content: agregar post 3 en sección blog`
-    - `legal: actualizar domicilio en aviso de privacidad v1.2`
-    - `fix: corregir link roto en footer`
-- **No incluir `Co-Authored-By`** en ningún commit.
-
----
-
-## Páginas existentes
-
-### index.html — Landing page
-
-Secciones en orden:
-
-1. **Nav** — logo `+Digital`, links a `#servicios`, `#para-quien`, `#como-funciona`, `#contacto`, CTA WhatsApp
-2. **Hero** — propuesta de valor principal
-3. **#servicios** — servicios ofrecidos
-4. **#para-quien** — segmento objetivo
-5. **#como-funciona** — proceso paso a paso
-6. **#contacto** — formulario o CTA de contacto
-7. **Footer** — logo, nav secundario, copyright, link a aviso de privacidad
-
-**CTA principal de negocio (NO modificar sin autorización):**
-
-```html
-<a href="https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio"
-   target="_blank" rel="noopener" class="btn btn-primary nav-cta">
-  Habla con nosotros
-</a>
-```
-
-### aviso-privacidad.html — Aviso de Privacidad
-
-**Versión actual:** v1.1 — Última actualización: 23 de abril de 2026
-
-Secciones (7 en total):
-
-1. Identidad y domicilio del responsable ⚠️ Ver nota abajo
-2. Datos personales que recabamos
-3. Finalidades del tratamiento
-4. Derechos ARCO y revocación del consentimiento
-5. Uso de cookies y tecnologías de seguimiento
-6. Cambios al aviso de privacidad
-7. Contacto
-
-**⚠️ Pendientes documentados:**
-
-- **Domicilio (Sección 1):** Actualmente contiene dirección provisional. Pendiente actualizar con domicilio virtual comercial contratado (≤$600 MXN/mes). NO cambiar sin instrucción explícita del propietario.
-- **Correo ARCO (Secciones 3, 4 y 7):** Actualmente usa `contacto@masdigitalmx.com`. Pendiente crear y reemplazar con `privacidad@masdigitalmx.com` o equivalente dedicado.
-
-**Restricciones del aviso — NO agregar:**
-
-- Números telefónicos (solo correo electrónico como canal de contacto)
-- Información técnica del stack (proveedores, modelos de IA, infraestructura)
-- Tabla de transferencias a terceros con detalle de proveedores
-
-**Ley aplicable:** LFPDPPP (DOF 05-07-2010, reforma DOF 14-11-2025) y su Reglamento (DOF 21-12-2011).
+1. Header — nav fija, scroll-blur, CTA WhatsApp naranja
+2. HeroSection — asimétrico: headline izquierda + chat mockup WhatsApp derecha
+3. ProblemasSection — lista editorial 3 problemas con números y métricas
+4. ProductosSection — 4 soluciones en grid, sin eyebrows
+5. SectoresSection — bento grid 6 sectores
+6. PricingSection — Plan Básico / Plan Pro en MXN
+7. ContactoSection — formulario Formspree (FORMSPREE_ID por configurar)
+8. Footer
+9. WhatsAppButton — flotante esquina inferior derecha
 
 ---
 
 ## Identidad visual +Digital
 
-| Elemento | Valor |
-| --- | --- |
-| Nombre de marca | `+Digital` |
-| Nombre legal | Servicios +Digital MX |
-| Tagline | Automatización empresarial con IA para negocios en México |
-| Correo de contacto | contacto@masdigitalmx.com |
-| WhatsApp de negocio | +52 56 5210 7460 (solo para CTA de negocio, no en documentos legales) |
-| Facebook Page | "Servicios +Digital MX" — Page ID: 1107626159096908 |
-| Instagram | @mas_digitalmx |
+Nombre de marca: +Digital | Nombre legal: Servicios +Digital MX
+Email: contacto@masdigitalmx.com
+WhatsApp CTA: `https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio`
+WhatsApp negocio: +52 56 5210 7460 (solo para CTA, NO en documentos legales)
+Facebook Page ID: 1107626159096908 | Instagram: @mas_digitalmx
 
 ---
 
-## Deploy y flujo de trabajo
+## Convenciones de código
 
+- TypeScript strict — no usar `any`
+- Componentes funcionales con hooks
+- Tailwind v4: clases utilitarias + `style={{ }}` para variables CSS dinámicas
+- Responsive: mobile-first, breakpoint principal `md:` (768px)
+- Commits: `tipo: descripción en español` (feat, fix, content, legal, style, docs, infra)
+- No incluir Co-Authored-By en ningún commit
+
+---
+
+## Lo que NO modificar sin autorización explícita
+
+- Número de WhatsApp en CTAs — número de negocio activo
+- Precios en PricingSection (`$8,000 MXN setup`, `$2,500 MXN/mes`, etc.)
+- Textos legales en `/privacidad` y `/terminos`
+- Design tokens en `app/globals.css` — afectan todo el sitio
+- `PRODUCT.md` — documento estratégico requerido por skill Impeccable
+
+---
+
+## Skills de diseño instalados
+
+| Skill | Ruta | Uso |
+|-------|------|-----|
+| impeccable | `.claude/skills/impeccable/` | Audit, polish, bolder, typeset, etc. |
+| ui-ux-pro-max | `.claude/skills/ui-ux-pro-max/` | Design system, paletas, UX rules |
+| design-taste-frontend | `.claude/skills/design-taste-frontend/` | Anti-slop guidelines |
+| huashu-design | `.claude/skills/huashu-design/` | Referencias de diseño adicionales |
+
+Antes de instalar nuevos skills: ejecutar `./pre-install.sh`.
+
+---
+
+## Pendientes técnicos
+
+- [x] Formulario operativo con Formsubmit.co — email confirmado, entrega verificada
+- [ ] Páginas de sector (`/sector/servicios`, `/sector/salud`, etc.)
+- [ ] Página `/pricing` standalone
+- [ ] Integrar mascota Mati (assets disponibles en `/assets/`)
+- [ ] Instalar y configurar Playwright para QA (con pre-install.sh)
+- [ ] Deploy inicial a Vercel con dominio masdigitalmx.com
+
+---
+
+## Estado actual del proyecto — Obsidian (MCP obsidian-Claude)
+
+FUENTE DE VERDAD: Obsidian — leer antes de cualquier tarea.
+Vault: `/Users/marcomartinezgonzalez/Documents/Trabajo/Desarrollos/Herramientas/Obsidian/obsidian-Claude`
+
+Archivos clave (rutas relativas al vault):
 ```
-Edición local → git commit → git push origin main → Vercel build automático → masdigitalmx.com
+00-Claude-Context/Proyecto-Estado.md
+00-Claude-Context/Sesion-Anterior.md
+00-Claude-Context/HANDOFF-Website-ClaudeCode.md
+00-Claude-Context/SEGMENTACION-ESTRATEGICA-MACRO-SECTORES.md
+03-Proyectos/MAS-Digital/04-Operaciones/Website/WIREFRAME-COPYWRITING-COMPLETO.md
+03-Proyectos/MAS-Digital/04-Operaciones/Infraestructura/CLAUDE-md-Nivel3-masdigitalmx-web.md
 ```
-
-- **Vercel** detecta el push y hace deploy automáticamente en ~30 segundos.
-- No hay staging environment en esta etapa — los cambios van directo a producción.
-- Verificar siempre en móvil y desktop después de un deploy.
-
----
-
-## Contexto del negocio — +Digital MX
-
-+Digital es el primer producto/marca de un emprendimiento en fase MVP. Vende automatización empresarial con IA (chatbot WhatsApp) a negocios mexicanos pequeños y medianos.
-
-**Precio objetivo del servicio:** $1,500–$5,000 MXN/mes por cliente
-
-**Primer producto:** Chatbot de atención al cliente vía WhatsApp (catálogo, pedidos, garantías)
-
-**Stack del producto (infraestructura separada, VPS Hetzner):** n8n + EvolutionAPI + Groq (llama-3.3-70b)
-
-**Estado de identidad digital:**
-
-| Activo | Estado |
-| --- | --- |
-| Dominio masdigitalmx.com | ✅ Activo |
-| Sitio web | ✅ Publicado en Vercel |
-| Facebook Page | ✅ Activa |
-| Instagram @mas_digitalmx | ✅ Activa |
-| Meta Business Verification | 🔴 Bloqueada — portfolio huérfano "Compras Chidas BM1" |
-
----
-
-## Cuentas baneadas en Meta — nunca usar
-
-- `marcotmg@yahoo.com`
-- `masdigitalmx75@gmail.com`
-
----
-
-## Referencias en Obsidian (vault: obsidian-main)
-
-- `00-Claude-Context/Proyecto-Estado.md` ← fuente de verdad del estado general
-- `00-Claude-Context/Sesion-Anterior.md` ← resumen de última sesión
-- `06-Knowledge-Base/Legal-Compliance/LFPDPPP/00-Indice.md` ← marco legal del aviso de privacidad
-- `01-Infraestructura/Decisiones-Arch.md` ← ADRs de infraestructura
-- `02-Chatbot/Memoria-Conversacional-Produccion.md` ← arquitectura del chatbot
-
----
-
-## Lo que NO modificar sin análisis previo
-
-- CTA de WhatsApp en el nav (`nav-cta`) — número de negocio activo
-- Variables CSS globales en `styles.css` — afectan todas las páginas
-- Secciones del aviso de privacidad con pendientes documentados — ver notas arriba
-- Link al aviso de privacidad en el footer — requerimiento legal
