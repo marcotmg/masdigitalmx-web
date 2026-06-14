@@ -2,18 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { sectores } from "@/lib/sectores";
 
-const XIcon = () => (
-  <svg className="mt-0.5 shrink-0" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-    <path d="M2 2l8 8M10 2l-8 8" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg className="mt-0.5 shrink-0" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-    <path d="M2 6l3 3 5-5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export default function SectoresSection() {
   return (
     <section
@@ -42,18 +30,23 @@ export default function SectoresSection() {
           >
             Diseñado para tu sector
           </h2>
-          <p className="text-lg whitespace-nowrap" style={{ color: "var(--color-text-muted)" }}>
+          <p className="text-lg" style={{ color: "var(--color-text-muted)" }}>
             No vendemos tecnología genérica. Cada sector tiene su problema — y su solución.
           </p>
         </div>
 
-        {/* Grid 3 columnas iguales desktop, 2 tablet, 1 móvil */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sectores.map(({ slug, nombre, subVerticals, problema, solucion, bullets, metrica, color }) => (
+        {/*
+          Bento grid: 4 cols desktop, 2 tablet, 1 mobile.
+          Layout (2 filas × 4 columnas llenas):
+          Fila 1: Servicios(2) | Salud(1) | Infraestructura(1)
+          Fila 2: Comercio(2)  | Finanzas(1) | Bienes Raíces(1)
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {sectores.map(({ slug, nombre, subVerticals, problema, solucion, metrica, color, wide }) => (
             <Link
               key={slug}
               href={`/sector/${slug}`}
-              className="group rounded-2xl p-6 flex flex-col gap-0 transition-all duration-200 hover:-translate-y-1 cursor-pointer"
+              className={`group rounded-2xl p-6 flex flex-col transition-all duration-200 hover:-translate-y-1 cursor-pointer${wide ? " sm:col-span-2" : ""}`}
               style={{
                 background: "var(--color-surface)",
                 border: "1px solid var(--color-border)",
@@ -80,55 +73,24 @@ export default function SectoresSection() {
                 />
               </div>
 
-              {/* Bullets */}
-              <div className="flex-1 flex flex-col">
-                {bullets ? (
-                  <>
-                    {/* Primer bullet — problema, ancho completo siempre */}
-                    <div className="flex items-start gap-2 text-sm mb-3">
-                      <XIcon />
-                      <span style={{ color: "var(--color-text-muted)" }}>{bullets[0]}</span>
-                    </div>
+              {/* Problema */}
+              <p className="text-sm italic mb-3" style={{ color: "var(--color-text-muted)" }}>
+                "{problema}"
+              </p>
 
-                    {/* Separador problema / soluciones */}
-                    <div
-                      aria-hidden="true"
-                      className="mb-3"
-                      style={{ height: "1px", background: "rgba(239,68,68,0.18)" }}
-                    />
+              {/* Solución */}
+              <p className="text-sm flex-1" style={{ color: "var(--color-text-base)" }}>
+                {solucion}
+              </p>
 
-                    {/* Bullets solución */}
-                    <div className="space-y-2 text-sm">
-                      {bullets.slice(1).map((b) => (
-                        <div key={b} className="flex items-start gap-2">
-                          <CheckIcon />
-                          <span style={{ color: "var(--color-text-muted)" }}>{b}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2">
-                      <XIcon />
-                      <span style={{ color: "var(--color-text-muted)" }}>{problema}</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <CheckIcon />
-                      <span style={{ color: "var(--color-text-muted)" }}>{solucion}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Métrica — separada con border-top del color del sector */}
+              {/* Métrica */}
               <div
                 className="mt-5 pt-4"
                 style={{ borderTop: "1px solid var(--color-border)" }}
               >
                 <p
                   className="font-heading font-bold"
-                  style={{ fontSize: slug === "infraestructura" ? "clamp(1.2rem, 1.9vw, 1.375rem)" : "clamp(1.3rem, 2.0vw, 1.5rem)", color }}
+                  style={{ fontSize: "clamp(1.25rem, 2vw, 1.5rem)", color }}
                 >
                   {metrica}
                 </p>
