@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 const PACKAGES = [
   {
     nombre: "Starter Digital",
@@ -36,6 +40,8 @@ function CheckSmall() {
 }
 
 export default function PaquetesSection() {
+  const [hovered, setHovered] = useState<number | null>(null);
+
   return (
     <section
       id="paquetes"
@@ -67,91 +73,99 @@ export default function PaquetesSection() {
 
         {/* Package cards */}
         <div className="grid md:grid-cols-3 gap-5">
-          {PACKAGES.map((pkg) => (
-            <div
-              key={pkg.nombre}
-              className="rounded-2xl p-8 lg:p-10 flex flex-col"
-              style={{
-                background: pkg.highlight ? "var(--color-surface-2)" : "var(--color-surface)",
-                border: `1px solid ${pkg.highlight ? "var(--color-border-strong)" : "var(--color-border)"}`,
-                boxShadow: pkg.highlight ? "var(--shadow-card-hover)" : "var(--shadow-card)",
-              }}
-            >
-              {/* Tag */}
-              <span
-                className="self-start text-xs font-bold px-3 py-1 rounded-full mb-5"
-                style={
-                  pkg.highlight
-                    ? { background: "var(--color-cta)", color: "white" }
-                    : { background: "rgba(27,110,243,0.1)", color: "var(--color-primary-light)" }
-                }
-              >
-                {pkg.tag}
-              </span>
-
-              {/* Nombre */}
-              <h3
-                className="font-heading font-bold text-2xl mb-5"
-                style={{ color: "var(--color-text-base)" }}
-              >
-                {pkg.nombre}
-              </h3>
-
-              {/* Incluye */}
-              <ul className="space-y-2 mb-8 flex-1">
-                {pkg.incluye.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-base" style={{ color: "var(--color-text-muted)" }}>
-                    <CheckSmall />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Precios */}
+          {PACKAGES.map((pkg, i) => {
+            const isHovered = hovered === i;
+            const elevated = isHovered || !!pkg.highlight;
+            return (
               <div
-                className="flex flex-col gap-3 mb-7 pt-6"
-                style={{ borderTop: "1px solid var(--color-border)" }}
+                key={pkg.nombre}
+                className="rounded-2xl p-8 lg:p-10 flex flex-col cursor-default"
+                style={{
+                  background: elevated ? "var(--color-surface-2)" : "var(--color-surface)",
+                  border: `1px solid ${elevated ? "var(--color-border-strong)" : "var(--color-border)"}`,
+                  boxShadow: elevated ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+                  transform: isHovered ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
+                  transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
+                }}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
               >
-                <div>
-                  <span
-                    className="font-heading font-extrabold"
-                    style={{ fontSize: "clamp(2rem, 3vw, 2.75rem)", color: "var(--color-text-base)" }}
-                  >
-                    {pkg.setup}
-                  </span>
-                  <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN setup</span>
-                </div>
-                <div>
-                  <span
-                    className="font-heading font-bold text-2xl"
-                    style={{ color: "var(--color-primary-light)" }}
-                  >
-                    {pkg.mensualidad}
-                  </span>
-                  <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN/mes</span>
-                </div>
-                <div
-                  className="inline-flex items-center gap-2 text-sm font-bold px-3 py-2 rounded-lg self-start"
-                  style={{ background: "rgba(16,185,129,0.1)", color: "var(--color-success)" }}
+                {/* Tag */}
+                <span
+                  className="self-start text-xs font-bold px-3 py-1 rounded-full mb-5"
+                  style={
+                    pkg.highlight
+                      ? { background: "var(--color-cta)", color: "white" }
+                      : { background: "rgba(27,110,243,0.1)", color: "var(--color-primary-light)" }
+                  }
                 >
-                  {pkg.ahorro}
-                </div>
-              </div>
+                  {pkg.tag}
+                </span>
 
-              {/* CTA */}
-              <a
-                href="#contacto"
-                className="inline-flex justify-center items-center px-6 py-4 rounded-xl text-base font-bold transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
-                style={
-                  pkg.highlight
-                    ? { background: "var(--color-cta)", color: "white", boxShadow: "var(--shadow-cta)" }
-                    : { border: "1px solid var(--color-border-strong)", color: "var(--color-primary-light)", background: "rgba(27,110,243,0.08)" }
-                }
-              >
-                Agendar demo
-              </a>
-            </div>
-          ))}
+                {/* Nombre */}
+                <h3
+                  className="font-heading font-bold text-2xl mb-5"
+                  style={{ color: "var(--color-text-base)" }}
+                >
+                  {pkg.nombre}
+                </h3>
+
+                {/* Incluye */}
+                <ul className="space-y-2 mb-8 flex-1">
+                  {pkg.incluye.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-base" style={{ color: "var(--color-text-muted)" }}>
+                      <CheckSmall />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Precios */}
+                <div
+                  className="flex flex-col gap-3 mb-7 pt-6"
+                  style={{ borderTop: "1px solid var(--color-border)" }}
+                >
+                  <div>
+                    <span
+                      className="font-heading font-extrabold"
+                      style={{ fontSize: "clamp(2rem, 3vw, 2.75rem)", color: "var(--color-text-base)" }}
+                    >
+                      {pkg.setup}
+                    </span>
+                    <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN setup</span>
+                  </div>
+                  <div>
+                    <span
+                      className="font-heading font-bold text-2xl"
+                      style={{ color: "var(--color-primary-light)" }}
+                    >
+                      {pkg.mensualidad}
+                    </span>
+                    <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN/mes</span>
+                  </div>
+                  <div
+                    className="inline-flex items-center gap-2 text-sm font-bold px-3 py-2 rounded-lg self-start"
+                    style={{ background: "rgba(16,185,129,0.1)", color: "var(--color-success)" }}
+                  >
+                    {pkg.ahorro}
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <a
+                  href="#contacto"
+                  className="inline-flex justify-center items-center px-6 py-4 rounded-xl text-base font-bold transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
+                  style={
+                    pkg.highlight
+                      ? { background: "var(--color-cta)", color: "white", boxShadow: "var(--shadow-cta)" }
+                      : { border: "1px solid var(--color-border-strong)", color: "var(--color-primary-light)", background: "rgba(27,110,243,0.08)" }
+                  }
+                >
+                  Agendar demo
+                </a>
+              </div>
+            );
+          })}
         </div>
 
         {/* Conditions */}

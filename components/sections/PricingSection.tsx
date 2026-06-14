@@ -123,17 +123,23 @@ function PlanCard({ label, data, features, pro }: {
   features: Feature[];
   pro: boolean;
 }) {
+  const [hovered, setHovered] = useState(false);
   const basicFeatures = features.filter((f) => f.basic);
   const proOnlyFeatures = features.filter((f) => !f.basic);
+  const elevated = hovered || pro;
 
   return (
     <div
-      className="rounded-2xl p-7 flex flex-col"
+      className="rounded-2xl p-7 flex flex-col cursor-default"
       style={{
-        background: pro ? "var(--color-surface-2)" : "var(--color-surface)",
-        border: `1px solid ${pro ? "var(--color-border-strong)" : "var(--color-border)"}`,
-        boxShadow: pro ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+        background: elevated ? "var(--color-surface-2)" : "var(--color-surface)",
+        border: `1px solid ${elevated ? "var(--color-border-strong)" : "var(--color-border)"}`,
+        boxShadow: elevated ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+        transform: hovered ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
+        transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {/* Plan label */}
       <div className="flex items-center justify-between mb-3">
@@ -232,6 +238,10 @@ function StandardProduct({ product }: { product: StandardProductData }) {
 
 /* ─── ProcessProduct — con feature lists para igualar altura ─── */
 function ProcessProduct() {
+  const [hovered, setHovered] = useState<number | null>(null);
+  const tareaHov = hovered === 0;
+  const procesosHov = hovered === 1;
+
   return (
     <>
       <p className="text-sm mb-4" style={{ color: "var(--color-text-muted)" }}>
@@ -240,8 +250,16 @@ function ProcessProduct() {
       <div className="grid md:grid-cols-2 gap-4">
         {/* Tareas */}
         <div
-          className="rounded-2xl p-7 flex flex-col"
-          style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)", boxShadow: "var(--shadow-card)" }}
+          className="rounded-2xl p-7 flex flex-col cursor-default"
+          style={{
+            background: tareaHov ? "var(--color-surface-2)" : "var(--color-surface)",
+            border: `1px solid ${tareaHov ? "var(--color-border-strong)" : "var(--color-border)"}`,
+            boxShadow: tareaHov ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+            transform: tareaHov ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
+            transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
+          }}
+          onMouseEnter={() => setHovered(0)}
+          onMouseLeave={() => setHovered(null)}
         >
           <h3 className="font-heading font-bold text-xl mb-0.5" style={{ color: "var(--color-text-base)" }}>
             Automatización de Tareas
@@ -285,8 +303,16 @@ function ProcessProduct() {
 
         {/* Procesos */}
         <div
-          className="rounded-2xl p-7 flex flex-col"
-          style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border-strong)", boxShadow: "var(--shadow-card-hover)" }}
+          className="rounded-2xl p-7 flex flex-col cursor-default"
+          style={{
+            background: "var(--color-surface-2)",
+            border: `1px solid var(--color-border-strong)`,
+            boxShadow: "var(--shadow-card-hover)",
+            transform: procesosHov ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
+            transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
+          }}
+          onMouseEnter={() => setHovered(1)}
+          onMouseLeave={() => setHovered(null)}
         >
           <div className="flex items-center justify-between mb-0.5">
             <h3 className="font-heading font-bold text-xl" style={{ color: "var(--color-text-base)" }}>
