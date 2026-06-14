@@ -38,7 +38,15 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 4rem; /* compensa el header fijo de 64px */
+}
+
+section {
+  scroll-snap-align: start;
+}
 
 body {
   font-family: var(--font-body), system-ui, sans-serif;
