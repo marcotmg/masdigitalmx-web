@@ -126,15 +126,14 @@ function PlanCard({ label, data, features, pro }: {
   const [hovered, setHovered] = useState(false);
   const basicFeatures = features.filter((f) => f.basic);
   const proOnlyFeatures = features.filter((f) => !f.basic);
-  const elevated = hovered || pro;
 
   return (
     <div
       className="rounded-2xl p-7 flex flex-col cursor-default"
       style={{
-        background: elevated ? "var(--color-surface-2)" : "var(--color-surface)",
-        border: `1px solid ${elevated ? "var(--color-border-strong)" : "var(--color-border)"}`,
-        boxShadow: elevated ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+        background: hovered ? "var(--color-surface-2)" : "var(--color-surface)",
+        border: `1px solid ${hovered ? "var(--color-border-strong)" : "var(--color-border)"}`,
+        boxShadow: hovered ? "var(--shadow-card-hover)" : "var(--shadow-card)",
         transform: hovered ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
         transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
       }}
@@ -305,9 +304,9 @@ function ProcessProduct() {
         <div
           className="rounded-2xl p-7 flex flex-col cursor-default"
           style={{
-            background: "var(--color-surface-2)",
-            border: `1px solid var(--color-border-strong)`,
-            boxShadow: "var(--shadow-card-hover)",
+            background: procesosHov ? "var(--color-surface-2)" : "var(--color-surface)",
+            border: `1px solid ${procesosHov ? "var(--color-border-strong)" : "var(--color-border)"}`,
+            boxShadow: procesosHov ? "var(--shadow-card-hover)" : "var(--shadow-card)",
             transform: procesosHov ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
             transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
           }}

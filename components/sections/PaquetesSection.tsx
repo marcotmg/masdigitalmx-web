@@ -75,15 +75,14 @@ export default function PaquetesSection() {
         <div className="grid md:grid-cols-3 gap-5">
           {PACKAGES.map((pkg, i) => {
             const isHovered = hovered === i;
-            const elevated = isHovered || !!pkg.highlight;
             return (
               <div
                 key={pkg.nombre}
                 className="rounded-2xl p-8 lg:p-10 flex flex-col cursor-default"
                 style={{
-                  background: elevated ? "var(--color-surface-2)" : "var(--color-surface)",
-                  border: `1px solid ${elevated ? "var(--color-border-strong)" : "var(--color-border)"}`,
-                  boxShadow: elevated ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+                  background: isHovered ? "var(--color-surface-2)" : "var(--color-surface)",
+                  border: `1px solid ${isHovered ? "var(--color-border-strong)" : "var(--color-border)"}`,
+                  boxShadow: isHovered ? "var(--shadow-card-hover)" : "var(--shadow-card)",
                   transform: isHovered ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
                   transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
                 }}
