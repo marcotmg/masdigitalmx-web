@@ -55,16 +55,16 @@ function CheckIcon({ hovered }: { hovered: boolean }) {
   const color = hovered ? "#60A5FA" : "#10B981";
   return (
     <svg
-      className="mt-0.5 shrink-0"
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
+      className="mt-1 shrink-0"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
       fill="none"
       aria-hidden="true"
     >
-      <circle cx="7" cy="7" r="7" fill={`${color}33`} />
+      <circle cx="8" cy="8" r="8" fill={`${color}33`} />
       <path
-        d="M4.5 7l1.8 1.8L9.5 5.5"
+        d="M5 8l2.2 2.2L11 5.5"
         stroke={color}
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -80,7 +80,7 @@ export default function ProductosSection() {
   return (
     <section
       id="soluciones"
-      className="py-28 px-5 relative"
+      className="min-h-[100dvh] flex flex-col justify-center py-16 px-5 relative"
       style={{ background: "var(--color-canvas)" }}
     >
       {/* Línea divisora */}
@@ -106,7 +106,7 @@ export default function ProductosSection() {
 
       <div className="relative mx-auto max-w-6xl">
         {/* Header asimétrico */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <h2
             className="font-heading font-bold"
             style={{
@@ -126,13 +126,13 @@ export default function ProductosSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {productos.map(({ icon: Icon, nombre, headline, features, badge }, i) => {
             const isHovered = hovered === i;
             return (
               <div
                 key={nombre}
-                className="relative rounded-2xl p-7 flex flex-col cursor-default"
+                className="relative rounded-2xl p-8 lg:p-10 flex flex-col cursor-default"
                 style={{
                   background: isHovered ? "var(--color-surface-2)" : "var(--color-surface)",
                   border: `1px solid ${isHovered ? "var(--color-border-strong)" : "var(--color-border)"}`,
@@ -153,14 +153,14 @@ export default function ProductosSection() {
                 )}
 
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
                   style={{
                     background: isHovered ? "rgba(27,110,243,0.22)" : "rgba(27,110,243,0.1)",
                     transition: "background 220ms ease-out",
                   }}
                 >
                   <Icon
-                    size={20}
+                    size={24}
                     style={{
                       color: isHovered ? "var(--color-primary-light)" : "var(--color-primary)",
                       transition: "color 220ms ease-out",
@@ -170,21 +170,21 @@ export default function ProductosSection() {
                 </div>
 
                 <h3
-                  className="font-heading font-bold text-xl leading-snug mb-1"
+                  className="font-heading font-bold text-2xl leading-snug mb-2"
                   style={{ color: "var(--color-text-base)" }}
                 >
                   {nombre}
                 </h3>
                 <p
-                  className="text-sm mb-5"
+                  className="text-sm mb-7"
                   style={{ color: "var(--color-text-caption)" }}
                 >
                   {headline}
                 </p>
 
-                <ul className="space-y-2.5 mt-auto">
+                <ul className="space-y-4 mt-auto">
                   {features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm">
+                    <li key={f} className="flex items-start gap-3 text-base">
                       <CheckIcon hovered={isHovered} />
                       <span style={{ color: "var(--color-text-muted)" }}>{f}</span>
                     </li>
