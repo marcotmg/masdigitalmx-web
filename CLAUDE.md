@@ -183,7 +183,7 @@ Facebook Page ID: 1107626159096908 | Instagram: @mas_digitalmx
 ## Lo que NO modificar sin autorización explícita
 
 - Número de WhatsApp en CTAs — número de negocio activo
-- Precios en PricingSection (`$8,000 MXN setup`, `$2,500 MXN/mes`, etc.)
+- Precios en PricingSection — fuente de verdad: SP-01 v0.5 en Obsidian (4 productos con planes Básico/Pro)
 - Textos legales en `/privacidad` y `/terminos`
 - Design tokens en `app/globals.css` — afectan todo el sitio
 - `PRODUCT.md` — documento estratégico requerido por skill Impeccable
