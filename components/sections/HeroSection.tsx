@@ -58,24 +58,7 @@ export default function HeroSection() {
         {/* BLOQUE 1 — Headline centrado */}
         <div className="text-center flex flex-col items-center gap-5">
 
-          {/* Badge — sin fecha, solo identidad */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full"
-            style={{
-              border: "1px solid rgba(27,110,243,0.3)",
-              background: "rgba(27,110,243,0.08)",
-            }}
-          >
-            <span
-              className="w-2 h-2 rounded-full animate-pulse"
-              style={{ background: "var(--color-success)" }}
-            />
-            <span className="text-sm font-medium" style={{ color: "var(--color-text-muted)" }}>
-              IA para negocios mexicanos
-            </span>
-          </div>
-
-          {/* Headline — Exo 2: tech, elegante, no genérica */}
+          {/* Headline — Chakra Petch: angular, terminales rectos */}
           <h1
             className="font-heading font-bold leading-[0.94] tracking-tight"
             style={{
@@ -84,9 +67,7 @@ export default function HeroSection() {
               textWrap: "balance",
             }}
           >
-            Automatiza tu negocio
-            <br />
-            <span style={{ color: "var(--color-primary-light)" }}>con IA.</span>
+            Tu negocio atiende. Siempre.
           </h1>
 
           {/* Subheadline — reformulado */}
@@ -94,7 +75,7 @@ export default function HeroSection() {
             className="text-xl leading-relaxed max-w-xl"
             style={{ color: "var(--color-text-muted)" }}
           >
-            Tu competencia pierde llamadas. Tú, nunca más.
+            Diseñamos e implementamos soluciones de automatización inteligente que reducen costos operativos, mejoran la experiencia de tus clientes y liberan tiempo para lo que importa.
           </p>
 
           {/* CTAs */}
@@ -107,7 +88,7 @@ export default function HeroSection() {
                 boxShadow: "var(--shadow-cta)",
               }}
             >
-              Ver demo en vivo
+              Agenda diagnóstico gratuito
             </a>
             <Link
               href="/#sectores"
@@ -118,7 +99,7 @@ export default function HeroSection() {
                 background: "rgba(27,110,243,0.08)",
               }}
             >
-              Ver sectores
+              Ver soluciones por sector
             </Link>
           </div>
 
@@ -127,11 +108,13 @@ export default function HeroSection() {
             className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm"
             style={{ color: "var(--color-text-caption)" }}
           >
+            <span>+25 años de experiencia en sectores exigentes</span>
+            <span aria-hidden="true">·</span>
+            <span>Implementación en días, no meses</span>
+            <span aria-hidden="true">·</span>
             <span>Sin contratos de largo plazo</span>
             <span aria-hidden="true">·</span>
             <span>Soporte 24/7</span>
-            <span aria-hidden="true">·</span>
-            <span>Implementación en días</span>
           </div>
         </div>
 
