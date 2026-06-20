@@ -409,21 +409,21 @@ export default function PrivacidadPage() {
         </Para>
 
         <Table
-          headers={["Proveedor", "Finalidad", "País"]}
+          headers={["Categoría de proveedor", "Finalidad", "País"]}
           rows={[
             [
-              "Zoho Mail",
+              "Proveedor de servicios de correo electrónico corporativo",
               "Operación de buzones corporativos y recepción de solicitudes ARCO",
               "India / infraestructura global",
             ],
             [
-              "Vercel Inc.",
+              "Proveedor de infraestructura web y hospedaje",
               "Despliegue y operación del sitio masdigitalmx.com",
               "Estados Unidos",
             ],
             [
-              "Meta Platforms (WhatsApp Business)",
-              "Operación del canal de WhatsApp Business",
+              "WhatsApp Business (Meta)",
+              "Operación del canal de mensajería WhatsApp",
               "Estados Unidos",
             ],
           ]}
@@ -610,7 +610,7 @@ export default function PrivacidadPage() {
             color: "var(--color-text-caption)",
           }}
         >
-          <p>Aviso de Privacidad Corporativo — Servicios +Digital MX — Versión 2.1</p>
+          <p>Aviso de Privacidad Corporativo — Servicios +Digital MX — Versión 2.2</p>
           <p>Última actualización: 19 de junio de 2026</p>
           <p>
             Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
