@@ -42,9 +42,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${chakraPetch.variable} ${barlow.variable}`}>
-      {/* padding-top compensa la altura real del header fijo (nav + banner cuando visible).
-          --header-height la actualiza Header.tsx vía ResizeObserver. */}
-      <body style={{ paddingTop: "var(--header-height, 4rem)" }}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
