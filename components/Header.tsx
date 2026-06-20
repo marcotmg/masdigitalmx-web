@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-
-// W-EXPRESS-01: Banner de aviso de privacidad temporal
 
 const navLinks = [
   { href: "/#sectores", label: "Soluciones" },
@@ -18,8 +16,6 @@ const WA_URL =
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [bannerVisible, setBannerVisible] = useState(true);
-  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 16);
@@ -27,28 +23,12 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  // Sincroniza --header-height con la altura real del <header> (incluye banner).
-  // ResizeObserver detecta cambios automáticamente: apertura/cierre del banner,
-  // menu móvil, redimensionado de ventana.
-  useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-    const update = () =>
-      document.documentElement.style.setProperty(
-        "--header-height",
-        `${header.offsetHeight}px`
-      );
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(header);
-    return () => ro.disconnect();
-  }, []);
-
   return (
     <header
-      ref={headerRef}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled ? "backdrop-blur-md shadow-lg" : "bg-transparent"
+        scrolled
+          ? "backdrop-blur-md shadow-lg"
+          : "bg-transparent"
       }`}
       style={
         scrolled
@@ -163,45 +143,6 @@ export default function Header() {
           >
             Habla con nosotros
           </a>
-        </div>
-      )}
-
-      {/* W-EXPRESS-01: Banner aviso de privacidad — cerrable, temporal */}
-      {bannerVisible && (
-        <div
-          style={{
-            background: "rgba(37,99,235,0.20)",
-            borderTop: "1px solid rgba(37,99,235,0.40)",
-          }}
-        >
-          <div className="mx-auto max-w-6xl px-5 py-1.5 sm:py-2 flex items-center gap-2">
-            <p
-              className="flex-1 text-xs sm:text-sm leading-snug text-center"
-              style={{ color: "#FFFFFF" }}
-            >
-              Estamos actualizando nuestra política de privacidad. Para consultas escríbenos a{" "}
-              <a
-                href="mailto:contacto@masdigitalmx.com"
-                className="underline transition-opacity duration-200 hover:opacity-80"
-                style={{ color: "#FFFFFF" }}
-              >
-                contacto@masdigitalmx.com
-              </a>
-            </p>
-            {/* Touch target 44×44px mínimo (WCAG 2.5.5) */}
-            <button
-              onClick={() => setBannerVisible(false)}
-              aria-label="Cerrar aviso"
-              className="flex-shrink-0 cursor-pointer flex items-center justify-center transition-opacity duration-200 hover:opacity-60"
-              style={{
-                color: "#FFFFFF",
-                minWidth: "44px",
-                minHeight: "44px",
-              }}
-            >
-              <X size={14} />
-            </button>
-          </div>
         </div>
       )}
     </header>
