@@ -48,6 +48,10 @@ section {
   scroll-snap-align: start;
 }
 
+footer {
+  scroll-snap-align: start;
+}
+
 body {
   font-family: var(--font-body), system-ui, sans-serif;
   background-color: var(--color-canvas);
