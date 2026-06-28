@@ -328,6 +328,14 @@ export default function ContactoSection() {
               </p>
             )}
 
+            <p className="text-center text-xs" style={{ color: "var(--color-text-caption)" }}>
+              +Digital MX tratará tus datos para atender tu consulta. Consulta nuestro{" "}
+              <a href="/privacidad" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
+                Aviso de Privacidad
+              </a>
+              . Al enviar, aceptas el tratamiento conforme a dicho aviso.
+            </p>
+
             <div
               className="flex items-center justify-center gap-2 text-xs"
               style={{ color: "var(--color-text-caption)" }}
