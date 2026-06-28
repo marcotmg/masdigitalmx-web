@@ -159,7 +159,7 @@ export default function Footer() {
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
             >
               <PhoneIcon />
-              Llamar a Aurora
+              Llamada de demostración
             </a>
           </div>
         </div>
