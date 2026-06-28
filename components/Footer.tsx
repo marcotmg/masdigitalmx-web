@@ -18,6 +18,14 @@ function InstagramIcon() {
   );
 }
 
+function PhoneIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+    </svg>
+  );
+}
+
 const WA_URL = "https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio";
 
 function NavLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
@@ -84,7 +92,7 @@ export default function Footer() {
             {/* Social icons */}
             <div className="flex gap-4 mt-2">
               <a
-                href="https://www.facebook.com/profile.php?id=1107626159096908"
+                href="https://www.facebook.com/people/MAS-Digital-MX/61576597229117/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook de +Digital MX"
@@ -96,7 +104,7 @@ export default function Footer() {
                 <FacebookIcon />
               </a>
               <a
-                href="https://instagram.com/mas_digitalmx"
+                href="https://www.instagram.com/mas_digitalmx/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram de +Digital MX"
@@ -143,6 +151,16 @@ export default function Footer() {
             <NavLink href={WA_URL} external>
               WhatsApp +52 56 5210 7460
             </NavLink>
+            <a
+              href="tel:+13203226307"
+              className="text-sm transition-colors cursor-pointer flex items-center gap-1.5"
+              style={{ color: "var(--color-text-muted)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-primary-light)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
+            >
+              <PhoneIcon />
+              Llamada de demostración
+            </a>
           </div>
         </div>
 
