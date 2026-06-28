@@ -34,6 +34,7 @@ export default function ContactoSection() {
           email: data.get("email"),
           sector: data.get("sector"),
           mensaje: data.get("mensaje") || "",
+          website: data.get("website") || "",
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -133,6 +134,22 @@ export default function ContactoSection() {
               boxShadow: "var(--shadow-card)",
             }}
           >
+            {/* Honeypot anti-bot — invisible para humanos */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "-9999px",
+                width: "1px",
+                height: "1px",
+                opacity: 0,
+                pointerEvents: "none",
+              }}
+            />
             <div className="grid sm:grid-cols-2 gap-5">
               <div className="flex flex-col gap-1.5">
                 <label
@@ -310,6 +327,14 @@ export default function ContactoSection() {
                 Algo salió mal. Escríbenos a contacto@masdigitalmx.com
               </p>
             )}
+
+            <p className="text-center text-xs" style={{ color: "var(--color-text-caption)" }}>
+              +Digital MX tratará tus datos para atender tu consulta. Consulta nuestro{" "}
+              <a href="/privacidad" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
+                Aviso de Privacidad
+              </a>
+              . Al enviar, aceptas el tratamiento conforme a dicho aviso.
+            </p>
 
             <div
               className="flex items-center justify-center gap-2 text-xs"
