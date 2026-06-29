@@ -6,7 +6,8 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/#sectores", label: "Soluciones" },
-  { href: "/#pricing", label: "Precios" },
+  // [W-PRICING-PAUSE] Link retirado temporalmente. Restaurar al cerrar P-29.
+  // { href: "/#pricing", label: "Precios" },
   { href: "/#contacto", label: "Contacto" },
 ];
 

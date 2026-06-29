@@ -134,7 +134,8 @@ export default function Footer() {
             <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-caption)" }}>
               Empresa
             </p>
-            <NavLink href="/#pricing">Precios</NavLink>
+            {/* [W-PRICING-PAUSE] Link retirado temporalmente. Restaurar al cerrar P-29. */}
+            {/* <NavLink href="/#pricing">Precios</NavLink> */}
             <NavLink href="/#contacto">Contacto</NavLink>
             <NavLink href="/privacidad">Aviso de Privacidad</NavLink>
             <NavLink href="/terminos">Términos y Condiciones</NavLink>
