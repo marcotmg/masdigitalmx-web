@@ -120,7 +120,7 @@ export default function Footer() {
 
           {/* Col 2: Productos */}
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-caption)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-base)" }}>
               Productos
             </p>
             <NavLink href="/#productos">Agente de Voz IA</NavLink>
@@ -131,11 +131,10 @@ export default function Footer() {
 
           {/* Col 3: Empresa */}
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-caption)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-base)" }}>
               Empresa
             </p>
-            {/* [W-PRICING-PAUSE] Link retirado temporalmente. Restaurar al cerrar P-29. */}
-            {/* <NavLink href="/#pricing">Precios</NavLink> */}
+            <NavLink href="/#pricing">Precios</NavLink>
             <NavLink href="/#contacto">Contacto</NavLink>
             <NavLink href="/privacidad">Aviso de Privacidad</NavLink>
             <NavLink href="/terminos">Términos y Condiciones</NavLink>
@@ -143,7 +142,7 @@ export default function Footer() {
 
           {/* Col 4: Contacto */}
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-caption)" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--color-text-base)" }}>
               Contacto
             </p>
             <NavLink href="mailto:contacto@masdigitalmx.com" external>
