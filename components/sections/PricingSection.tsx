@@ -102,7 +102,7 @@ const PRODUCTS: StandardProductData[] = [
     kind: "standard",
     nombre: "Chatbot WhatsApp",
     tagline: "Atiende en WhatsApp 24/7",
-    basico: { setup: "$9,000",  mens: "$2,800", incluido: "500 conv/mes",   adicional: "$1.50/conv" },
+    basico: { setup: "$9,000",  mens: "$2,800", incluido: "800 conv/mes",   adicional: "$1.50/conv" },
     pro:    { setup: "$15,000", mens: "$4,800", incluido: "1,500 conv/mes", adicional: "$1.00/conv" },
     features: WA_FEATURES,
   },
