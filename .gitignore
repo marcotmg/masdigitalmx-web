@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code skills (instalados localmente para mejorar la calidad de diseño —
+# impeccable, ui-ux-pro-max, design-taste-frontend, huashu-design. Reinstalables
+# desde su fuente vía skills-lock.json — no son contenido del proyecto, no se comitean.
+# gitignore evita que `git clean -fd` los borre y que un `git add -A` futuro los suba
+# por accidente. Documentados como parte de la estructura esperada en CLAUDE.md.)
+.claude/skills/
+.agents/skills/
+skills-lock.json
+.install-log.txt
