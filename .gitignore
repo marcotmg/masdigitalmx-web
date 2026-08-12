@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# netlify — estado local del sitio vinculado, no es contenido del proyecto
+.netlify
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

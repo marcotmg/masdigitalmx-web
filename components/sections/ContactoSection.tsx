@@ -30,7 +30,9 @@ export default function ContactoSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nombre: data.get("nombre"),
-          whatsapp: data.get("whatsapp"),
+          // El campo captura 10 dígitos nacionales; el +52 lo antepone el
+          // cliente para que el backend siempre reciba E.164.
+          whatsapp: `+52${String(data.get("whatsapp") ?? "").replace(/\D/g, "")}`,
           email: data.get("email"),
           sector: data.get("sector"),
           mensaje: data.get("mensaje") || "",
@@ -187,17 +189,15 @@ export default function ContactoSection() {
                 >
                   WhatsApp *
                 </label>
-                <input
-                  id="whatsapp"
-                  name="whatsapp"
-                  type="tel"
-                  required
-                  placeholder="+52 55 xxxx xxxx"
-                  className="px-4 py-3 rounded-xl text-sm focus:outline-none transition-colors duration-200"
+                {/* Prefijo +52 fijo: solo operamos en México, el usuario
+                    escribe los 10 dígitos nacionales y el país se antepone
+                    al enviar (ver handleSubmit). Normaliza el dato a E.164
+                    en origen, que es el formato que WhatsApp requiere. */}
+                <div
+                  className="flex items-center rounded-xl overflow-hidden transition-colors duration-200"
                   style={{
                     background: "var(--color-canvas)",
                     border: "1px solid var(--color-border)",
-                    color: "var(--color-text-base)",
                   }}
                   onFocus={(e) =>
                     (e.currentTarget.style.borderColor = "var(--color-primary)")
@@ -205,7 +205,36 @@ export default function ContactoSection() {
                   onBlur={(e) =>
                     (e.currentTarget.style.borderColor = "var(--color-border)")
                   }
-                />
+                >
+                  <span
+                    className="pl-4 pr-2 text-sm select-none"
+                    style={{ color: "var(--color-text-muted)" }}
+                    aria-hidden="true"
+                  >
+                    +52
+                  </span>
+                  <input
+                    id="whatsapp"
+                    name="whatsapp"
+                    type="tel"
+                    required
+                    inputMode="numeric"
+                    maxLength={10}
+                    pattern="[0-9]{10}"
+                    aria-describedby="whatsapp-hint"
+                    title="10 dígitos, sin el código de país"
+                    placeholder="5512345678"
+                    className="flex-1 min-w-0 pr-4 py-3 bg-transparent text-sm focus:outline-none"
+                    style={{ color: "var(--color-text-base)" }}
+                  />
+                </div>
+                <span
+                  id="whatsapp-hint"
+                  className="text-xs"
+                  style={{ color: "var(--color-text-caption)" }}
+                >
+                  10 dígitos, sin código de país
+                </span>
               </div>
             </div>
 
