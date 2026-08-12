@@ -1,6 +1,6 @@
 # masdigitalmx-web — AGENTS.md
 
-> **Gobernanza:** este repositorio hereda el núcleo (N1–N16) vía
+> **Gobernanza:** este repositorio hereda el núcleo (N1–N19) vía
 > `Desarrollos/AGENTS.md` (leído por Claude Code vía el puntero
 > `Desarrollos/CLAUDE.md`→`@AGENTS.md`). No se duplican reglas aquí. Si algo
 > de este repo requiere apartarse del núcleo, es una excepción y se documenta
