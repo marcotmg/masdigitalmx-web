@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const FORMSUBMIT_URL =
-  "https://formsubmit.co/ajax/contacto@masdigitalmx.com";
+  process.env.FORMSUBMIT_URL ?? "https://formsubmit.co/ajax/contacto@masdigitalmx.com";
 
 // REGLA-OWASP-01: Zod + rate-limit obligatorios en todo endpoint público.
 // Diferido a W-FORM-01 (julio): Turnstile CAPTCHA + shared secret.
