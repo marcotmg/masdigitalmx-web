@@ -45,6 +45,18 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   }
 }
 
+// W-FORM-01: shared secret anti-bot. Sin CONTACTO_SHARED_SECRET configurado
+// el chequeo se OMITE explícitamente (no corta la petición) — mismo criterio
+// que Turnstile arriba: `main` sigue siendo producción real vía Vercel
+// (deploy automático), y un fail-cerrado tumbaría el formulario en vivo
+// antes de que Marco configure la env var real en Netlify (B3). Limitación
+// conocida y aceptada: el valor también viaja como
+// NEXT_PUBLIC_CONTACTO_SHARED_SECRET para que el cliente lo pueda enviar, lo
+// que lo hace extraíble del bundle — filtra bots genéricos que golpean el
+// endpoint sin pasar por el sitio, no a un atacante dirigido (para eso está
+// Turnstile).
+const CONTACTO_SHARED_SECRET = process.env.CONTACTO_SHARED_SECRET;
+
 async function notifyFailure(reason: string, context: Record<string, unknown>) {
   if (!ALERT_WEBHOOK_URL) return;
   try {
@@ -59,10 +71,10 @@ async function notifyFailure(reason: string, context: Record<string, unknown>) {
 }
 
 // REGLA-OWASP-01: Zod + rate-limit + Turnstile + shared secret en todo
-// endpoint público. Turnstile implementado en W-FORM-01 (2026-08-12) pero
-// inactivo hasta que Marco configure la env var real en Netlify (B3) — ver
-// comentario junto a TURNSTILE_SECRET_KEY arriba. Shared secret: pendiente,
-// PR aparte.
+// endpoint público. Turnstile y shared secret implementados en W-FORM-01
+// (2026-08-12) pero inactivos hasta que Marco configure las env vars reales
+// en Netlify (B3) — ver comentarios junto a TURNSTILE_SECRET_KEY y
+// CONTACTO_SHARED_SECRET arriba.
 
 const ContactoSchema = z.object({
   nombre: z.string().trim().min(2).max(80),
@@ -124,6 +136,21 @@ export async function POST(request: Request) {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     request.headers.get("x-real-ip") ??
     "unknown";
+
+  // Shared secret — antes que nada, incluso antes de parsear el body.
+  // Sin CONTACTO_SHARED_SECRET configurado el chequeo se omite (ver
+  // comentario junto a la constante, arriba).
+  if (CONTACTO_SHARED_SECRET) {
+    const provided = request.headers.get("x-contacto-key");
+    if (provided !== CONTACTO_SHARED_SECRET) {
+      console.warn("[contacto] shared secret ausente o inválido", { ip });
+      return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 403 });
+    }
+  } else {
+    console.warn(
+      "[contacto] CONTACTO_SHARED_SECRET no configurado — verificación omitida (W-FORM-01, pendiente B3)"
+    );
+  }
 
   // Parse JSON — cualquier body malformado o no-JSON da 400
   let rawBody: unknown;

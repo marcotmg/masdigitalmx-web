@@ -13,6 +13,12 @@ const API_URL = "/api/contacto";
 // secreto: el site key es público por diseño de Turnstile.
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
+// W-FORM-01: mismo patrón de activación opcional que Turnstile arriba. Ver
+// limitación documentada junto a CONTACTO_SHARED_SECRET en route.ts — este
+// valor es extraíble del bundle por ser NEXT_PUBLIC_, filtra bots genéricos
+// no dirigidos.
+const CONTACTO_SHARED_SECRET = process.env.NEXT_PUBLIC_CONTACTO_SHARED_SECRET;
+
 const sectores = [
   "Servicios",
   "Salud",
@@ -35,7 +41,10 @@ export default function ContactoSection() {
     try {
       const res = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(CONTACTO_SHARED_SECRET ? { "x-contacto-key": CONTACTO_SHARED_SECRET } : {}),
+        },
         body: JSON.stringify({
           nombre: data.get("nombre"),
           // El campo captura 10 dígitos nacionales; el +52 lo antepone el
