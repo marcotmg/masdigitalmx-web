@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const FORMSUBMIT_URL =
-  "https://formsubmit.co/ajax/contacto@masdigitalmx.com";
+  process.env.FORMSUBMIT_URL ?? "https://formsubmit.co/ajax/contacto@masdigitalmx.com";
 
 // REGLA-OWASP-01: Zod + rate-limit obligatorios en todo endpoint público.
 // Diferido a W-FORM-01 (julio): Turnstile CAPTCHA + shared secret.
@@ -10,7 +10,11 @@ const FORMSUBMIT_URL =
 
 const ContactoSchema = z.object({
   nombre: z.string().trim().min(2).max(80),
-  whatsapp: z.string().trim().min(8).max(20).regex(/^[+\d\s\-()]+$/),
+  // E.164 mexicano: +52 seguido de exactamente 10 dígitos nacionales.
+  // El formulario captura solo los 10 dígitos y antepone el +52 (ver
+  // ContactoSection). Sin el "1" de móvil: el formato vigente es +52 + 10
+  // dígitos, consistente con el CTA de WhatsApp en producción.
+  whatsapp: z.string().trim().regex(/^\+52\d{10}$/),
   email: z.string().trim().email().max(120),
   sector: z.enum([
     "Servicios",
