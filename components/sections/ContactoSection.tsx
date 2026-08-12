@@ -1,9 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Script from "next/script";
 import { Send, Lock } from "lucide-react";
 
 const API_URL = "/api/contacto";
+
+// W-FORM-01: Turnstile inactivo hasta que Marco cree el widget en Cloudflare
+// y configure esta env var en Netlify (B3) — sin ella, no se renderiza nada
+// y el submit funciona igual que hoy (server-side también lo omite, ver
+// route.ts). Inlineada en build por Next (prefijo NEXT_PUBLIC_), no es un
+// secreto: el site key es público por diseño de Turnstile.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 const sectores = [
   "Servicios",
@@ -37,6 +45,10 @@ export default function ContactoSection() {
           sector: data.get("sector"),
           mensaje: data.get("mensaje") || "",
           website: data.get("website") || "",
+          // Hidden input que el widget de Turnstile genera solo
+          // (name="cf-turnstile-response"). Ausente/vacío si el widget no
+          // está activo — el backend lo trata igual (ver route.ts).
+          turnstileToken: data.get("cf-turnstile-response") || "",
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -57,6 +69,9 @@ export default function ContactoSection() {
       className="py-28 px-5 relative"
       style={{ background: "var(--color-canvas)" }}
     >
+      {TURNSTILE_SITE_KEY && (
+        <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" async defer />
+      )}
       <div
         className="absolute top-0 left-0 right-0"
         aria-hidden="true"
@@ -328,6 +343,10 @@ export default function ContactoSection() {
                 }
               />
             </div>
+
+            {TURNSTILE_SITE_KEY && (
+              <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark" />
+            )}
 
             <button
               type="submit"

@@ -16,6 +16,35 @@ const FORMSPREE_URL = process.env.FORMSPREE_URL;
 // var, la falla solo queda en los logs del hosting.
 const ALERT_WEBHOOK_URL = process.env.CONTACTO_ALERT_WEBHOOK_URL;
 
+// W-FORM-01: verificación server-side de Cloudflare Turnstile. Preparado
+// para activarse solo configurando esta env var en Netlify (B3) — sin ella,
+// la verificación se OMITE explícitamente (no se corta la petición). Es una
+// desviación deliberada del patrón "fallar cerrado" de FORMSPREE_URL: `main`
+// hoy sigue siendo producción real (masdigitalmx.com vía Vercel, deploy
+// automático), y el objetivo de W-FORM-01 es dejar el código listo sin
+// romper el formulario en vivo antes de que Marco tenga el site key real.
+const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
+const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
+  try {
+    const res = await fetch(TURNSTILE_VERIFY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        secret: TURNSTILE_SECRET_KEY,
+        response: token,
+        remoteip: ip !== "unknown" ? ip : undefined,
+      }),
+    });
+    const data = (await res.json()) as { success?: boolean };
+    return data.success === true;
+  } catch (err) {
+    console.error("[contacto] error de red al verificar Turnstile", err);
+    return false;
+  }
+}
+
 async function notifyFailure(reason: string, context: Record<string, unknown>) {
   if (!ALERT_WEBHOOK_URL) return;
   try {
@@ -29,9 +58,11 @@ async function notifyFailure(reason: string, context: Record<string, unknown>) {
   }
 }
 
-// REGLA-OWASP-01: Zod + rate-limit obligatorios en todo endpoint público.
-// Diferido a W-FORM-01 (julio): Turnstile CAPTCHA + shared secret.
-// Motivo: suficiente para MVP pre P-05; Turnstile requiere dominio verificado.
+// REGLA-OWASP-01: Zod + rate-limit + Turnstile + shared secret en todo
+// endpoint público. Turnstile implementado en W-FORM-01 (2026-08-12) pero
+// inactivo hasta que Marco configure la env var real en Netlify (B3) — ver
+// comentario junto a TURNSTILE_SECRET_KEY arriba. Shared secret: pendiente,
+// PR aparte.
 
 const ContactoSchema = z.object({
   nombre: z.string().trim().min(2).max(80),
@@ -55,6 +86,11 @@ const ContactoSchema = z.object({
   // porque si la validación falla aquí el bot recibiría 400 en lugar del 200 trampa.
   // El check real ocurre en el handler después de parsear.
   website: z.string().optional().default(""),
+  // Token de Cloudflare Turnstile (hidden input `cf-turnstile-response` que
+  // el widget genera solo). Opcional en el schema porque, sin
+  // NEXT_PUBLIC_TURNSTILE_SITE_KEY configurado, el cliente ni siquiera
+  // renderiza el widget — ver ContactoSection.tsx.
+  turnstileToken: z.string().optional().default(""),
 });
 
 // Rate limit in-memory: 3 req/min por IP.
@@ -104,7 +140,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "validation" }, { status: 400 });
   }
 
-  const { nombre, whatsapp, email, sector, mensaje, website } = parsed.data;
+  const { nombre, whatsapp, email, sector, mensaje, website, turnstileToken } = parsed.data;
 
   // Honeypot: bots que llenan el campo "website" reciben 200 falso, sin enviar a Formspree
   if (website !== "") {
@@ -118,6 +154,20 @@ export async function POST(request: Request) {
   }
   if (!checkRateLimit(ip)) {
     return NextResponse.json({ ok: false, error: "rate_limit" }, { status: 429 });
+  }
+
+  // Turnstile — sin TURNSTILE_SECRET_KEY configurado el chequeo se omite
+  // (ver comentario junto a la constante, arriba).
+  if (TURNSTILE_SECRET_KEY) {
+    const turnstileOk = await verifyTurnstile(turnstileToken, ip);
+    if (!turnstileOk) {
+      console.warn("[contacto] Turnstile no verificado", { ip });
+      return NextResponse.json({ ok: false, error: "captcha" }, { status: 400 });
+    }
+  } else {
+    console.warn(
+      "[contacto] TURNSTILE_SECRET_KEY no configurado — verificación omitida (W-FORM-01, pendiente B3)"
+    );
   }
 
   // Config faltante: fallar explícito y ruidoso en vez de intentar contra
