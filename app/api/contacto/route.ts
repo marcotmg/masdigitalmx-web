@@ -1,8 +1,33 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-const FORMSUBMIT_URL =
-  process.env.FORMSUBMIT_URL ?? "https://formsubmit.co/ajax/contacto@masdigitalmx.com";
+// Migrado de FormSubmit.co a Formspree (W-FORM-CONTACTO-CAIDO-01, 2026-08-12):
+// FormSubmit dejó de aceptar envíos en producción — la activación no
+// persistía y no hay causa raíz confirmable en su documentación oficial.
+// Formspree da cuenta real, panel de uso y notificaciones de cuota, a
+// diferencia de FormSubmit. Sin default hardcodeado: sin este env var el
+// endpoint no tiene a dónde enviar, así que se falla explícito en vez de
+// silenciar el error contra una URL rota.
+const FORMSPREE_URL = process.env.FORMSPREE_URL;
+
+// Webhook opcional (ej. un workflow de n8n) que recibe un aviso cuando el
+// envío a Formspree falla. El defecto de fondo del incidente de FormSubmit
+// fue que nadie se enteró de la falla — esto la hace ruidosa. Sin este env
+// var, la falla solo queda en los logs del hosting.
+const ALERT_WEBHOOK_URL = process.env.CONTACTO_ALERT_WEBHOOK_URL;
+
+async function notifyFailure(reason: string, context: Record<string, unknown>) {
+  if (!ALERT_WEBHOOK_URL) return;
+  try {
+    await fetch(ALERT_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ source: "contacto-form", reason, ...context }),
+    });
+  } catch (alertErr) {
+    console.error("[contacto] fallo al notificar el webhook de alerta", alertErr);
+  }
+}
 
 // REGLA-OWASP-01: Zod + rate-limit obligatorios en todo endpoint público.
 // Diferido a W-FORM-01 (julio): Turnstile CAPTCHA + shared secret.
@@ -81,7 +106,7 @@ export async function POST(request: Request) {
 
   const { nombre, whatsapp, email, sector, mensaje, website } = parsed.data;
 
-  // Honeypot: bots que llenan el campo "website" reciben 200 falso, sin enviar a FormSubmit
+  // Honeypot: bots que llenan el campo "website" reciben 200 falso, sin enviar a Formspree
   if (website !== "") {
     console.warn(`[contacto] honeypot triggered — ip: ${ip}`);
     return NextResponse.json({ ok: true });
@@ -95,21 +120,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "rate_limit" }, { status: 429 });
   }
 
-  // Formsubmit requiere Referer/Origin para distinguir requests legítimos
-  // de archivos HTML locales. Usamos el origen del navegador si está disponible.
-  const origin =
-    request.headers.get("origin") ??
-    request.headers.get("referer") ??
-    "https://masdigitalmx.com";
+  // Config faltante: fallar explícito y ruidoso en vez de intentar contra
+  // una URL rota o vacía. Se notifica igual que un fallo de envío.
+  if (!FORMSPREE_URL) {
+    console.error("[contacto] FORMSPREE_URL no configurado — no se puede enviar el lead");
+    await notifyFailure("missing_config", { ip });
+    return NextResponse.json({ ok: false, error: "server_config" }, { status: 500 });
+  }
 
   try {
-    const res = await fetch(FORMSUBMIT_URL, {
+    const res = await fetch(FORMSPREE_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Referer: origin,
-        Origin: origin,
       },
       body: JSON.stringify({
         nombre,
@@ -118,21 +142,25 @@ export async function POST(request: Request) {
         sector,
         mensaje,
         _subject: "Nueva solicitud de demo — +Digital MX",
-        _captcha: "false",
+        _replyto: email,
       }),
     });
 
-    const data = await res.json().catch(() => ({}));
-
-    if (res.ok && data.success === "true") {
+    if (res.ok) {
       return NextResponse.json({ ok: true });
     }
 
-    return NextResponse.json({ ok: false, detail: data }, { status: 502 });
+    // No se filtra el body crudo de Formspree al cliente — solo se registra
+    // en logs de servidor y se notifica al webhook de alerta si existe.
+    const data = await res.json().catch(() => ({}));
+    console.error("[contacto] Formspree respondió error", { status: res.status, data });
+    await notifyFailure("provider_error", { status: res.status, ip });
+
+    return NextResponse.json({ ok: false, error: "provider_error" }, { status: 502 });
   } catch (err) {
-    return NextResponse.json(
-      { ok: false, detail: String(err) },
-      { status: 500 }
-    );
+    console.error("[contacto] error de red al contactar Formspree", err);
+    await notifyFailure("network_error", { ip });
+
+    return NextResponse.json({ ok: false, error: "network_error" }, { status: 500 });
   }
 }
