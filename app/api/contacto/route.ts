@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 // Migrado de FormSubmit.co a Formspree (W-FORM-CONTACTO-CAIDO-01, 2026-08-12):
 // FormSubmit dejó de aceptar envíos en producción — la activación no
@@ -71,10 +73,10 @@ async function notifyFailure(reason: string, context: Record<string, unknown>) {
 }
 
 // REGLA-OWASP-01: Zod + rate-limit + Turnstile + shared secret en todo
-// endpoint público. Turnstile y shared secret implementados en W-FORM-01
-// (2026-08-12) pero inactivos hasta que Marco configure las env vars reales
-// en Netlify (B3) — ver comentarios junto a TURNSTILE_SECRET_KEY y
-// CONTACTO_SHARED_SECRET arriba.
+// endpoint público. Los 3 controles (rate-limit Upstash, Turnstile, shared
+// secret) están implementados pero inactivos hasta que Marco configure las
+// env vars reales en Netlify (B3) — ver comentarios junto a cada constante
+// arriba.
 
 const ContactoSchema = z.object({
   nombre: z.string().trim().min(2).max(80),
@@ -105,29 +107,34 @@ const ContactoSchema = z.object({
   turnstileToken: z.string().optional().default(""),
 });
 
-// Rate limit in-memory: 3 req/min por IP.
-// Limitación conocida: en Vercel serverless puede haber múltiples instancias warm —
-// es imperfecto por proceso. Suficiente para MVP. Migrar a Upstash Redis en W-FORM-01 (julio).
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+// Rate limit: Upstash Redis, 3 req/min por IP (W-FORM-01, 2026-08-13).
+// Sustituye el rate-limit in-memory anterior — imperfecto en serverless por
+// no compartir estado entre instancias warm. Sin las 2 env vars de Upstash
+// configuradas, el chequeo se OMITE explícitamente (mismo criterio que
+// Turnstile/shared secret arriba): `main` es producción real, y un
+// fail-cerrado tumbaría el formulario antes de que Marco cree la base de
+// datos en Upstash y cargue las credenciales reales en Netlify.
+const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
+const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const WINDOW_MS = 60_000;
-  const MAX_REQUESTS = 3;
+const ratelimit =
+  UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN
+    ? new Ratelimit({
+        redis: new Redis({ url: UPSTASH_REDIS_REST_URL, token: UPSTASH_REDIS_REST_TOKEN }),
+        limiter: Ratelimit.slidingWindow(3, "1 m"),
+        prefix: "contacto",
+      })
+    : null;
 
-  const entry = rateLimitMap.get(ip);
-
-  if (!entry || entry.resetAt < now) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+async function checkRateLimit(ip: string): Promise<boolean> {
+  if (!ratelimit) {
+    console.warn(
+      "[contacto] UPSTASH_REDIS_REST_URL/TOKEN no configurados — rate-limit omitido (W-FORM-01, pendiente B3)"
+    );
     return true;
   }
-
-  if (entry.count >= MAX_REQUESTS) {
-    return false;
-  }
-
-  entry.count += 1;
-  return true;
+  const { success } = await ratelimit.limit(ip);
+  return success;
 }
 
 export async function POST(request: Request) {
@@ -179,7 +186,7 @@ export async function POST(request: Request) {
   if (ip === "unknown") {
     console.warn("[contacto] IP desconocida — permitiendo pero registrando");
   }
-  if (!checkRateLimit(ip)) {
+  if (!(await checkRateLimit(ip))) {
     return NextResponse.json({ ok: false, error: "rate_limit" }, { status: 429 });
   }
 
