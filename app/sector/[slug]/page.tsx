@@ -22,10 +22,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${sector.nombre} — +Digital MX | Automatización con IA`,
     description: sector.descripcion,
+    alternates: {
+      canonical: `/sector/${slug}`,
+    },
     openGraph: {
       title: `Automatización IA para ${sector.nombre} — +Digital MX`,
       description: sector.descripcion,
-      url: `https://masdigitalmx.com/sector/${slug}`,
+      // Relativa a propósito: metadataBase (app/layout.tsx) ya resuelve el host.
+      // Hardcodearlo duplica la fuente de verdad del dominio.
+      url: `/sector/${slug}`,
     },
   };
 }
@@ -190,8 +195,11 @@ export default async function SectorPage({ params }: Props) {
               >
                 Agendar demo gratis
               </a>
+              {/* /pricing nunca se construyó — daba 404 desde las 6 páginas de
+                  sector. La sección de precios sí existe en el Home, y es la
+                  misma ancla que ya usa components/Footer.tsx. */}
               <Link
-                href="/pricing"
+                href="/#pricing"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-semibold transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
                 style={{
                   border: "1px solid rgba(27,110,243,0.35)",
