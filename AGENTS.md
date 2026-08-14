@@ -150,15 +150,17 @@ pre-install.sh           ← auditoría de dependencias
 → Problemas (lista editorial, 3 problemas con métricas) → Productos (4 cards)
 → Sectores (bento grid) → Pricing (Básico/Pro en MXN) → Contacto → Footer → WhatsAppButton.
 
-**Rutas construidas:** `/` · `/privacidad` · `/privacidad-hygieia` ·
+**Rutas construidas:** `/` · `/privacidad` · `/privacidad-hygieia` · `/terminos` ·
 `/sector/[slug]` (6 slugs desde `lib/sectores.ts`: `servicios`, `salud`,
 `infraestructura`, `comercio`, `finanzas`, `bienes-raices`) · `POST /api/contacto`.
 Más los archivos generados: `robots.txt`, `sitemap.xml`, `opengraph-image`, `not-found`.
 
+**`/terminos` construida 2026-08-14** (`WEB-SEO-TECNICO-01` P0, PR #24): T&C
+Corporativo v1.0 (uso del sitio, modelo por capas de `ADR-048`) — retira el redirect
+307 temporal a `/privacidad` que llevaba desde el 13-ago. Fuente: vault
+`Documentos-Legales/Corporativo/Terminos-Condiciones-Corporativo/`.
+
 **Rutas NO construidas, y qué pasa con ellas:**
-- `/terminos` — enlazada en `Footer.tsx`; daba 404 en producción. Hoy tiene un
-  **redirect 307 temporal a `/privacidad`** (`next.config.ts`). La página real está
-  pendiente de que el DRAFT del vault pase revisión legal.
 - `/pricing` — enlazada en las páginas de sector; daba 404. Repuntada a `/#pricing`,
   la sección que sí existe en el Home. No hay plan de construirla standalone.
 
