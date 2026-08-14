@@ -83,12 +83,40 @@ PR (nunca push directo a `main`) → validar Vercel Preview → merge.
 | Framework | Next.js 16.2.7 — App Router | TypeScript strict |
 | CSS | Tailwind CSS v4 | `@theme` en `app/globals.css`, **sin** `tailwind.config.ts` |
 | Package manager | **pnpm** | NUNCA npm ni yarn |
-| Fuentes | Barlow Semi Condensed (600/700/800) + Barlow (400/500/600) | vía `next/font/google` |
-| Formulario | **Formsubmit.co** | AJAX a `contacto@masdigitalmx.com` — sin cuenta ni ID |
-| Hosting | Vercel | Deploy automático en push a `main` |
+| Fuentes | Chakra Petch (400/600/700) + Barlow (400/500/600) | vía `next/font/google` — ver `app/layout.tsx` |
+| Formulario | **Formspree** | `FORMSPREE_URL` como env var. Migrado desde Formsubmit.co en `W-FORM-CONTACTO-CAIDO-01` (PR #16) |
+| Protección del endpoint | Turnstile + shared secret + rate-limit Upstash + Zod | `REGLA-OWASP-01` completa desde `W-FORM-01` (PR #17-19) |
+| Hosting | **Netlify** | `netlify.toml` en la raíz. Migrado desde Vercel en `MIGRACION-NETLIFY-01` (cutover de DNS 2026-08-12) |
 | QA | Playwright | Pendiente instalar |
 
-**Sin staging** — lo que entra a `main` va directo a producción. Verificar en
+### ⚠️ Mergear a `main` NO despliega a producción
+
+**Verificado el 2026-08-13.** El sitio de Netlify que sirve `masdigitalmx.com`
+**no está conectado a este repositorio**: `netlify api getSite` devuelve
+`build_settings` vacío (sin `repo_url`, sin `repo_branch`, sin provider), y el
+deploy publicado no tiene `branch` ni `commit_ref` — firma de un deploy manual
+por CLI. **Producción solo se actualiza corriéndolo a mano:**
+
+```bash
+export PATH="$PATH:/Users/marcomartinezgonzalez/Library/pnpm/bin"
+netlify deploy --prod --build
+```
+
+> 🪤 **Trampa que ya costó una confusión real.** Al mergear, GitHub muestra
+> *"This branch was successfully deployed"* con un cohete verde. **Ese deployment
+> lo crea `vercel[bot]`**, no Netlify: la integración de Vercel sigue conectada al
+> repo aunque Vercel ya no sirve el dominio desde el cutover del 12-ago. El badge
+> es cierto y es irrelevante — reporta un despliegue a una plataforma que nadie
+> visita.
+>
+> **Nunca dar por desplegado un cambio por el check verde de GitHub.** Verificar
+> siempre contra `https://masdigitalmx.com` con `curl`.
+
+Pendiente de fondo (ver `MIGRACION-NETLIFY-01` B4): conectar Netlify al repo para
+que el deploy sea automático, y desconectar la integración de Vercel para que deje
+de emitir señales verdes engañosas.
+
+**Sin staging** — lo que se despliega va directo a producción. Verificar en
 móvil y desktop después de cada deploy.
 
 **Auditoría pre-instalación (N14):** correr `./pre-install.sh <paquete>` antes de
@@ -118,8 +146,21 @@ pre-install.sh           ← auditoría de dependencias
 → Problemas (lista editorial, 3 problemas con métricas) → Productos (4 cards)
 → Sectores (bento grid) → Pricing (Básico/Pro en MXN) → Contacto → Footer → WhatsAppButton.
 
-**Rutas:** solo existe `/`. Pendientes: `/sector/{servicios,salud,comercio,infraestructura,finanzas,bienes-raices}`,
-`/pricing`, `/privacidad`, `/terminos`.
+**Rutas construidas:** `/` · `/privacidad` · `/privacidad-hygieia` ·
+`/sector/[slug]` (6 slugs desde `lib/sectores.ts`: `servicios`, `salud`,
+`infraestructura`, `comercio`, `finanzas`, `bienes-raices`) · `POST /api/contacto`.
+Más los archivos generados: `robots.txt`, `sitemap.xml`, `opengraph-image`, `not-found`.
+
+**Rutas NO construidas, y qué pasa con ellas:**
+- `/terminos` — enlazada en `Footer.tsx`; daba 404 en producción. Hoy tiene un
+  **redirect 307 temporal a `/privacidad`** (`next.config.ts`). La página real está
+  pendiente de que el DRAFT del vault pase revisión legal.
+- `/pricing` — enlazada en las páginas de sector; daba 404. Repuntada a `/#pricing`,
+  la sección que sí existe en el Home. No hay plan de construirla standalone.
+
+> Lección de `WEB-SEO-TECNICO-01`: ambas llevaban **meses** en 404 sin que nada lo
+> detectara, y `/terminos` estaba listada aquí como "Intocable" sin haberse
+> verificado nunca en vivo. Al enlazar una ruta, confirmar que responde 200.
 
 ### Design tokens — usar variables CSS, nunca hardcodear
 
@@ -150,7 +191,7 @@ Definidos en `app/globals.css` bajo `@theme`:
 - **Cero** gradientes teal→púrpura · **cero** `bg-clip-text` · **cero** glassmorphism
   (cards con `background: var(--color-surface)` sólido).
 - **Cero eyebrows en MAYÚSCULAS** por sección — los nombres de producto van en `<h3>`.
-- Barlow Semi Condensed para headings (fuera de la reflex-reject list).
+- Chakra Petch para headings (angular, terminales rectos, identidad tech).
 
 ### Convenciones de código
 
@@ -180,16 +221,22 @@ Sin autorización explícita de Marco:
 
 - **Número de WhatsApp en CTAs** — número de negocio activo
   (`https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio`)
-- **Precios en PricingSection** — fuente de verdad: SP-01 v0.5 en el vault.
-  Precios REACTIVADOS y mergeados (PR #11)
+- **Precios en PricingSection** — fuente de verdad: SP-01 **v0.6** en el vault.
+  Precios REACTIVADOS y mergeados (PR #11). Ojo al actualizarlos:
+  `Auditoria-SP-01-Catalogo-2026-08-13` documenta 8 funcionalidades que SP-01
+  vende y no están construidas — 7 de ellas son diferenciadores del plan Pro.
 - **Textos legales** en `/privacidad` y `/terminos`
 - **Design tokens** en `app/globals.css` — afectan todo el sitio
 - **`PRODUCT.md`** — documento estratégico requerido por skill Impeccable
 - **Copy del Hero** (headline, subheadline, CTAs) — spec exacta en "Gate de contenido" arriba. No
   modificar sin W-ticket que cite el Brief.
 - **Ramas `backup/*` y tags `v1-*`** — respaldos de seguridad, no borrar.
-- **Config de dominio en Vercel** — canonical `masdigitalmx.com` (apex); `www` NO se re-agrega a
-  Vercel (redirect vive en Namecheap, decisión estable desde 2026-06-22).
+- **Config de dominio en Netlify** — canonical `masdigitalmx.com` (apex), servido por Netlify desde
+  el cutover de DNS del 2026-08-12, con certificado Let's Encrypt y HSTS activo.
+  `www` está pendiente de estandarizarse a CNAME → `masdigitalmx-web.netlify.app`; hoy sigue siendo
+  un **URL Redirect Record propietario de Namecheap** (no DNS estándar, se esconde bajo "SHOW MORE"
+  en Advanced DNS). *(La versión previa de este punto decía "Config de dominio en Vercel" y que `www`
+  no se re-agrega — quedó obsoleta con la migración.)*
 - **Componentes "huérfanos" en `components/sections/`** (del rediseño enterprise revertido) — no
   borrar, reutilizables en fases futuras. No incluirlos en `page.tsx` sin W-ticket.
 
@@ -219,14 +266,26 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 
 ## Pendientes técnicos
 
-- [x] Formulario operativo con Formsubmit.co — entrega verificada
-- [ ] Páginas de sector (`/sector/*`)
-- [ ] Página `/pricing` standalone
+- [x] Formulario operativo — migrado a **Formspree**, entrega real verificada
+- [x] Endpoint de contacto cumpliendo `REGLA-OWASP-01` completa (`W-FORM-01`)
+- [x] Páginas de sector (`/sector/*`) — 6 rutas SSG
+- [x] Migración de hosting a Netlify, con SSL y HSTS (`MIGRACION-NETLIFY-01`)
+- [x] Base de SEO técnico: `robots.txt`, `sitemap.xml`, canonical, `og:image`,
+      `Organization` schema, 404 con marca, `llms.txt` (`WEB-SEO-TECNICO-01` P0+P1)
+- [ ] `www` → CNAME (último punto abierto de `MIGRACION-NETLIFY-01`)
+- [ ] GA4 + Search Console — **bloqueado por gate legal**: el §7 de
+      `app/privacidad/page.tsx` declara que el sitio no usa analítica, y es Intocable.
+      Instalar GA4 obliga a reescribir ese aviso y versionarlo en el vault
 - [ ] Integrar mascota Mati (assets en `/assets/`)
 - [ ] Instalar Playwright para QA (con `pre-install.sh`)
 - [ ] **Decisión de diseño:** retomar `draft/reposicionamiento-2026-06-sin-desplegar`
-      corrigiendo su auditoría, o descartarlo
+      corrigiendo su auditoría, o descartarlo — bloquea P2 de `WEB-SEO-TECNICO-01`
+- [ ] Repuntar el CTA de WhatsApp al número comercial propio
+      (`MASDIGITAL-CHATBOT-PROPIO-01`) — hoy apunta al número de demos
+- [ ] ⚠️ **Discrepancia sin resolver:** "Identidad visual" declara Facebook Page ID
+      `1107626159096908`, pero `Footer.tsx:95` enlaza el perfil `61576597229117`.
+      No se corrigió aquí porque no está verificado cuál es el correcto
 
 ## Estado
 
-**Vivo** — en producción, commits activos (último 2026-07-17).
+**Vivo** — en producción en Netlify, commits activos (último 2026-08-13).
