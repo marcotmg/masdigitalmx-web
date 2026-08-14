@@ -245,6 +245,12 @@ Sin autorización explícita de Marco:
   no se re-agrega — quedó obsoleta con la migración.)*
 - **Componentes "huérfanos" en `components/sections/`** (del rediseño enterprise revertido) — no
   borrar, reutilizables en fases futuras. No incluirlos en `page.tsx` sin W-ticket.
+- **Google Signals / vinculación a Google Ads en la propiedad GA4 de `masdigitalmx.com`**
+  (Measurement ID `G-2DWXR0JN2E`, `app/layout.tsx`) — hoy desactivados a propósito. El §7 del
+  Aviso de Privacidad (v3.0) declara que +Digital MX no hace perfilamiento publicitario/cross-site,
+  y esa declaración es cierta SOLO mientras esas dos funciones sigan apagadas. Activar cualquiera
+  de las dos sin reescribir y re-versionar §7 primero vuelve el aviso inexacto. Ver
+  `Aviso-Privacidad-Corporativo-v3.0-2026-08-14.md` → frontmatter `gate_condicionado`.
 
 ## Identidad visual
 
@@ -279,9 +285,10 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 - [x] Base de SEO técnico: `robots.txt`, `sitemap.xml`, canonical, `og:image`,
       `Organization` schema, 404 con marca, `llms.txt` (`WEB-SEO-TECNICO-01` P0+P1)
 - [ ] `www` → CNAME (último punto abierto de `MIGRACION-NETLIFY-01`)
-- [ ] GA4 + Search Console — **bloqueado por gate legal**: el §7 de
-      `app/privacidad/page.tsx` declara que el sitio no usa analítica, y es Intocable.
-      Instalar GA4 obliga a reescribir ese aviso y versionarlo en el vault
+- [x] GA4 instalado — propiedad `masdigitalmx.com` (Measurement ID `G-2DWXR0JN2E`), snippet en
+      `app/layout.tsx`, §7 del Aviso de Privacidad reescrito y versionado a v3.0 (2026-08-14).
+      Gate nuevo en Intocables arriba (Google Signals/Ads)
+- [ ] Search Console — pendiente, no bloqueado por gate legal
 - [ ] Integrar mascota Mati (assets en `/assets/`)
 - [ ] Instalar Playwright para QA (con `pre-install.sh`)
 - [ ] **Decisión de diseño:** retomar `draft/reposicionamiento-2026-06-sin-desplegar`
