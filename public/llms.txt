@@ -1,0 +1,44 @@
+# +Digital MX
+
+> Servicios +Digital MX diseña e implementa automatización con inteligencia
+> artificial para negocios en México: agentes de voz que contestan llamadas,
+> chatbots de WhatsApp y automatización de procesos. Opera desde Ciudad de
+> México y atiende clientes en todo el país.
+
++Digital MX no vende software de autoservicio: implementa la solución completa
+para cada cliente (setup, configuración e integración), con soporte directo en
+español. Los datos conversacionales viven en infraestructura propia bajo
+jurisdicción mexicana, conforme a la LFPDPPP.
+
+## Servicios
+
+- [Agente de Voz IA](https://masdigitalmx.com/#productos): contesta llamadas 24/7,
+  agenda citas en calendario, verifica disponibilidad en tiempo real y envía
+  confirmaciones por WhatsApp.
+- [ChatBot de WhatsApp](https://masdigitalmx.com/#productos): atención automática
+  24/7 con IA conversacional, memoria de conversación, consulta de catálogo y
+  escalamiento a una persona cuando hace falta.
+- [Gestión Documental IA](https://masdigitalmx.com/#productos): recepción de
+  documentos por WhatsApp, clasificación automática y extracción de campos.
+- [Automatización de Procesos](https://masdigitalmx.com/#productos): integración
+  de sistemas y flujos de negocio, con diagnóstico profesional previo.
+
+## Sectores
+
+- [Servicios](https://masdigitalmx.com/sector/servicios)
+- [Salud](https://masdigitalmx.com/sector/salud)
+- [Infraestructura](https://masdigitalmx.com/sector/infraestructura)
+- [Comercio](https://masdigitalmx.com/sector/comercio)
+- [Finanzas](https://masdigitalmx.com/sector/finanzas)
+- [Bienes Raíces](https://masdigitalmx.com/sector/bienes-raices)
+
+## Contacto
+
+- [Formulario de contacto](https://masdigitalmx.com/#contacto): vía preferente
+  para solicitar un diagnóstico gratuito.
+- Correo: contacto@masdigitalmx.com
+
+## Optional
+
+- [Aviso de Privacidad](https://masdigitalmx.com/privacidad)
+- [Precios](https://masdigitalmx.com/#pricing)
