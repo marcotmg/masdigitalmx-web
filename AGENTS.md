@@ -89,7 +89,34 @@ PR (nunca push directo a `main`) → validar Vercel Preview → merge.
 | Hosting | **Netlify** | `netlify.toml` en la raíz. Migrado desde Vercel en `MIGRACION-NETLIFY-01` (cutover de DNS 2026-08-12) |
 | QA | Playwright | Pendiente instalar |
 
-**Sin staging** — lo que entra a `main` va directo a producción. Verificar en
+### ⚠️ Mergear a `main` NO despliega a producción
+
+**Verificado el 2026-08-13.** El sitio de Netlify que sirve `masdigitalmx.com`
+**no está conectado a este repositorio**: `netlify api getSite` devuelve
+`build_settings` vacío (sin `repo_url`, sin `repo_branch`, sin provider), y el
+deploy publicado no tiene `branch` ni `commit_ref` — firma de un deploy manual
+por CLI. **Producción solo se actualiza corriéndolo a mano:**
+
+```bash
+export PATH="$PATH:/Users/marcomartinezgonzalez/Library/pnpm/bin"
+netlify deploy --prod --build
+```
+
+> 🪤 **Trampa que ya costó una confusión real.** Al mergear, GitHub muestra
+> *"This branch was successfully deployed"* con un cohete verde. **Ese deployment
+> lo crea `vercel[bot]`**, no Netlify: la integración de Vercel sigue conectada al
+> repo aunque Vercel ya no sirve el dominio desde el cutover del 12-ago. El badge
+> es cierto y es irrelevante — reporta un despliegue a una plataforma que nadie
+> visita.
+>
+> **Nunca dar por desplegado un cambio por el check verde de GitHub.** Verificar
+> siempre contra `https://masdigitalmx.com` con `curl`.
+
+Pendiente de fondo (ver `MIGRACION-NETLIFY-01` B4): conectar Netlify al repo para
+que el deploy sea automático, y desconectar la integración de Vercel para que deje
+de emitir señales verdes engañosas.
+
+**Sin staging** — lo que se despliega va directo a producción. Verificar en
 móvil y desktop después de cada deploy.
 
 **Auditoría pre-instalación (N14):** correr `./pre-install.sh <paquete>` antes de
