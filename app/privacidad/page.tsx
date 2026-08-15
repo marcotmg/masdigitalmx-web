@@ -586,17 +586,6 @@ export default function PrivacidadPage() {
         circunstancias lo justifiquen, conforme al artículo 31 de la LFPDPPP.
       </Para>
 
-      <SubHeading>Si no quedas satisfecho con nuestra respuesta</SubHeading>
-      <Para>
-        Puedes presentar una queja o denuncia ante la{" "}
-        <strong style={{ color: "var(--color-text-base)" }}>
-          Secretaría Anticorrupción y Buen Gobierno
-        </strong>
-        , autoridad competente en materia de protección de datos personales conforme a la
-        reforma publicada en el DOF el 14 de noviembre de 2025, o ante los tribunales
-        competentes.
-      </Para>
-
       <Separator />
 
       {/* §9 — Cambios */}
