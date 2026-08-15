@@ -156,7 +156,7 @@ export default function PrivacidadPage() {
             Aviso de Privacidad
           </h1>
           <p className="text-sm" style={{ color: "var(--color-text-caption)" }}>
-            Versión 2.1 — Última actualización: 19 de junio de 2026
+            Versión 3.0 — Última actualización: 14 de agosto de 2026
           </p>
         </div>
 
@@ -296,6 +296,7 @@ export default function PrivacidadPage() {
           <li>Dirección IP</li>
           <li>Tipo de dispositivo y navegador</li>
           <li>Fecha y hora de interacción con el sitio web</li>
+          <li>Identificador de cliente asignado por cookie de analítica (Google Analytics)</li>
         </ul>
 
         <div
@@ -426,6 +427,11 @@ export default function PrivacidadPage() {
               "Operación del canal de mensajería WhatsApp",
               "Estados Unidos",
             ],
+            [
+              "Google LLC (Google Analytics)",
+              "Analítica web agregada del sitio masdigitalmx.com",
+              "Estados Unidos",
+            ],
           ]}
         />
 
@@ -461,18 +467,57 @@ export default function PrivacidadPage() {
         <SectionHeading id="s7">7. Uso de cookies y tecnologías de seguimiento</SectionHeading>
         <Para>
           El sitio web <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong>{" "}
-          utiliza únicamente{" "}
-          <strong style={{ color: "var(--color-text-base)" }}>
-            cookies técnicas esenciales
-          </strong>{" "}
-          para el correcto funcionamiento de la página. No utilizamos cookies de rastreo de
-          terceros, píxeles de retargeting ni herramientas de analítica de comportamiento
-          personal.
+          utiliza:
         </Para>
-        <Para>No se requiere ninguna acción de tu parte respecto a cookies al visitar este sitio.</Para>
+        <ul
+          className="text-sm leading-relaxed mb-4 space-y-2 pl-5 list-disc"
+          style={{ color: "var(--color-text-muted)" }}
+        >
+          <li>
+            <strong style={{ color: "var(--color-text-base)" }}>
+              Cookies técnicas esenciales
+            </strong>{" "}
+            para el correcto funcionamiento de la página.
+          </li>
+          <li>
+            <strong style={{ color: "var(--color-text-base)" }}>Google Analytics 4</strong>{" "}
+            (Google LLC), una herramienta de analítica que nos permite conocer patrones
+            agregados de navegación (páginas visitadas, tiempo de permanencia, origen del
+            tráfico) para mejorar el sitio. Google Analytics asigna un identificador de
+            cliente mediante cookies propias y recaba dirección IP, tipo de dispositivo y
+            navegador.
+          </li>
+        </ul>
         <Para>
-          Puedes configurar tu navegador para bloquear o eliminar cookies en cualquier
-          momento; esto podría afectar la funcionalidad básica del sitio.
+          No utilizamos píxeles de retargeting publicitario ni herramientas de perfilamiento
+          de comportamiento personal más allá de la analítica agregada descrita.
+        </Para>
+        <Para>
+          Puedes oponerte al uso de Google Analytics instalando el{" "}
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline transition-opacity duration-200 hover:opacity-75"
+            style={{ color: "var(--color-primary-light)" }}
+          >
+            complemento de inhabilitación oficial de Google
+          </a>{" "}
+          o configurando tu navegador para bloquear cookies de terceros — esto podría afectar
+          la funcionalidad de medición pero no la funcionalidad básica del sitio.
+        </Para>
+        <Para>
+          Para más información sobre cómo Google trata estos datos, consulta la{" "}
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline transition-opacity duration-200 hover:opacity-75"
+            style={{ color: "var(--color-primary-light)" }}
+          >
+            Política de Privacidad de Google
+          </a>
+          .
         </Para>
 
         <Separator />
@@ -610,8 +655,8 @@ export default function PrivacidadPage() {
             color: "var(--color-text-caption)",
           }}
         >
-          <p>Aviso de Privacidad Corporativo — Servicios +Digital MX — Versión 2.2</p>
-          <p>Última actualización: 19 de junio de 2026</p>
+          <p>Aviso de Privacidad Corporativo — Servicios +Digital MX — Versión 3.0</p>
+          <p>Última actualización: 14 de agosto de 2026</p>
           <p>
             Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
             Posesión de los Particulares (DOF 05-07-2010, reforma DOF 14-11-2025) y su

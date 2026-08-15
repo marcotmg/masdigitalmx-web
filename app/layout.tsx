@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Barlow, Chakra_Petch } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+
+/* Measurement ID de la propiedad GA4 "masdigitalmx.com" (cuenta marcotmg@gmail.com,
+   creada 2026-08-14). Google Signals y vinculación a Google Ads permanecen
+   desactivados a propósito — condición que sostiene la redacción de §7 del
+   Aviso de Privacidad (v3.0). Antes de activar cualquiera de las dos, ver el
+   gate en AGENTS.md → Intocables. */
+const GA_MEASUREMENT_ID = "G-2DWXR0JN2E";
 
 /* Brand + Headings — Chakra Petch: angular, terminales rectos, sin curvas innecesarias.
    Letterforms cuadrados/digitales, fuerte identidad tech. */
@@ -81,6 +89,18 @@ export default function RootLayout({
             __html: JSON.stringify(organizationSchema),
           }}
         />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         {children}
       </body>
     </html>
