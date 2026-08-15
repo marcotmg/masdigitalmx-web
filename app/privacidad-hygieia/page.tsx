@@ -359,8 +359,10 @@ export default function PrivacidadHygieiaPage() {
         </a>{" "}
         con el asunto <Bold>"Derechos ARCO — HygieIA"</Bold> indicando: su nombre
         completo, número de teléfono con el que realizó la llamada, y la acción que
-        solicita. Daremos respuesta en un plazo máximo de{" "}
-        <Bold>20 días hábiles.</Bold>
+        solicita.{" "}
+        <Bold>Plazo de respuesta:</Bold> 20 días hábiles para comunicarle nuestra
+        determinación, y 15 días hábiles adicionales para hacerla efectiva, conforme al
+        artículo 31 de la LFPDPPP.
       </Para>
 
       <Separator />

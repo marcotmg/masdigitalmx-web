@@ -580,9 +580,10 @@ export default function PrivacidadPage() {
       </ol>
       <Para>
         <strong style={{ color: "var(--color-text-base)" }}>Plazo de respuesta:</strong>{" "}
-        20 días hábiles a partir de la recepción de tu solicitud completa, ampliable por
-        10 días hábiles adicionales cuando las circunstancias lo justifiquen, conforme al
-        artículo 28 de la LFPDPPP.
+        20 días hábiles a partir de la recepción de tu solicitud completa para
+        comunicarte nuestra determinación, y 15 días hábiles adicionales para hacerla
+        efectiva. Este plazo es ampliable una sola vez por un periodo igual cuando las
+        circunstancias lo justifiquen, conforme al artículo 31 de la LFPDPPP.
       </Para>
 
       <SubHeading>Si no quedas satisfecho con nuestra respuesta</SubHeading>
