@@ -190,7 +190,8 @@ export default function PrivacidadHygieiaPage() {
         <Bold>
           Ley Federal de Protección de Datos Personales en Posesión de los Particulares
         </Bold>{" "}
-        (LFPDPPP).
+        (LFPDPPP, publicada en el DOF el 20 de marzo de 2025, con última reforma
+        publicada el 14 de noviembre de 2025).
       </Para>
 
       <Separator />
@@ -468,7 +469,8 @@ export default function PrivacidadHygieiaPage() {
         <p>Última actualización: junio de 2026</p>
         <p>
           Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
-          Posesión de los Particulares (DOF 05-07-2010) y su Reglamento (DOF 21-12-2011).
+          Posesión de los Particulares (DOF 20-03-2025, última reforma DOF 14-11-2025)
+          y su Reglamento (DOF 21-12-2011).
         </p>
       </div>
     </LegalDocLayout>

@@ -5,7 +5,7 @@ import LegalDocLayout, { type LegalSection } from "@/components/LegalDocLayout";
 export const metadata: Metadata = {
   title: "Aviso de Privacidad | +Digital MX",
   description:
-    "Aviso de Privacidad Corporativo de Servicios +Digital MX — LFPDPPP DOF 05-07-2010.",
+    "Aviso de Privacidad Corporativo de Servicios +Digital MX — LFPDPPP DOF 20-03-2025.",
   robots: { index: false, follow: false },
 };
 
@@ -204,8 +204,9 @@ export default function PrivacidadPage() {
         <strong style={{ color: "var(--color-text-base)" }}>
           Ley Federal de Protección de Datos Personales en Posesión de los Particulares
         </strong>{" "}
-        (LFPDPPP, publicada en el DOF el 5 de julio de 2010, con reforma publicada el
-        14 de noviembre de 2025) y su Reglamento (DOF 21 de diciembre de 2011).
+        (LFPDPPP, publicada en el DOF el 20 de marzo de 2025, con última reforma
+        publicada el 14 de noviembre de 2025) y su Reglamento (DOF 21 de diciembre de
+        2011).
       </Para>
 
       {/* §1.1 — Unidad de Privacidad */}
@@ -676,8 +677,8 @@ export default function PrivacidadPage() {
         <p>Última actualización: 14 de agosto de 2026</p>
         <p>
           Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
-          Posesión de los Particulares (DOF 05-07-2010, reforma DOF 14-11-2025) y su
-          Reglamento (DOF 21-12-2011).
+          Posesión de los Particulares (DOF 20-03-2025, última reforma DOF 14-11-2025)
+          y su Reglamento (DOF 21-12-2011).
         </p>
       </div>
     </LegalDocLayout>
