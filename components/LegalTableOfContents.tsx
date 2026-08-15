@@ -160,17 +160,26 @@ export default function LegalTableOfContents({
 
   /* Ojo: nada de <section> aquí. globals.css declara scroll-snap-type: y proximity
      en html con section { scroll-snap-align: start }, y un punto de anclaje dentro
-     de un documento legal largo secuestraría el scroll. */
+     de un documento legal largo secuestraría el scroll.
+
+     Dos <nav> independientes, no uno compartido envolviendo ambas variantes.
+     Motivo (verificado con inspección de estilos computados, no a ojo): un
+     elemento sticky solo puede desplazarse dentro de la altura de SU PROPIO
+     padre. Con un único <nav> envolviendo las dos variantes, en móvil ese
+     <nav> únicamente contiene la barra colapsada (la lista desktop mide 0 al
+     estar en display:none) — el padre termina midiendo lo mismo que la barra
+     misma, sin "cuarto" para quedarse pegada, y el navegador la desengancha
+     en el primer scroll. Al separar cada variante en su propio <nav>, el
+     <nav> móvil pasa a ser hijo directo del grid de LegalDocLayout, mismo
+     nivel que la columna del documento — y en flujo de bloque (móvil no usa
+     grid) esa columna sí mide la altura completa del documento. */
   return (
-    <nav
-      ref={navRef}
-      aria-label="Contenido del documento"
-      className="mb-10 md:mb-0"
-    >
-      {/* Móvil: barra sticky con la sección activa — nunca desaparece al hacer
-          scroll. Al tocar, despliega el índice completo como panel flotante
-          (no empuja el contenido ni le roba media pantalla). */}
-      <div className="md:hidden sticky top-0 z-20 py-2">
+    <>
+      <nav
+        ref={navRef}
+        aria-label="Contenido del documento"
+        className="md:hidden sticky top-0 z-20 mb-10 py-2"
+      >
         <button
           type="button"
           onClick={() => setMobileOpen((v) => !v)}
@@ -220,11 +229,16 @@ export default function LegalTableOfContents({
             {renderItems(() => setMobileOpen(false))}
           </div>
         )}
-      </div>
+      </nav>
 
       {/* Desktop: columna propia. El sticky funciona porque el grid de
           LegalDocLayout deja que esta columna se estire a lo alto (sin items-start). */}
-      <div className="hidden md:block sticky top-8">{renderItems()}</div>
-    </nav>
+      <nav
+        aria-label="Contenido del documento"
+        className="hidden md:block sticky top-8"
+      >
+        {renderItems()}
+      </nav>
+    </>
   );
 }

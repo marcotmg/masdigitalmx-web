@@ -115,7 +115,13 @@ export default function TerminosPage() {
         El acceso y la navegación del sitio web{" "}
         <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong> (en
         adelante, el &quot;Sitio&quot;), operado por{" "}
-        <strong style={{ color: "var(--color-text-base)" }}>Servicios +Digital MX</strong>{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Servicios +Digital MX
+        </strong>{" "}
+        (Marco Martínez González), con domicilio en{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Ciudad de México, México
+        </strong>{" "}
         (en adelante, &quot;+Digital MX&quot;), implican la aceptación plena y sin reservas
         de los presentes Términos y Condiciones de Uso, en la versión publicada al momento
         del acceso.

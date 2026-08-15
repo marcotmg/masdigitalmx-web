@@ -184,7 +184,8 @@ export default function PrivacidadPage() {
         <strong style={{ color: "var(--color-text-base)" }}>
           Servicios +Digital MX
         </strong>{" "}
-        (en adelante, "+Digital MX" o el "Responsable"), con domicilio en{" "}
+        (Marco Martínez González; en adelante, "+Digital MX" o el "Responsable"), con
+        domicilio en{" "}
         <strong style={{ color: "var(--color-text-base)" }}>
           Ciudad de México, México
         </strong>

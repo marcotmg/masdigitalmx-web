@@ -159,11 +159,11 @@ export default function PrivacidadHygieiaPage() {
             <br />
             <Bold>Correo de contacto:</Bold>{" "}
             <a
-              href="mailto:contacto@masdigitalmx.com"
+              href="mailto:privacidad@masdigitalmx.com"
               className="underline transition-opacity duration-200 hover:opacity-75"
               style={{ color: "var(--color-primary-light)" }}
             >
-              contacto@masdigitalmx.com
+              privacidad@masdigitalmx.com
             </a>
             <br />
             <Bold>Última actualización:</Bold> junio de 2026
@@ -176,13 +176,15 @@ export default function PrivacidadHygieiaPage() {
       {/* §1 — Identidad y domicilio */}
       <SectionHeading id="s1">1. Identidad y domicilio del Responsable</SectionHeading>
       <Para>
-        <Bold>Servicios +Digital MX</Bold>, con correo electrónico de contacto{" "}
+        <Bold>Servicios +Digital MX</Bold> (Marco Martínez González), con domicilio en{" "}
+        <Bold>Ciudad de México, México</Bold>, y correo electrónico
+        de contacto{" "}
         <a
-          href="mailto:contacto@masdigitalmx.com"
+          href="mailto:privacidad@masdigitalmx.com"
           className="underline transition-opacity duration-200 hover:opacity-75"
           style={{ color: "var(--color-primary-light)" }}
         >
-          contacto@masdigitalmx.com
+          privacidad@masdigitalmx.com
         </a>
         , es el responsable del tratamiento de sus datos personales de conformidad con la{" "}
         <Bold>
@@ -305,11 +307,11 @@ export default function PrivacidadHygieiaPage() {
         Si desea oponerse al tratamiento para la finalidad F4, puede hacerlo en cualquier
         momento escribiendo a{" "}
         <a
-          href="mailto:contacto@masdigitalmx.com"
+          href="mailto:privacidad@masdigitalmx.com"
           className="underline transition-opacity duration-200 hover:opacity-75"
           style={{ color: "var(--color-primary-light)" }}
         >
-          contacto@masdigitalmx.com
+          privacidad@masdigitalmx.com
         </a>{" "}
         con el asunto{" "}
         <Bold>"Oposición F4 — HygieIA"</Bold> desde el correo electrónico o teléfono que
@@ -348,11 +350,11 @@ export default function PrivacidadHygieiaPage() {
       <Para>
         Para ejercer cualquiera de estos derechos, envíe un correo a{" "}
         <a
-          href="mailto:contacto@masdigitalmx.com"
+          href="mailto:privacidad@masdigitalmx.com"
           className="underline transition-opacity duration-200 hover:opacity-75"
           style={{ color: "var(--color-primary-light)" }}
         >
-          contacto@masdigitalmx.com
+          privacidad@masdigitalmx.com
         </a>{" "}
         con el asunto <Bold>"Derechos ARCO — HygieIA"</Bold> indicando: su nombre
         completo, número de teléfono con el que realizó la llamada, y la acción que
