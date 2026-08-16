@@ -141,8 +141,11 @@ components/
 ├── WhatsAppButton.tsx         ← flotante, esquina inferior derecha
 ├── LegalDocLayout.tsx         ← maqueta de 2 columnas de las 3 páginas legales (server)
 ├── LegalTableOfContents.tsx   ← índice navegable con scrollspy, "use client"
-└── sections/                  ← Hero · Problemas · Productos · Sectores · Pricing · Contacto
-assets/                  ← imágenes, mascota Mati (pendiente integrar)
+└── sections/                  ← Hero · Problemas · Productos · Sectores · Pricing · Paquetes · Contacto
+lib/
+├── sectores.ts            ← datos de los 6 slugs de /sector/[slug]
+└── legal-data.ts          ← datos atómicos compartidos entre las 3 páginas legales (WEB-INDICE-LEGAL-01)
+public/mati.webp          ← mascota Mati, ya integrada (Hero y 404) — no existe carpeta assets/
 design-system/           ← generado por skill ui-ux-pro-max
 PRODUCT.md               ← requerido por skill Impeccable (register: brand)
 pre-install.sh           ← auditoría de dependencias
@@ -150,7 +153,9 @@ pre-install.sh           ← auditoría de dependencias
 
 **Orden del Home:** Header → Hero (asimétrico: headline izq + chat mockup WhatsApp der)
 → Problemas (lista editorial, 3 problemas con métricas) → Productos (4 cards)
-→ Sectores (bento grid) → Pricing (Básico/Pro en MXN) → Contacto → Footer → WhatsAppButton.
+→ Sectores (bento grid) → Pricing (Básico/Pro en MXN) → Paquetes → Contacto → Footer →
+WhatsAppButton. *(Corregido 2026-08-16: "Paquetes" faltaba en esta lista pese a estar
+renderizado en `page.tsx` desde PR #11.)*
 
 **Rutas construidas:** `/` · `/privacidad` · `/privacidad-hygieia` · `/terminos` ·
 `/sector/[slug]` (6 slugs desde `lib/sectores.ts`: `servicios`, `salud`,
@@ -263,12 +268,13 @@ Sin autorización explícita de Marco:
 - **Ramas `backup/*` y tags `v1-*`** — respaldos de seguridad, no borrar.
 - **Config de dominio en Netlify** — canonical `masdigitalmx.com` (apex), servido por Netlify desde
   el cutover de DNS del 2026-08-12, con certificado Let's Encrypt y HSTS activo.
-  `www` está pendiente de estandarizarse a CNAME → `masdigitalmx-web.netlify.app`; hoy sigue siendo
-  un **URL Redirect Record propietario de Namecheap** (no DNS estándar, se esconde bajo "SHOW MORE"
-  en Advanced DNS). *(La versión previa de este punto decía "Config de dominio en Vercel" y que `www`
-  no se re-agrega — quedó obsoleta con la migración.)*
-- **Componentes "huérfanos" en `components/sections/`** (del rediseño enterprise revertido) — no
-  borrar, reutilizables en fases futuras. No incluirlos en `page.tsx` sin W-ticket.
+  `www` ya se estandarizó a CNAME → `masdigitalmx-web.netlify.app` (verificado en vivo 2026-08-15:
+  `dig CNAME www.masdigitalmx.com` resuelve como DNS estándar, ya no el URL Redirect Record
+  propietario de Namecheap; `www` redirige 301 al apex, que sirve 200 vía Netlify). *(La versión
+  previa de este punto decía "Config de dominio en Vercel" — quedó obsoleta con la migración.)*
+- ~~Componentes "huérfanos" en `components/sections/`~~ — **ya no aplica** (verificado
+  2026-08-16): los 7 archivos de esa carpeta, incluyendo `PaquetesSection.tsx`, están
+  todos importados y renderizados en `page.tsx`. No hay huérfanos hoy.
 - **Google Signals / vinculación a Google Ads en la propiedad GA4 de `masdigitalmx.com`**
   (Measurement ID `G-2DWXR0JN2E`, `app/layout.tsx`) — hoy desactivados a propósito. El §7 del
   Aviso de Privacidad (v3.0) declara que +Digital MX no hace perfilamiento publicitario/cross-site,
@@ -308,12 +314,13 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 - [x] Migración de hosting a Netlify, con SSL y HSTS (`MIGRACION-NETLIFY-01`)
 - [x] Base de SEO técnico: `robots.txt`, `sitemap.xml`, canonical, `og:image`,
       `Organization` schema, 404 con marca, `llms.txt` (`WEB-SEO-TECNICO-01` P0+P1)
-- [ ] `www` → CNAME (último punto abierto de `MIGRACION-NETLIFY-01`)
+- [x] `www` → CNAME — cerrado, `MIGRACION-NETLIFY-01` sin puntos abiertos (verificado en vivo 2026-08-15)
 - [x] GA4 instalado — propiedad `masdigitalmx.com` (Measurement ID `G-2DWXR0JN2E`), snippet en
       `app/layout.tsx`, §7 del Aviso de Privacidad reescrito y versionado a v3.0 (2026-08-14).
       Gate nuevo en Intocables arriba (Google Signals/Ads)
 - [ ] Search Console — pendiente, no bloqueado por gate legal
-- [ ] Integrar mascota Mati (assets en `/assets/`)
+- [x] Integrar mascota Mati — ya está en `HeroSection.tsx` y en el 404 (`app/not-found.tsx`,
+      PR #22). Imagen en `public/mati.webp`, no en `/assets/` (esa carpeta no existe)
 - [ ] Instalar Playwright para QA (con `pre-install.sh`)
 - [ ] **Decisión de diseño:** retomar `draft/reposicionamiento-2026-06-sin-desplegar`
       corrigiendo su auditoría, o descartarlo — bloquea P2 de `WEB-SEO-TECNICO-01`
@@ -325,4 +332,6 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 
 ## Estado
 
-**Vivo** — en producción en Netlify, commits activos (último 2026-08-13).
+**Vivo** — en producción en Netlify, commits activos. *(Esta fecha se desactualizaba cada
+vez que se revisaba — usar `git log --oneline -5 origin/main` para el estado real en vez
+de confiar en un valor fijo aquí.)*
