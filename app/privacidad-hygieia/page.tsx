@@ -254,8 +254,8 @@ export default function PrivacidadHygieiaPage() {
         <Bold>Datos que NO se almacenan en nuestra base de datos:</Bold> el contenido
         detallado del motivo médico expresado durante la llamada (por ejemplo, descripción
         de síntomas o diagnósticos). Este tipo de información, cuando se menciona, permanece
-        únicamente en la grabación de la llamada administrada por Retell AI con una retención
-        máxima de 90 días.
+        únicamente en la grabación de la llamada administrada por nuestro proveedor de
+        procesamiento de voz, con una retención máxima de 90 días.
       </div>
 
       <Separator />
@@ -385,8 +385,8 @@ export default function PrivacidadHygieiaPage() {
         un <Bold>dato sensible</Bold> en términos del artículo 2 de la LFPDPPP. Como se
         indicó en la sección 2, este dato{" "}
         <Bold>no se almacena en nuestros sistemas</Bold> — permanece únicamente en la
-        grabación de la llamada administrada por el proveedor Retell AI durante un máximo
-        de 90 días. Al continuar la llamada, usted consiente expresamente este tratamiento
+        grabación de la llamada administrada por nuestro proveedor de procesamiento de
+        voz durante un máximo de 90 días. Al continuar la llamada, usted consiente expresamente este tratamiento
         limitado y temporal.
       </Para>
 
