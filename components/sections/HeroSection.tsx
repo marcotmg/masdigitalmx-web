@@ -1,9 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const WA_URL =
-  "https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio";
-
 const chatMessages = [
   { from: "user", text: "Hola, quiero agendar para mañana" },
   {

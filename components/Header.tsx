@@ -10,8 +10,9 @@ const navLinks = [
   { href: "/#contacto", label: "Contacto" },
 ];
 
-const WA_URL =
-  "https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio";
+// Repuntado a la sección de contacto (2026-08-16, autorización explícita de Marco).
+// Antes: wa.me/525652107460 — número del MattIAs de demos, ajeno a la marca.
+const CONTACT_URL = "/#contacto";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -91,9 +92,7 @@ export default function Header() {
 
         {/* CTA */}
         <a
-          href={WA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={CONTACT_URL}
           className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-white transition-all duration-200 cursor-pointer hover:opacity-90 hover:-translate-y-px"
           style={{
             background: "var(--color-cta)",
@@ -135,9 +134,7 @@ export default function Header() {
             </Link>
           ))}
           <a
-            href={WA_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={CONTACT_URL}
             className="mt-2 inline-flex justify-center items-center px-5 py-3 rounded-lg text-sm font-bold text-white cursor-pointer"
             style={{ background: "var(--color-cta)" }}
           >

@@ -26,8 +26,6 @@ function PhoneIcon() {
   );
 }
 
-const WA_URL = "https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio";
-
 function NavLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
   const style: React.CSSProperties = { color: "var(--color-text-muted)" };
   const hover = (e: React.MouseEvent<HTMLElement>) =>
@@ -147,9 +145,6 @@ export default function Footer() {
             </p>
             <NavLink href="mailto:contacto@masdigitalmx.com" external>
               contacto@masdigitalmx.com
-            </NavLink>
-            <NavLink href={WA_URL} external>
-              WhatsApp +52 56 5210 7460
             </NavLink>
             <a
               href="tel:+13203226307"

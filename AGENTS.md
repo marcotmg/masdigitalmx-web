@@ -138,7 +138,7 @@ app/
 components/
 ├── Header.tsx                 ← nav fija con scroll-blur, "use client"
 ├── Footer.tsx                 ← "use client"
-├── WhatsAppButton.tsx         ← flotante, esquina inferior derecha
+├── WhatsAppButton.tsx         ← flotante, esquina inferior derecha → `/#contacto`
 ├── LegalDocLayout.tsx         ← maqueta de 2 columnas de las 3 páginas legales (server)
 ├── LegalTableOfContents.tsx   ← índice navegable con scrollspy, "use client"
 └── sections/                  ← Hero · Problemas · Productos · Sectores · Pricing · Paquetes · Contacto
@@ -254,8 +254,12 @@ Definidos en `app/globals.css` bajo `@theme`:
 
 Sin autorización explícita de Marco:
 
-- **Número de WhatsApp en CTAs** — número de negocio activo
-  (`https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio`)
+- **Destino de los CTAs de contacto** — desde el 2026-08-16 apuntan a `/#contacto`
+  (formulario), **no a WhatsApp**. Antes: `wa.me/525652107460`, que es el número del
+  **MattIAs de demos** — un bot configurado con el catálogo de un prospecto y con
+  `contacto_humano` apuntando a un teléfono ajeno a +Digital MX. Retirado por
+  autorización explícita de Marco. **No devolverlo a WhatsApp** hasta que exista el
+  número comercial propio (`MASDIGITAL-CHATBOT-PROPIO-01`).
 - **Precios en PricingSection** — fuente de verdad: SP-01 **v0.6** en el vault.
   Precios REACTIVADOS y mergeados (PR #11). Ojo al actualizarlos:
   `Auditoria-SP-01-Catalogo-2026-08-13` documenta 8 funcionalidades que SP-01
@@ -285,8 +289,9 @@ Sin autorización explícita de Marco:
 ## Identidad visual
 
 Marca: **+Digital** · Legal: Servicios +Digital MX
-Email: `contacto@masdigitalmx.com` · WhatsApp negocio: +52 56 5210 7460
-(solo para CTA, **NO** en documentos legales)
+Email: `contacto@masdigitalmx.com`
+⚠️ **`+52 56 5210 7460` ya NO se publica en el sitio** (retirado 2026-08-16 de CTAs y footer):
+es el número del MattIAs de demos, no un canal de la marca. Tampoco va en documentos legales.
 Facebook Page ID: `1107626159096908` · Instagram: `@mas_digitalmx`
 
 ## Rutas al vault
@@ -324,8 +329,13 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 - [ ] Instalar Playwright para QA (con `pre-install.sh`)
 - [ ] **Decisión de diseño:** retomar `draft/reposicionamiento-2026-06-sin-desplegar`
       corrigiendo su auditoría, o descartarlo — bloquea P2 de `WEB-SEO-TECNICO-01`
-- [ ] Repuntar el CTA de WhatsApp al número comercial propio
-      (`MASDIGITAL-CHATBOT-PROPIO-01`) — hoy apunta al número de demos
+- [x] Retirar el número de demos de los CTAs — **hecho 2026-08-16**: los 3 puntos vivos
+      (`WhatsAppButton`, `Header` ×2, `Footer`) apuntan a `/#contacto`; la línea
+      "WhatsApp +52 56 5210 7460" salió del footer. Verificado: cero `wa.me` en el HTML generado
+- [ ] **Restituir un CTA de WhatsApp** cuando exista el número comercial propio
+      (`MASDIGITAL-CHATBOT-PROPIO-01`). Hoy el sitio no tiene canal WhatsApp
+- [ ] `WhatsAppButton.tsx` conserva **icono y verde de WhatsApp** pero lleva al formulario —
+      decidir si se le cambia el icono o se retira el botón flotante
 - [ ] ⚠️ **Discrepancia sin resolver:** "Identidad visual" declara Facebook Page ID
       `1107626159096908`, pero `Footer.tsx:95` enlaza el perfil `61576597229117`.
       No se corrigió aquí porque no está verificado cuál es el correcto

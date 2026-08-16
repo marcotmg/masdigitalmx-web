@@ -1,7 +1,10 @@
 "use client";
 
-const WA_URL =
-  "https://wa.me/525652107460?text=Hola%2C+me+interesa+automatizar+mi+negocio";
+// Repuntado a la sección de contacto (2026-08-16, autorización explícita de Marco).
+// Antes: wa.me/525652107460 — ese número corre el MattIAs de demos, hoy configurado
+// con el catálogo de un prospecto y con handoff a un teléfono ajeno a +Digital MX.
+// Vuelve a WhatsApp cuando exista el número comercial propio (MASDIGITAL-CHATBOT-PROPIO-01).
+const CONTACT_URL = "/#contacto";
 
 function WhatsAppIcon() {
   return (
@@ -29,10 +32,8 @@ export default function WhatsAppButton() {
         .wa-pulse-btn { animation: wa-pulse 1.2s ease-out 2; }
       `}</style>
       <a
-        href={WA_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contactar por WhatsApp"
+        href={CONTACT_URL}
+        aria-label="Ir al formulario de contacto"
         className="wa-pulse-btn fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full text-white cursor-pointer transition-transform duration-200 hover:scale-110 w-12 h-12 md:w-14 md:h-14"
         style={{
           background: "#25D366",
