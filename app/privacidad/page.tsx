@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LegalDocLayout, { type LegalSection } from "@/components/LegalDocLayout";
+import {
+  RESPONSABLE_NOMBRE,
+  RESPONSABLE_PERSONA,
+  RESPONSABLE_DOMICILIO,
+  CORREO_PRIVACIDAD,
+  LFPDPPP_DOF_LEY,
+  LFPDPPP_DOF_REFORMA,
+  LFPDPPP_DOF_REGLAMENTO,
+  ARCO_ARTICULOS_CITA,
+  CONSENTIMIENTO_ARTICULO_CITA,
+} from "@/lib/legal-data";
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad | +Digital MX",
   description:
-    "Aviso de Privacidad Corporativo de Servicios +Digital MX — LFPDPPP DOF 05-07-2010.",
+    "Aviso de Privacidad Corporativo de Servicios +Digital MX — LFPDPPP DOF 20-03-2025.",
   robots: { index: false, follow: false },
 };
 
@@ -127,16 +139,30 @@ function Table({
   );
 }
 
+// ─── Índice navegable ─────────────────────────────────────────────────────────
+// Etiquetas sin el número inicial: el índice pone su propio "01". Los <h2> del
+// cuerpo conservan su "1. ", "2. "… — texto Intocable, no se toca.
+
+const SECTIONS: LegalSection[] = [
+  { id: "s1", label: "Identidad y domicilio del responsable" },
+  { id: "s2", label: "Alcance de este aviso" },
+  { id: "s3", label: "Datos personales que recabamos" },
+  { id: "s4", label: "Finalidades del tratamiento" },
+  { id: "s5", label: "Plazos de conservación de tus datos" },
+  { id: "s6", label: "Transferencias de datos personales" },
+  { id: "s7", label: "Uso de cookies y tecnologías de seguimiento" },
+  { id: "s8", label: "Derechos ARCO y revocación del consentimiento" },
+  { id: "s9", label: "Cambios al aviso de privacidad" },
+  { id: "s10", label: "Contacto" },
+];
+
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 export default function PrivacidadPage() {
   return (
-    <main
-      className="min-h-screen py-20 px-5"
-      style={{ background: "var(--color-canvas)" }}
-    >
-      <div className="mx-auto max-w-3xl">
-        {/* Encabezado */}
+    <LegalDocLayout
+      sections={SECTIONS}
+      header={
         <div className="mb-10">
           <Link
             href="/"
@@ -159,511 +185,502 @@ export default function PrivacidadPage() {
             Versión 3.0 — Última actualización: 14 de agosto de 2026
           </p>
         </div>
+      }
+    >
+      <Separator />
 
-        <Separator />
+      {/* §1 — Identidad y domicilio */}
+      <SectionHeading id="s1">1. Identidad y domicilio del responsable</SectionHeading>
+      <Para>
+        <strong style={{ color: "var(--color-text-base)" }}>
+          {RESPONSABLE_NOMBRE}
+        </strong>{" "}
+        ({RESPONSABLE_PERSONA}; en adelante, "+Digital MX" o el "Responsable"), con
+        domicilio en{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          {RESPONSABLE_DOMICILIO}
+        </strong>
+        , es el responsable del tratamiento de los datos personales que recaba a través
+        del sitio web <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong> y de
+        sus canales de comunicación asociados (WhatsApp Business y correo electrónico).
+      </Para>
+      <Para>
+        Para efectos de notificaciones formales relacionadas con el ejercicio de tus
+        derechos ARCO o cualquier asunto jurídico derivado del presente aviso, el domicilio
+        completo del Responsable puede ser solicitado a través del correo{" "}
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
+      </Para>
+      <Para>
+        El presente Aviso de Privacidad se emite en cumplimiento de la{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Ley Federal de Protección de Datos Personales en Posesión de los Particulares
+        </strong>{" "}
+        (LFPDPPP, publicada en el DOF el {LFPDPPP_DOF_LEY}, con última reforma
+        publicada el {LFPDPPP_DOF_REFORMA}) y su Reglamento (DOF {LFPDPPP_DOF_REGLAMENTO}).
+      </Para>
 
-        {/* §1 — Identidad y domicilio */}
-        <SectionHeading id="s1">1. Identidad y domicilio del responsable</SectionHeading>
-        <Para>
+      {/* §1.1 — Unidad de Privacidad */}
+      <SubHeading>1.1 Unidad de Privacidad</SubHeading>
+      <Para>
+        La atención a las solicitudes de ejercicio de derechos ARCO, la gestión de
+        consultas sobre privacidad y la supervisión del cumplimiento de este aviso están
+        a cargo de la{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Unidad de Privacidad
+        </strong>{" "}
+        de +Digital MX. Puedes contactar a esta unidad a través del correo{" "}
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
+      </Para>
+
+      <Separator />
+
+      {/* §2 — Alcance */}
+      <SectionHeading id="s2">2. Alcance de este aviso</SectionHeading>
+      <Para>Este aviso aplica al tratamiento de datos personales derivado de:</Para>
+      <ul
+        className="text-sm leading-relaxed mb-4 space-y-2 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>
+          Tu interacción con el sitio web{" "}
+          <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong>{" "}
+          (formulario de contacto, navegación).
+        </li>
+        <li>
+          La comunicación a través de nuestro{" "}
           <strong style={{ color: "var(--color-text-base)" }}>
-            Servicios +Digital MX
-          </strong>{" "}
-          (en adelante, "+Digital MX" o el "Responsable"), con domicilio en{" "}
-          <strong style={{ color: "var(--color-text-base)" }}>
-            Ciudad de México, México
+            canal de WhatsApp Business
           </strong>
-          , es el responsable del tratamiento de los datos personales que recaba a través
-          del sitio web <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong> y de
-          sus canales de comunicación asociados (WhatsApp Business y correo electrónico).
-        </Para>
-        <Para>
-          Para efectos de notificaciones formales relacionadas con el ejercicio de tus
-          derechos ARCO o cualquier asunto jurídico derivado del presente aviso, el domicilio
-          completo del Responsable puede ser solicitado a través del correo{" "}
-          <PrivacyLink email="privacidad@masdigitalmx.com" />.
-        </Para>
-        <Para>
-          El presente Aviso de Privacidad se emite en cumplimiento de la{" "}
-          <strong style={{ color: "var(--color-text-base)" }}>
-            Ley Federal de Protección de Datos Personales en Posesión de los Particulares
-          </strong>{" "}
-          (LFPDPPP, publicada en el DOF el 5 de julio de 2010, con reforma publicada el
-          14 de noviembre de 2025) y su Reglamento (DOF 21 de diciembre de 2011).
-        </Para>
-
-        {/* §1.1 — Unidad de Privacidad */}
-        <SubHeading>1.1 Unidad de Privacidad</SubHeading>
-        <Para>
-          La atención a las solicitudes de ejercicio de derechos ARCO, la gestión de
-          consultas sobre privacidad y la supervisión del cumplimiento de este aviso están
-          a cargo de la{" "}
-          <strong style={{ color: "var(--color-text-base)" }}>
-            Unidad de Privacidad
-          </strong>{" "}
-          de +Digital MX. Puedes contactar a esta unidad a través del correo{" "}
-          <PrivacyLink email="privacidad@masdigitalmx.com" />.
-        </Para>
-
-        <Separator />
-
-        {/* §2 — Alcance */}
-        <SectionHeading id="s2">2. Alcance de este aviso</SectionHeading>
-        <Para>Este aviso aplica al tratamiento de datos personales derivado de:</Para>
-        <ul
-          className="text-sm leading-relaxed mb-4 space-y-2 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>
-            Tu interacción con el sitio web{" "}
-            <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong>{" "}
-            (formulario de contacto, navegación).
-          </li>
-          <li>
-            La comunicación a través de nuestro{" "}
-            <strong style={{ color: "var(--color-text-base)" }}>
-              canal de WhatsApp Business
-            </strong>
-            .
-          </li>
-          <li>
-            El contacto por{" "}
-            <strong style={{ color: "var(--color-text-base)" }}>correo electrónico</strong>{" "}
-            con cualquiera de nuestras direcciones corporativas.
-          </li>
-          <li>
-            El proceso de{" "}
-            <strong style={{ color: "var(--color-text-base)" }}>
-              prospección y cotización
-            </strong>{" "}
-            de cualquiera de nuestros servicios.
-          </li>
-        </ul>
-        <div
-          className="rounded-xl p-4 text-sm leading-relaxed"
-          style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            color: "var(--color-text-muted)",
-          }}
-        >
-          <strong style={{ color: "var(--color-text-base)" }}>
-            Aviso importante sobre nuestros productos:
-          </strong>{" "}
-          Si utilizas alguno de nuestros productos o servicios (como HygieIA — agente de voz
-          para citas médicas, o MattIAs — chatbot de atención por WhatsApp), el tratamiento
-          de tus datos en el contexto de ese producto se rige por el aviso de privacidad
-          específico de dicho producto, el cual te será presentado antes de iniciar su uso.
-          Los avisos específicos por producto están disponibles en el sitio web de +Digital MX.
-        </div>
-
-        <Separator />
-
-        {/* §3 — Datos */}
-        <SectionHeading id="s3">3. Datos personales que recabamos</SectionHeading>
-        <Para>
-          Según el canal de contacto, recabamos las siguientes categorías de datos:
-        </Para>
-
-        <SubHeading>Sitio web y correo electrónico</SubHeading>
-        <ul
-          className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>Nombre y apellidos</li>
-          <li>Correo electrónico</li>
-          <li>Número de teléfono (móvil o fijo)</li>
-          <li>Nombre de la empresa o negocio</li>
-          <li>Giro o sector de tu empresa</li>
-          <li>Contenido del mensaje o consulta</li>
-        </ul>
-
-        <SubHeading>Canal de WhatsApp Business</SubHeading>
-        <ul
-          className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>Número de teléfono móvil</li>
-          <li>Nombre de perfil de WhatsApp</li>
-          <li>Mensajes de texto, notas de voz, imágenes y documentos que nos envíes</li>
-          <li>Historial de conversación necesario para dar continuidad a la atención</li>
-        </ul>
-
-        <SubHeading>Datos técnicos (recabados automáticamente)</SubHeading>
-        <ul
-          className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>Dirección IP</li>
-          <li>Tipo de dispositivo y navegador</li>
-          <li>Fecha y hora de interacción con el sitio web</li>
-          <li>Identificador de cliente asignado por cookie de analítica (Google Analytics)</li>
-        </ul>
-
-        <div
-          className="rounded-xl p-4 text-sm leading-relaxed"
-          style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            color: "var(--color-text-muted)",
-          }}
-        >
-          <strong style={{ color: "var(--color-text-base)" }}>
-            No recabamos datos sensibles
-          </strong>{" "}
-          (estado de salud, origen étnico, ideología política, preferencias sexuales,
-          creencias religiosas, etc.) a través de los canales descritos en este aviso. Si
-          por la naturaleza de una conversación compartes voluntariamente información de esa
-          índole, su uso quedará estrictamente limitado a resolver tu consulta y no será
-          almacenada en nuestros sistemas más allá del hilo de conversación.
-        </div>
-
-        <Separator />
-
-        {/* §4 — Finalidades */}
-        <SectionHeading id="s4">4. Finalidades del tratamiento</SectionHeading>
-
-        <SubHeading>Finalidades primarias — necesarias para el servicio</SubHeading>
-        <Para>
-          Sin el tratamiento para estas finalidades no es posible atender tu solicitud:
-        </Para>
-        <ul
-          className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>Responder consultas y solicitudes de información sobre nuestros servicios.</li>
-          <li>Agendar y realizar demostraciones del servicio.</li>
-          <li>
-            Gestionar la relación comercial: elaborar cotizaciones, presentar propuestas y
-            formalizar contratos.
-          </li>
-          <li>Dar seguimiento a procesos de venta activos.</li>
-          <li>
-            Atender requerimientos de autoridades competentes conforme a la legislación
-            aplicable.
-          </li>
-        </ul>
-
-        <SubHeading>Finalidades secundarias — opcionales</SubHeading>
-        <Para>
-          Estas finalidades no son necesarias para atender tu solicitud. Si no deseas que
-          tus datos sean tratados para estos fines, puedes manifestarlo en cualquier momento
-          escribiendo a <PrivacyLink email="privacidad@masdigitalmx.com" />:
-        </Para>
-        <ul
-          className="text-sm leading-relaxed mb-4 space-y-1.5 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>
-            Envío de comunicaciones comerciales, promociones y novedades de +Digital MX.
-          </li>
-          <li>Análisis estadístico agregado para la mejora de nuestros servicios.</li>
-          <li>
-            Elaboración de casos de éxito (siempre con tu consentimiento explícito previo y
-            por escrito).
-          </li>
-        </ul>
-
-        <Separator />
-
-        {/* §5 — Plazos */}
-        <SectionHeading id="s5">5. Plazos de conservación de tus datos</SectionHeading>
-        <Para>
-          Conservamos tus datos personales únicamente durante el tiempo necesario para
-          cumplir las finalidades descritas en este aviso, conforme a los siguientes plazos:
-        </Para>
-
-        <Table
-          headers={["Categoría de dato", "Plazo de conservación", "Criterio"]}
-          rows={[
-            [
-              "Datos de contacto y consulta (formulario, correo)",
-              "12 meses desde el último contacto",
-              "Ciclo de venta; sin actividad comercial en 12 meses, el dato pierde relevancia",
-            ],
-            [
-              "Conversaciones de WhatsApp Business",
-              "12 meses desde el último mensaje",
-              "Continuidad de atención; purga al vencimiento del plazo",
-            ],
-            [
-              "Datos técnicos (IP, navegación)",
-              "6 meses desde la interacción",
-              "Sin valor comercial tras ese período",
-            ],
-          ]}
-        />
-
-        <Para>
-          Una vez vencido el plazo aplicable, procederemos a la cancelación (bloqueo y
-          posterior supresión) de tus datos conforme al procedimiento establecido en los
-          artículos 36 y 37 de la LFPDPPP, salvo que exista una obligación legal que exija
-          su conservación por un período mayor.
-        </Para>
-
-        <Separator />
-
-        {/* §6 — Transferencias */}
-        <SectionHeading id="s6">6. Transferencias de datos personales</SectionHeading>
-        <Para>
-          +Digital MX puede compartir tus datos personales con los siguientes terceros, en
-          la medida estrictamente necesaria para cumplir las finalidades de este aviso:
-        </Para>
-
-        <Table
-          headers={["Categoría de proveedor", "Finalidad", "País"]}
-          rows={[
-            [
-              "Proveedor de servicios de correo electrónico corporativo",
-              "Operación de buzones corporativos y recepción de solicitudes ARCO",
-              "India / infraestructura global",
-            ],
-            [
-              "Proveedor de infraestructura web y hospedaje",
-              "Despliegue y operación del sitio masdigitalmx.com",
-              "Estados Unidos",
-            ],
-            [
-              "WhatsApp Business (Meta)",
-              "Operación del canal de mensajería WhatsApp",
-              "Estados Unidos",
-            ],
-            [
-              "Google LLC (Google Analytics)",
-              "Analítica web agregada del sitio masdigitalmx.com",
-              "Estados Unidos",
-            ],
-          ]}
-        />
-
-        <Para>
-          Estas transferencias son necesarias para la operación del servicio. Ninguno de
-          estos proveedores está autorizado a usar tus datos para finalidades distintas a
-          las aquí descritas.
-        </Para>
-        <Para>
-          <strong style={{ color: "var(--color-text-base)" }}>
-            Garantías para transferencias internacionales:
-          </strong>{" "}
-          Cuando tus datos son transferidos a proveedores ubicados en países que no cuentan
-          con un nivel de protección de datos equiparable al de México, +Digital MX
-          implementa mecanismos contractuales adecuados conforme a los artículos 36 y 37 de
-          la LFPDPPP. Específicamente, suscribimos con dichos proveedores Cláusulas
-          Contractuales Tipo u otros mecanismos equivalentes reconocidos por la legislación
-          aplicable, que obligan a estos terceros a proteger tus datos con un nivel
-          sustancialmente similar al exigido por la ley mexicana. Puedes solicitar
-          información sobre las garantías vigentes escribiendo a{" "}
-          <PrivacyLink email="privacidad@masdigitalmx.com" />.
-        </Para>
-        <Para>
-          <strong style={{ color: "var(--color-text-base)" }}>
-            +Digital MX no vende, cede ni comercializa tus datos personales a terceros con
-            fines publicitarios o de prospección propia.
-          </strong>
-        </Para>
-
-        <Separator />
-
-        {/* §7 — Cookies */}
-        <SectionHeading id="s7">7. Uso de cookies y tecnologías de seguimiento</SectionHeading>
-        <Para>
-          El sitio web <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong>{" "}
-          utiliza:
-        </Para>
-        <ul
-          className="text-sm leading-relaxed mb-4 space-y-2 pl-5 list-disc"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <li>
-            <strong style={{ color: "var(--color-text-base)" }}>
-              Cookies técnicas esenciales
-            </strong>{" "}
-            para el correcto funcionamiento de la página.
-          </li>
-          <li>
-            <strong style={{ color: "var(--color-text-base)" }}>Google Analytics 4</strong>{" "}
-            (Google LLC), una herramienta de analítica que nos permite conocer patrones
-            agregados de navegación (páginas visitadas, tiempo de permanencia, origen del
-            tráfico) para mejorar el sitio. Google Analytics asigna un identificador de
-            cliente mediante cookies propias y recaba dirección IP, tipo de dispositivo y
-            navegador.
-          </li>
-        </ul>
-        <Para>
-          No utilizamos píxeles de retargeting publicitario ni herramientas de perfilamiento
-          de comportamiento personal más allá de la analítica agregada descrita.
-        </Para>
-        <Para>
-          Puedes oponerte al uso de Google Analytics instalando el{" "}
-          <a
-            href="https://tools.google.com/dlpage/gaoptout"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline transition-opacity duration-200 hover:opacity-75"
-            style={{ color: "var(--color-primary-light)" }}
-          >
-            complemento de inhabilitación oficial de Google
-          </a>{" "}
-          o configurando tu navegador para bloquear cookies de terceros — esto podría afectar
-          la funcionalidad de medición pero no la funcionalidad básica del sitio.
-        </Para>
-        <Para>
-          Para más información sobre cómo Google trata estos datos, consulta la{" "}
-          <a
-            href="https://policies.google.com/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline transition-opacity duration-200 hover:opacity-75"
-            style={{ color: "var(--color-primary-light)" }}
-          >
-            Política de Privacidad de Google
-          </a>
           .
-        </Para>
-
-        <Separator />
-
-        {/* §8 — ARCO */}
-        <SectionHeading id="s8">8. Derechos ARCO y revocación del consentimiento</SectionHeading>
-        <Para>
-          Como titular de datos personales, tienes derecho a{" "}
+        </li>
+        <li>
+          El contacto por{" "}
+          <strong style={{ color: "var(--color-text-base)" }}>correo electrónico</strong>{" "}
+          con cualquiera de nuestras direcciones corporativas.
+        </li>
+        <li>
+          El proceso de{" "}
           <strong style={{ color: "var(--color-text-base)" }}>
-            Acceder, Rectificar, Cancelar u Oponerte
+            prospección y cotización
           </strong>{" "}
-          al tratamiento de tus datos (derechos ARCO), así como a{" "}
-          <strong style={{ color: "var(--color-text-base)" }}>
-            revocar el consentimiento
-          </strong>{" "}
-          otorgado para finalidades secundarias, conforme a los artículos 8 al 15 y 28 de
-          la LFPDPPP.
-        </Para>
+          de cualquiera de nuestros servicios.
+        </li>
+      </ul>
+      <div
+        className="rounded-xl p-4 text-sm leading-relaxed"
+        style={{
+          background: "var(--color-surface)",
+          border: "1px solid var(--color-border)",
+          color: "var(--color-text-muted)",
+        }}
+      >
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Aviso importante sobre nuestros productos:
+        </strong>{" "}
+        Si utilizas alguno de nuestros productos o servicios (como HygieIA — agente de voz
+        para citas médicas, o MattIAs — chatbot de atención por WhatsApp), el tratamiento
+        de tus datos en el contexto de ese producto se rige por el aviso de privacidad
+        específico de dicho producto, el cual te será presentado antes de iniciar su uso.
+        Los avisos específicos por producto están disponibles en el sitio web de +Digital MX.
+      </div>
 
-        <SubHeading>Para ejercer tus derechos</SubHeading>
-        <Para>
-          Envía una solicitud a la Unidad de Privacidad al correo{" "}
-          <PrivacyLink email="privacidad@masdigitalmx.com" /> que incluya:
-        </Para>
-        <ol
-          className="text-sm leading-relaxed mb-6 space-y-2 pl-5 list-decimal"
-          style={{ color: "var(--color-text-muted)" }}
+      <Separator />
+
+      {/* §3 — Datos */}
+      <SectionHeading id="s3">3. Datos personales que recabamos</SectionHeading>
+      <Para>
+        Según el canal de contacto, recabamos las siguientes categorías de datos:
+      </Para>
+
+      <SubHeading>Sitio web y correo electrónico</SubHeading>
+      <ul
+        className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>Nombre y apellidos</li>
+        <li>Correo electrónico</li>
+        <li>Número de teléfono (móvil o fijo)</li>
+        <li>Nombre de la empresa o negocio</li>
+        <li>Giro o sector de tu empresa</li>
+        <li>Contenido del mensaje o consulta</li>
+      </ul>
+
+      <SubHeading>Canal de WhatsApp Business</SubHeading>
+      <ul
+        className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>Número de teléfono móvil</li>
+        <li>Nombre de perfil de WhatsApp</li>
+        <li>Mensajes de texto, notas de voz, imágenes y documentos que nos envíes</li>
+        <li>Historial de conversación necesario para dar continuidad a la atención</li>
+      </ul>
+
+      <SubHeading>Datos técnicos (recabados automáticamente)</SubHeading>
+      <ul
+        className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>Dirección IP</li>
+        <li>Tipo de dispositivo y navegador</li>
+        <li>Fecha y hora de interacción con el sitio web</li>
+        <li>Identificador de cliente asignado por cookie de analítica (Google Analytics)</li>
+      </ul>
+
+      <div
+        className="rounded-xl p-4 text-sm leading-relaxed"
+        style={{
+          background: "var(--color-surface)",
+          border: "1px solid var(--color-border)",
+          color: "var(--color-text-muted)",
+        }}
+      >
+        <strong style={{ color: "var(--color-text-base)" }}>
+          No recabamos datos sensibles
+        </strong>{" "}
+        (estado de salud, origen étnico, ideología política, preferencias sexuales,
+        creencias religiosas, etc.) a través de los canales descritos en este aviso. Si
+        por la naturaleza de una conversación compartes voluntariamente información de esa
+        índole, su uso quedará estrictamente limitado a resolver tu consulta y no será
+        almacenada en nuestros sistemas más allá del hilo de conversación.
+      </div>
+
+      <Separator />
+
+      {/* §4 — Finalidades */}
+      <SectionHeading id="s4">4. Finalidades del tratamiento</SectionHeading>
+
+      <SubHeading>Finalidades primarias — necesarias para el servicio</SubHeading>
+      <Para>
+        Sin el tratamiento para estas finalidades no es posible atender tu solicitud:
+      </Para>
+      <ul
+        className="text-sm leading-relaxed mb-6 space-y-1.5 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>Responder consultas y solicitudes de información sobre nuestros servicios.</li>
+        <li>Agendar y realizar demostraciones del servicio.</li>
+        <li>
+          Gestionar la relación comercial: elaborar cotizaciones, presentar propuestas y
+          formalizar contratos.
+        </li>
+        <li>Dar seguimiento a procesos de venta activos.</li>
+        <li>
+          Atender requerimientos de autoridades competentes conforme a la legislación
+          aplicable.
+        </li>
+      </ul>
+
+      <SubHeading>Finalidades secundarias — opcionales</SubHeading>
+      <Para>
+        Estas finalidades no son necesarias para atender tu solicitud. Si no deseas que
+        tus datos sean tratados para estos fines, puedes manifestarlo en cualquier momento
+        escribiendo a <PrivacyLink email={CORREO_PRIVACIDAD} />:
+      </Para>
+      <ul
+        className="text-sm leading-relaxed mb-4 space-y-1.5 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>
+          Envío de comunicaciones comerciales, promociones y novedades de +Digital MX.
+        </li>
+        <li>Análisis estadístico agregado para la mejora de nuestros servicios.</li>
+        <li>
+          Elaboración de casos de éxito (siempre con tu consentimiento explícito previo y
+          por escrito).
+        </li>
+      </ul>
+
+      <Separator />
+
+      {/* §5 — Plazos */}
+      <SectionHeading id="s5">5. Plazos de conservación de tus datos</SectionHeading>
+      <Para>
+        Conservamos tus datos personales únicamente durante el tiempo necesario para
+        cumplir las finalidades descritas en este aviso, conforme a los siguientes plazos:
+      </Para>
+
+      <Table
+        headers={["Categoría de dato", "Plazo de conservación", "Criterio"]}
+        rows={[
+          [
+            "Datos de contacto y consulta (formulario, correo)",
+            "12 meses desde el último contacto",
+            "Ciclo de venta; sin actividad comercial en 12 meses, el dato pierde relevancia",
+          ],
+          [
+            "Conversaciones de WhatsApp Business",
+            "12 meses desde el último mensaje",
+            "Continuidad de atención; purga al vencimiento del plazo",
+          ],
+          [
+            "Datos técnicos (IP, navegación)",
+            "6 meses desde la interacción",
+            "Sin valor comercial tras ese período",
+          ],
+        ]}
+      />
+
+      <Para>
+        Una vez vencido el plazo aplicable, procederemos a la cancelación (bloqueo y
+        posterior supresión) de tus datos conforme al procedimiento establecido en los
+        artículos 36 y 37 de la LFPDPPP, salvo que exista una obligación legal que exija
+        su conservación por un período mayor.
+      </Para>
+
+      <Separator />
+
+      {/* §6 — Transferencias */}
+      <SectionHeading id="s6">6. Transferencias de datos personales</SectionHeading>
+      <Para>
+        +Digital MX puede compartir tus datos personales con los siguientes terceros, en
+        la medida estrictamente necesaria para cumplir las finalidades de este aviso:
+      </Para>
+
+      <Table
+        headers={["Categoría de proveedor", "Finalidad", "País"]}
+        rows={[
+          [
+            "Proveedor de servicios de correo electrónico corporativo",
+            "Operación de buzones corporativos y recepción de solicitudes ARCO",
+            "India / infraestructura global",
+          ],
+          [
+            "Proveedor de infraestructura web y hospedaje",
+            "Despliegue y operación del sitio masdigitalmx.com",
+            "Estados Unidos",
+          ],
+          [
+            "WhatsApp Business (Meta)",
+            "Operación del canal de mensajería WhatsApp",
+            "Estados Unidos",
+          ],
+          [
+            "Google LLC (Google Analytics)",
+            "Analítica web agregada del sitio masdigitalmx.com",
+            "Estados Unidos",
+          ],
+        ]}
+      />
+
+      <Para>
+        Estas transferencias son necesarias para la operación del servicio. Ninguno de
+        estos proveedores está autorizado a usar tus datos para finalidades distintas a
+        las aquí descritas.
+      </Para>
+      <Para>
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Garantías para transferencias internacionales:
+        </strong>{" "}
+        Cuando tus datos son transferidos a proveedores ubicados en países que no cuentan
+        con un nivel de protección de datos equiparable al de México, +Digital MX
+        implementa mecanismos contractuales adecuados conforme a los artículos 36 y 37 de
+        la LFPDPPP. Específicamente, suscribimos con dichos proveedores Cláusulas
+        Contractuales Tipo u otros mecanismos equivalentes reconocidos por la legislación
+        aplicable, que obligan a estos terceros a proteger tus datos con un nivel
+        sustancialmente similar al exigido por la ley mexicana. Puedes solicitar
+        información sobre las garantías vigentes escribiendo a{" "}
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
+      </Para>
+      <Para>
+        <strong style={{ color: "var(--color-text-base)" }}>
+          +Digital MX no vende, cede ni comercializa tus datos personales a terceros con
+          fines publicitarios o de prospección propia.
+        </strong>
+      </Para>
+
+      <Separator />
+
+      {/* §7 — Cookies */}
+      <SectionHeading id="s7">7. Uso de cookies y tecnologías de seguimiento</SectionHeading>
+      <Para>
+        El sitio web <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong>{" "}
+        utiliza:
+      </Para>
+      <ul
+        className="text-sm leading-relaxed mb-4 space-y-2 pl-5 list-disc"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>
+          <strong style={{ color: "var(--color-text-base)" }}>
+            Cookies técnicas esenciales
+          </strong>{" "}
+          para el correcto funcionamiento de la página.
+        </li>
+        <li>
+          <strong style={{ color: "var(--color-text-base)" }}>Google Analytics 4</strong>{" "}
+          (Google LLC), una herramienta de analítica que nos permite conocer patrones
+          agregados de navegación (páginas visitadas, tiempo de permanencia, origen del
+          tráfico) para mejorar el sitio. Google Analytics asigna un identificador de
+          cliente mediante cookies propias y recaba dirección IP, tipo de dispositivo y
+          navegador.
+        </li>
+      </ul>
+      <Para>
+        No utilizamos píxeles de retargeting publicitario ni herramientas de perfilamiento
+        de comportamiento personal más allá de la analítica agregada descrita.
+      </Para>
+      <Para>
+        Puedes oponerte al uso de Google Analytics instalando el{" "}
+        <a
+          href="https://tools.google.com/dlpage/gaoptout"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline transition-opacity duration-200 hover:opacity-75"
+          style={{ color: "var(--color-primary-light)" }}
         >
-          <li>
-            Tu nombre completo y el correo electrónico o número de teléfono con el que te
-            contactaste con nosotros.
-          </li>
-          <li>
-            Descripción clara del derecho que deseas ejercer y los datos a los que se
-            refiere.
-          </li>
-          <li>Copia de tu identificación oficial vigente (INE/IFE o pasaporte).</li>
-          <li>
-            Cualquier información que facilite la localización de tus datos (fecha de
-            conversación, número de WhatsApp desde el que escribiste, etc.).
-          </li>
-        </ol>
-        <Para>
-          <strong style={{ color: "var(--color-text-base)" }}>Plazo de respuesta:</strong>{" "}
-          20 días hábiles a partir de la recepción de tu solicitud completa, ampliable por
-          10 días hábiles adicionales cuando las circunstancias lo justifiquen, conforme al
-          artículo 28 de la LFPDPPP.
-        </Para>
+          complemento de inhabilitación oficial de Google
+        </a>{" "}
+        o configurando tu navegador para bloquear cookies de terceros — esto podría afectar
+        la funcionalidad de medición pero no la funcionalidad básica del sitio.
+      </Para>
+      <Para>
+        Para más información sobre cómo Google trata estos datos, consulta la{" "}
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline transition-opacity duration-200 hover:opacity-75"
+          style={{ color: "var(--color-primary-light)" }}
+        >
+          Política de Privacidad de Google
+        </a>
+        .
+      </Para>
 
-        <SubHeading>Si no quedas satisfecho con nuestra respuesta</SubHeading>
-        <Para>
-          Puedes presentar una queja o denuncia ante la{" "}
+      <Separator />
+
+      {/* §8 — ARCO */}
+      <SectionHeading id="s8">8. Derechos ARCO y revocación del consentimiento</SectionHeading>
+      <Para>
+        Como titular de datos personales, tienes derecho a{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          Acceder, Rectificar, Cancelar u Oponerte
+        </strong>{" "}
+        al tratamiento de tus datos (derechos ARCO), conforme a los {ARCO_ARTICULOS_CITA},
+        así como a{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          revocar el consentimiento
+        </strong>{" "}
+        otorgado para finalidades secundarias, conforme al {CONSENTIMIENTO_ARTICULO_CITA}.
+      </Para>
+
+      <SubHeading>Para ejercer tus derechos</SubHeading>
+      <Para>
+        Envía una solicitud a la Unidad de Privacidad al correo{" "}
+        <PrivacyLink email={CORREO_PRIVACIDAD} /> que incluya:
+      </Para>
+      <ol
+        className="text-sm leading-relaxed mb-6 space-y-2 pl-5 list-decimal"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <li>
+          Tu nombre completo y el correo electrónico o número de teléfono con el que te
+          contactaste con nosotros.
+        </li>
+        <li>
+          Descripción clara del derecho que deseas ejercer y los datos a los que se
+          refiere.
+        </li>
+        <li>Copia de tu identificación oficial vigente (INE/IFE o pasaporte).</li>
+        <li>
+          Cualquier información que facilite la localización de tus datos (fecha de
+          conversación, número de WhatsApp desde el que escribiste, etc.).
+        </li>
+      </ol>
+      <Para>
+        <strong style={{ color: "var(--color-text-base)" }}>Plazo de respuesta:</strong>{" "}
+        20 días hábiles a partir de la recepción de tu solicitud completa para
+        comunicarte nuestra determinación, y 15 días hábiles adicionales para hacerla
+        efectiva. Este plazo es ampliable una sola vez por un periodo igual cuando las
+        circunstancias lo justifiquen, conforme al artículo 31 de la LFPDPPP.
+      </Para>
+
+      <Separator />
+
+      {/* §9 — Cambios */}
+      <SectionHeading id="s9">9. Cambios al aviso de privacidad</SectionHeading>
+      <Para>
+        +Digital MX se reserva el derecho de actualizar el presente Aviso de Privacidad
+        para reflejar cambios en el servicio, en la legislación aplicable o en nuestras
+        prácticas de tratamiento de datos.
+      </Para>
+      <Para>
+        Cualquier modificación será publicada en{" "}
+        <Link
+          href="/privacidad"
+          className="underline transition-opacity duration-200 hover:opacity-75"
+          style={{ color: "var(--color-primary-light)" }}
+        >
+          masdigitalmx.com/privacidad
+        </Link>{" "}
+        con la fecha de actualización correspondiente. Para cambios sustanciales que
+        afecten tus derechos como titular, te notificaremos directamente al correo que
+        tengamos registrado con al menos{" "}
+        <strong style={{ color: "var(--color-text-base)" }}>
+          15 días de anticipación
+        </strong>{" "}
+        a su entrada en vigor, conforme al artículo 18 de la LFPDPPP.
+      </Para>
+      <Para>
+        La versión vigente siempre será la disponible en esta página. Las versiones
+        anteriores quedan archivadas y disponibles para consulta bajo solicitud dirigida a{" "}
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
+      </Para>
+
+      <Separator />
+
+      {/* §10 — Contacto */}
+      <SectionHeading id="s10">10. Contacto</SectionHeading>
+      <Para>
+        Para cualquier duda, comentario o solicitud relacionada con este Aviso de
+        Privacidad o con el tratamiento de tus datos personales:
+      </Para>
+      <div
+        className="rounded-xl p-6 text-sm leading-relaxed space-y-1"
+        style={{
+          background: "var(--color-surface)",
+          border: "1px solid var(--color-border)",
+          color: "var(--color-text-muted)",
+        }}
+      >
+        <p>
           <strong style={{ color: "var(--color-text-base)" }}>
-            Secretaría Anticorrupción y Buen Gobierno
+            {RESPONSABLE_NOMBRE} — Unidad de Privacidad
           </strong>
-          , autoridad competente en materia de protección de datos personales conforme a la
-          reforma publicada en el DOF el 14 de noviembre de 2025, o ante los tribunales
-          competentes.
-        </Para>
-
-        <Separator />
-
-        {/* §9 — Cambios */}
-        <SectionHeading id="s9">9. Cambios al aviso de privacidad</SectionHeading>
-        <Para>
-          +Digital MX se reserva el derecho de actualizar el presente Aviso de Privacidad
-          para reflejar cambios en el servicio, en la legislación aplicable o en nuestras
-          prácticas de tratamiento de datos.
-        </Para>
-        <Para>
-          Cualquier modificación será publicada en{" "}
+        </p>
+        <p>
+          Correo de privacidad:{" "}
+          <PrivacyLink email={CORREO_PRIVACIDAD} />
+        </p>
+        <p>
+          Sitio web:{" "}
           <Link
-            href="/privacidad"
+            href="/"
             className="underline transition-opacity duration-200 hover:opacity-75"
             style={{ color: "var(--color-primary-light)" }}
           >
-            masdigitalmx.com/privacidad
-          </Link>{" "}
-          con la fecha de actualización correspondiente. Para cambios sustanciales que
-          afecten tus derechos como titular, te notificaremos directamente al correo que
-          tengamos registrado con al menos{" "}
-          <strong style={{ color: "var(--color-text-base)" }}>
-            15 días de anticipación
-          </strong>{" "}
-          a su entrada en vigor, conforme al artículo 18 de la LFPDPPP.
-        </Para>
-        <Para>
-          La versión vigente siempre será la disponible en esta página. Las versiones
-          anteriores quedan archivadas y disponibles para consulta bajo solicitud dirigida a{" "}
-          <PrivacyLink email="privacidad@masdigitalmx.com" />.
-        </Para>
-
-        <Separator />
-
-        {/* §10 — Contacto */}
-        <SectionHeading id="s10">10. Contacto</SectionHeading>
-        <Para>
-          Para cualquier duda, comentario o solicitud relacionada con este Aviso de
-          Privacidad o con el tratamiento de tus datos personales:
-        </Para>
-        <div
-          className="rounded-xl p-6 text-sm leading-relaxed space-y-1"
-          style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            color: "var(--color-text-muted)",
-          }}
-        >
-          <p>
-            <strong style={{ color: "var(--color-text-base)" }}>
-              Servicios +Digital MX — Unidad de Privacidad
-            </strong>
-          </p>
-          <p>
-            Correo de privacidad:{" "}
-            <PrivacyLink email="privacidad@masdigitalmx.com" />
-          </p>
-          <p>
-            Sitio web:{" "}
-            <Link
-              href="/"
-              className="underline transition-opacity duration-200 hover:opacity-75"
-              style={{ color: "var(--color-primary-light)" }}
-            >
-              masdigitalmx.com
-            </Link>
-          </p>
-        </div>
-
-        {/* Pie legal */}
-        <div
-          className="mt-12 pt-6 text-xs space-y-1"
-          style={{
-            borderTop: "1px solid var(--color-border)",
-            color: "var(--color-text-caption)",
-          }}
-        >
-          <p>Aviso de Privacidad Corporativo — Servicios +Digital MX — Versión 3.0</p>
-          <p>Última actualización: 14 de agosto de 2026</p>
-          <p>
-            Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
-            Posesión de los Particulares (DOF 05-07-2010, reforma DOF 14-11-2025) y su
-            Reglamento (DOF 21-12-2011).
-          </p>
-        </div>
+            masdigitalmx.com
+          </Link>
+        </p>
       </div>
-    </main>
+
+      {/* Pie legal */}
+      <div
+        className="mt-12 pt-6 text-xs space-y-1"
+        style={{
+          borderTop: "1px solid var(--color-border)",
+          color: "var(--color-text-caption)",
+        }}
+      >
+        <p>Aviso de Privacidad Corporativo — {RESPONSABLE_NOMBRE} — Versión 3.0</p>
+        <p>Última actualización: 14 de agosto de 2026</p>
+        <p>
+          Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
+          Posesión de los Particulares (DOF 20-03-2025, última reforma DOF 14-11-2025)
+          y su Reglamento (DOF 21-12-2011).
+        </p>
+      </div>
+    </LegalDocLayout>
   );
 }

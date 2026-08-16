@@ -69,4 +69,12 @@ h1, h2, h3, h4 {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+
+  /* El scroll-behavior: smooth de arriba no lo apagan las reglas de animación
+     ni las de transición — es una propiedad aparte y hay que desactivarla
+     explícitamente. Sin esto, saltar a un ancla anima el scroll aunque el
+     usuario haya pedido lo contrario en su sistema. */
+  html {
+    scroll-behavior: auto;
+  }
 }

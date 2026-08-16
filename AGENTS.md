@@ -136,10 +136,12 @@ app/
 ├── layout.tsx           ← root layout + Google Fonts
 └── page.tsx             ← home (ensambla secciones)
 components/
-├── Header.tsx           ← nav fija con scroll-blur, "use client"
-├── Footer.tsx           ← "use client"
-├── WhatsAppButton.tsx   ← flotante, esquina inferior derecha
-└── sections/            ← Hero · Problemas · Productos · Sectores · Pricing · Contacto
+├── Header.tsx                 ← nav fija con scroll-blur, "use client"
+├── Footer.tsx                 ← "use client"
+├── WhatsAppButton.tsx         ← flotante, esquina inferior derecha
+├── LegalDocLayout.tsx         ← maqueta de 2 columnas de las 3 páginas legales (server)
+├── LegalTableOfContents.tsx   ← índice navegable con scrollspy, "use client"
+└── sections/                  ← Hero · Problemas · Productos · Sectores · Pricing · Contacto
 assets/                  ← imágenes, mascota Mati (pendiente integrar)
 design-system/           ← generado por skill ui-ux-pro-max
 PRODUCT.md               ← requerido por skill Impeccable (register: brand)
@@ -159,6 +161,28 @@ Más los archivos generados: `robots.txt`, `sitemap.xml`, `opengraph-image`, `no
 Corporativo v1.0 (uso del sitio, modelo por capas de `ADR-048`) — retira el redirect
 307 temporal a `/privacidad` que llevaba desde el 13-ago. Fuente: vault
 `Documentos-Legales/Corporativo/Terminos-Condiciones-Corporativo/`.
+
+### Páginas legales — índice navegable (`WEB-INDICE-LEGAL-01`, 2026-08-15)
+
+Las 3 páginas legales comparten `LegalDocLayout` (índice a la izquierda, documento a la derecha).
+Para agregar o mover una sección hay que tocar **dos** lugares del mismo archivo: el `<h2 id="sN">`
+y la constante `SECTIONS` de arriba. Si se desincronizan, el índice apunta a un ancla muerta.
+
+Cosas verificadas que no son obvias y conviene no volver a descubrir:
+
+- **Estas páginas NO montan `Header`** (se monta en `app/page.tsx` y `app/sector/[slug]/page.tsx`).
+  No hay barra fija de 64px que compensar aquí — de ahí `sticky top-8` y no `top-88px`.
+- **`scroll-margin-top` por `<h2>` no hace falta:** `globals.css` ya declara
+  `html { scroll-padding-top: 4rem }` para todo el sitio.
+- **`html` tiene `scroll-snap-type: y proximity`** con `section { scroll-snap-align: start }`.
+  Las 3 páginas legales tienen cero `<section>` a propósito: un punto de anclaje dentro de un
+  documento legal largo secuestraría el scroll. **No introducir `<section>` en estas páginas.**
+- El scrollspy usa un listener de scroll con `requestAnimationFrame`, **no** `IntersectionObserver`:
+  con varias secciones visibles a la vez las `entries` llegan desordenadas, y al tocar fondo puede
+  no cruzarse ningún umbral, dejando la última sección sin activar nunca.
+- Los ids se quedan en `s1…sN`, no se migran a slugs legibles: las 3 páginas son `noindex/nofollow`
+  y no hay ningún enlace profundo en el sitio, así que el slug no compra nada y obligaría a editar
+  texto Intocable.
 
 **Rutas NO construidas, y qué pasa con ellas:**
 - `/pricing` — enlazada en las páginas de sector; daba 404. Repuntada a `/#pricing`,
