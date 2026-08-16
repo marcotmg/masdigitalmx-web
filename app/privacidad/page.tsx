@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalDocLayout, { type LegalSection } from "@/components/LegalDocLayout";
+import {
+  RESPONSABLE_NOMBRE,
+  RESPONSABLE_PERSONA,
+  RESPONSABLE_DOMICILIO,
+  CORREO_PRIVACIDAD,
+  LFPDPPP_DOF_LEY,
+  LFPDPPP_DOF_REFORMA,
+  LFPDPPP_DOF_REGLAMENTO,
+  ARCO_ARTICULOS_CITA,
+  CONSENTIMIENTO_ARTICULO_CITA,
+} from "@/lib/legal-data";
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad | +Digital MX",
@@ -182,12 +193,12 @@ export default function PrivacidadPage() {
       <SectionHeading id="s1">1. Identidad y domicilio del responsable</SectionHeading>
       <Para>
         <strong style={{ color: "var(--color-text-base)" }}>
-          Servicios +Digital MX
+          {RESPONSABLE_NOMBRE}
         </strong>{" "}
-        (Marco Martínez González; en adelante, "+Digital MX" o el "Responsable"), con
+        ({RESPONSABLE_PERSONA}; en adelante, "+Digital MX" o el "Responsable"), con
         domicilio en{" "}
         <strong style={{ color: "var(--color-text-base)" }}>
-          Ciudad de México, México
+          {RESPONSABLE_DOMICILIO}
         </strong>
         , es el responsable del tratamiento de los datos personales que recaba a través
         del sitio web <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong> y de
@@ -197,16 +208,15 @@ export default function PrivacidadPage() {
         Para efectos de notificaciones formales relacionadas con el ejercicio de tus
         derechos ARCO o cualquier asunto jurídico derivado del presente aviso, el domicilio
         completo del Responsable puede ser solicitado a través del correo{" "}
-        <PrivacyLink email="privacidad@masdigitalmx.com" />.
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
       </Para>
       <Para>
         El presente Aviso de Privacidad se emite en cumplimiento de la{" "}
         <strong style={{ color: "var(--color-text-base)" }}>
           Ley Federal de Protección de Datos Personales en Posesión de los Particulares
         </strong>{" "}
-        (LFPDPPP, publicada en el DOF el 20 de marzo de 2025, con última reforma
-        publicada el 14 de noviembre de 2025) y su Reglamento (DOF 21 de diciembre de
-        2011).
+        (LFPDPPP, publicada en el DOF el {LFPDPPP_DOF_LEY}, con última reforma
+        publicada el {LFPDPPP_DOF_REFORMA}) y su Reglamento (DOF {LFPDPPP_DOF_REGLAMENTO}).
       </Para>
 
       {/* §1.1 — Unidad de Privacidad */}
@@ -219,7 +229,7 @@ export default function PrivacidadPage() {
           Unidad de Privacidad
         </strong>{" "}
         de +Digital MX. Puedes contactar a esta unidad a través del correo{" "}
-        <PrivacyLink email="privacidad@masdigitalmx.com" />.
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
       </Para>
 
       <Separator />
@@ -365,7 +375,7 @@ export default function PrivacidadPage() {
       <Para>
         Estas finalidades no son necesarias para atender tu solicitud. Si no deseas que
         tus datos sean tratados para estos fines, puedes manifestarlo en cualquier momento
-        escribiendo a <PrivacyLink email="privacidad@masdigitalmx.com" />:
+        escribiendo a <PrivacyLink email={CORREO_PRIVACIDAD} />:
       </Para>
       <ul
         className="text-sm leading-relaxed mb-4 space-y-1.5 pl-5 list-disc"
@@ -470,7 +480,7 @@ export default function PrivacidadPage() {
         aplicable, que obligan a estos terceros a proteger tus datos con un nivel
         sustancialmente similar al exigido por la ley mexicana. Puedes solicitar
         información sobre las garantías vigentes escribiendo a{" "}
-        <PrivacyLink email="privacidad@masdigitalmx.com" />.
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
       </Para>
       <Para>
         <strong style={{ color: "var(--color-text-base)" }}>
@@ -547,18 +557,18 @@ export default function PrivacidadPage() {
         <strong style={{ color: "var(--color-text-base)" }}>
           Acceder, Rectificar, Cancelar u Oponerte
         </strong>{" "}
-        al tratamiento de tus datos (derechos ARCO), así como a{" "}
+        al tratamiento de tus datos (derechos ARCO), conforme a los {ARCO_ARTICULOS_CITA},
+        así como a{" "}
         <strong style={{ color: "var(--color-text-base)" }}>
           revocar el consentimiento
         </strong>{" "}
-        otorgado para finalidades secundarias, conforme a los artículos 8 al 15 y 28 de
-        la LFPDPPP.
+        otorgado para finalidades secundarias, conforme al {CONSENTIMIENTO_ARTICULO_CITA}.
       </Para>
 
       <SubHeading>Para ejercer tus derechos</SubHeading>
       <Para>
         Envía una solicitud a la Unidad de Privacidad al correo{" "}
-        <PrivacyLink email="privacidad@masdigitalmx.com" /> que incluya:
+        <PrivacyLink email={CORREO_PRIVACIDAD} /> que incluya:
       </Para>
       <ol
         className="text-sm leading-relaxed mb-6 space-y-2 pl-5 list-decimal"
@@ -615,7 +625,7 @@ export default function PrivacidadPage() {
       <Para>
         La versión vigente siempre será la disponible en esta página. Las versiones
         anteriores quedan archivadas y disponibles para consulta bajo solicitud dirigida a{" "}
-        <PrivacyLink email="privacidad@masdigitalmx.com" />.
+        <PrivacyLink email={CORREO_PRIVACIDAD} />.
       </Para>
 
       <Separator />
@@ -636,12 +646,12 @@ export default function PrivacidadPage() {
       >
         <p>
           <strong style={{ color: "var(--color-text-base)" }}>
-            Servicios +Digital MX — Unidad de Privacidad
+            {RESPONSABLE_NOMBRE} — Unidad de Privacidad
           </strong>
         </p>
         <p>
           Correo de privacidad:{" "}
-          <PrivacyLink email="privacidad@masdigitalmx.com" />
+          <PrivacyLink email={CORREO_PRIVACIDAD} />
         </p>
         <p>
           Sitio web:{" "}
@@ -663,7 +673,7 @@ export default function PrivacidadPage() {
           color: "var(--color-text-caption)",
         }}
       >
-        <p>Aviso de Privacidad Corporativo — Servicios +Digital MX — Versión 3.0</p>
+        <p>Aviso de Privacidad Corporativo — {RESPONSABLE_NOMBRE} — Versión 3.0</p>
         <p>Última actualización: 14 de agosto de 2026</p>
         <p>
           Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en

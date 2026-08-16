@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalDocLayout, { type LegalSection } from "@/components/LegalDocLayout";
+import {
+  RESPONSABLE_NOMBRE,
+  RESPONSABLE_PERSONA,
+  RESPONSABLE_DOMICILIO,
+  CORREO_PRIVACIDAD,
+  LFPDPPP_DOF_LEY,
+  LFPDPPP_DOF_REFORMA,
+  ARCO_ARTICULOS_CITA,
+  CONSENTIMIENTO_ARTICULO_CITA,
+} from "@/lib/legal-data";
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad — HygieIA | +Digital MX",
@@ -155,18 +165,18 @@ export default function PrivacidadHygieiaPage() {
           </h1>
 
           <Para>
-            <Bold>Responsable:</Bold> Servicios +Digital MX (Marco Martínez González)
+            <Bold>Responsable:</Bold> {RESPONSABLE_NOMBRE} ({RESPONSABLE_PERSONA})
             <br />
             <Bold>Correo de contacto:</Bold>{" "}
             <a
-              href="mailto:privacidad@masdigitalmx.com"
+              href={`mailto:${CORREO_PRIVACIDAD}`}
               className="underline transition-opacity duration-200 hover:opacity-75"
               style={{ color: "var(--color-primary-light)" }}
             >
-              privacidad@masdigitalmx.com
+              {CORREO_PRIVACIDAD}
             </a>
             <br />
-            <Bold>Última actualización:</Bold> junio de 2026
+            <Bold>Última actualización:</Bold> 15 de agosto de 2026
           </Para>
         </div>
       }
@@ -176,22 +186,22 @@ export default function PrivacidadHygieiaPage() {
       {/* §1 — Identidad y domicilio */}
       <SectionHeading id="s1">1. Identidad y domicilio del Responsable</SectionHeading>
       <Para>
-        <Bold>Servicios +Digital MX</Bold> (Marco Martínez González), con domicilio en{" "}
-        <Bold>Ciudad de México, México</Bold>, y correo electrónico
+        <Bold>{RESPONSABLE_NOMBRE}</Bold> ({RESPONSABLE_PERSONA}), con domicilio en{" "}
+        <Bold>{RESPONSABLE_DOMICILIO}</Bold>, y correo electrónico
         de contacto{" "}
         <a
-          href="mailto:privacidad@masdigitalmx.com"
+          href={`mailto:${CORREO_PRIVACIDAD}`}
           className="underline transition-opacity duration-200 hover:opacity-75"
           style={{ color: "var(--color-primary-light)" }}
         >
-          privacidad@masdigitalmx.com
+          {CORREO_PRIVACIDAD}
         </a>
         , es el responsable del tratamiento de sus datos personales de conformidad con la{" "}
         <Bold>
           Ley Federal de Protección de Datos Personales en Posesión de los Particulares
         </Bold>{" "}
-        (LFPDPPP, publicada en el DOF el 20 de marzo de 2025, con última reforma
-        publicada el 14 de noviembre de 2025).
+        (LFPDPPP, publicada en el DOF el {LFPDPPP_DOF_LEY}, con última reforma
+        publicada el {LFPDPPP_DOF_REFORMA}).
       </Para>
 
       <Separator />
@@ -308,11 +318,11 @@ export default function PrivacidadHygieiaPage() {
         Si desea oponerse al tratamiento para la finalidad F4, puede hacerlo en cualquier
         momento escribiendo a{" "}
         <a
-          href="mailto:privacidad@masdigitalmx.com"
+          href={`mailto:${CORREO_PRIVACIDAD}`}
           className="underline transition-opacity duration-200 hover:opacity-75"
           style={{ color: "var(--color-primary-light)" }}
         >
-          privacidad@masdigitalmx.com
+          {CORREO_PRIVACIDAD}
         </a>{" "}
         con el asunto{" "}
         <Bold>"Oposición F4 — HygieIA"</Bold> desde el correo electrónico o teléfono que
@@ -324,7 +334,7 @@ export default function PrivacidadHygieiaPage() {
       {/* §4 — Derechos ARCO */}
       <SectionHeading id="s4">4. Cómo ejercer sus derechos ARCO</SectionHeading>
       <Para>
-        De conformidad con el artículo 28 de la LFPDPPP, usted tiene derecho a:
+        De conformidad con los {ARCO_ARTICULOS_CITA}, usted tiene derecho a:
       </Para>
       <ul
         className="text-sm leading-relaxed mb-6 space-y-2 pl-5 list-disc"
@@ -351,18 +361,19 @@ export default function PrivacidadHygieiaPage() {
       <Para>
         Para ejercer cualquiera de estos derechos, envíe un correo a{" "}
         <a
-          href="mailto:privacidad@masdigitalmx.com"
+          href={`mailto:${CORREO_PRIVACIDAD}`}
           className="underline transition-opacity duration-200 hover:opacity-75"
           style={{ color: "var(--color-primary-light)" }}
         >
-          privacidad@masdigitalmx.com
+          {CORREO_PRIVACIDAD}
         </a>{" "}
         con el asunto <Bold>"Derechos ARCO — HygieIA"</Bold> indicando: su nombre
         completo, número de teléfono con el que realizó la llamada, y la acción que
         solicita.{" "}
         <Bold>Plazo de respuesta:</Bold> 20 días hábiles para comunicarle nuestra
-        determinación, y 15 días hábiles adicionales para hacerla efectiva, conforme al
-        artículo 31 de la LFPDPPP.
+        determinación, y 15 días hábiles adicionales para hacerla efectiva. Este plazo
+        es ampliable una sola vez por un periodo igual cuando las circunstancias lo
+        justifiquen, conforme al artículo 31 de la LFPDPPP.
       </Para>
 
       <Separator />
@@ -371,7 +382,7 @@ export default function PrivacidadHygieiaPage() {
       <SectionHeading id="s5">5. Datos sensibles</SectionHeading>
       <Para>
         El motivo médico detallado que pueda usted mencionar durante la llamada constituye
-        un <Bold>dato sensible</Bold> en términos del artículo 9 de la LFPDPPP. Como se
+        un <Bold>dato sensible</Bold> en términos del artículo 2 de la LFPDPPP. Como se
         indicó en la sección 2, este dato{" "}
         <Bold>no se almacena en nuestros sistemas</Bold> — permanece únicamente en la
         grabación de la llamada administrada por el proveedor Retell AI durante un máximo
@@ -389,27 +400,27 @@ export default function PrivacidadHygieiaPage() {
       </Para>
 
       <Table
-        headers={["Proveedor", "País", "Finalidad"]}
+        headers={["Categoría de proveedor", "Finalidad", "País"]}
         rows={[
           [
-            "Retell AI",
-            "Estados Unidos de América",
-            "Procesamiento de voz, transcripción y alojamiento temporal de la grabación",
+            "Proveedor de procesamiento de voz y transcripción",
+            "Procesamiento de voz, transcripción y alojamiento temporal de la grabación de la llamada (máximo 90 días)",
+            "Estados Unidos",
           ],
           [
-            "Cal.com",
-            "Estados Unidos de América",
+            "Proveedor de gestión de calendario y citas",
             "Gestión del calendario y confirmación de citas",
+            "Estados Unidos",
           ],
           [
-            "Resend",
-            "Estados Unidos de América",
+            "Proveedor de envío de correo electrónico",
             "Envío de correos de confirmación",
+            "Estados Unidos",
           ],
           [
-            "Hetzner Online GmbH",
-            "Alemania",
+            "Proveedor de infraestructura de alojamiento",
             "Alojamiento de la base de datos y sistemas de la plataforma",
+            "Unión Europea",
           ],
         ]}
       />
@@ -442,7 +453,7 @@ export default function PrivacidadHygieiaPage() {
         Al continuar la llamada con HygieIA después de escuchar la mención a este aviso de
         privacidad, usted otorga su{" "}
         <Bold>consentimiento tácito</Bold> para el tratamiento de sus datos personales en
-        los términos aquí descritos, conforme al artículo 8 de la LFPDPPP. Para las
+        los términos aquí descritos, conforme al {CONSENTIMIENTO_ARTICULO_CITA}. Para las
         finalidades secundarias (F4), su consentimiento puede ser revocado en cualquier
         momento conforme al procedimiento descrito en la sección 4.
       </Para>
@@ -467,8 +478,8 @@ export default function PrivacidadHygieiaPage() {
           </Link>
           .
         </p>
-        <p>Aviso de Privacidad HygieIA — Servicios +Digital MX — Versión 1.0</p>
-        <p>Última actualización: junio de 2026</p>
+        <p>Aviso de Privacidad HygieIA — {RESPONSABLE_NOMBRE} — Versión 1.1</p>
+        <p>Última actualización: 15 de agosto de 2026</p>
         <p>
           Emitido en cumplimiento de la Ley Federal de Protección de Datos Personales en
           Posesión de los Particulares (DOF 20-03-2025, última reforma DOF 14-11-2025)

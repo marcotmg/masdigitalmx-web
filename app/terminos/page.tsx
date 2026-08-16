@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalDocLayout, { type LegalSection } from "@/components/LegalDocLayout";
+import {
+  RESPONSABLE_NOMBRE,
+  RESPONSABLE_PERSONA,
+  RESPONSABLE_DOMICILIO,
+  CORREO_PRIVACIDAD,
+} from "@/lib/legal-data";
 
 export const metadata: Metadata = {
   title: "Términos y Condiciones | +Digital MX",
@@ -116,11 +122,11 @@ export default function TerminosPage() {
         <strong style={{ color: "var(--color-text-base)" }}>masdigitalmx.com</strong> (en
         adelante, el &quot;Sitio&quot;), operado por{" "}
         <strong style={{ color: "var(--color-text-base)" }}>
-          Servicios +Digital MX
+          {RESPONSABLE_NOMBRE}
         </strong>{" "}
-        (Marco Martínez González), con domicilio en{" "}
+        ({RESPONSABLE_PERSONA}), con domicilio en{" "}
         <strong style={{ color: "var(--color-text-base)" }}>
-          Ciudad de México, México
+          {RESPONSABLE_DOMICILIO}
         </strong>{" "}
         (en adelante, &quot;+Digital MX&quot;), implican la aceptación plena y sin reservas
         de los presentes Términos y Condiciones de Uso, en la versión publicada al momento
@@ -344,11 +350,11 @@ export default function TerminosPage() {
       >
         <p>
           <strong style={{ color: "var(--color-text-base)" }}>
-            Servicios +Digital MX
+            {RESPONSABLE_NOMBRE}
           </strong>
         </p>
         <p>
-          Correo: <ContactLink email="privacidad@masdigitalmx.com" />
+          Correo: <ContactLink email={CORREO_PRIVACIDAD} />
         </p>
         <p>
           Sitio web:{" "}
