@@ -5,6 +5,11 @@
 
 export const RESPONSABLE_NOMBRE = "Servicios +Digital MX";
 export const RESPONSABLE_PERSONA = "Marco Martínez González";
+// ⚠️ 2026-08-22 — colonia retirada por instrucción de Marco: era su domicilio
+// particular, publicado en documentos legales ligados a su nombre completo.
+// Queda ciudad y país, el mínimo que el Art. 15 fracc. I admite sin exponer un
+// domicilio personal. Sustituir por el domicilio legal del negocio en cuanto
+// exista (oficina virtual — ticket LEGAL-DOMICILIO-01).
 export const RESPONSABLE_DOMICILIO = "Ciudad de México, México";
 export const CORREO_PRIVACIDAD = "privacidad@masdigitalmx.com";
 
