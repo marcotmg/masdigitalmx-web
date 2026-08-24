@@ -22,7 +22,7 @@ const ALERT_WEBHOOK_URL = process.env.CONTACTO_ALERT_WEBHOOK_URL;
 // para activarse solo configurando esta env var en Netlify (B3) — sin ella,
 // la verificación se OMITE explícitamente (no se corta la petición). Es una
 // desviación deliberada del patrón "fallar cerrado" de FORMSPREE_URL: `main`
-// hoy sigue siendo producción real (masdigitalmx.com vía Vercel, deploy
+// hoy sigue siendo producción real (masdigitalmx.com vía Netlify, deploy
 // automático), y el objetivo de W-FORM-01 es dejar el código listo sin
 // romper el formulario en vivo antes de que Marco tenga el site key real.
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
@@ -49,7 +49,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
 
 // W-FORM-01: shared secret anti-bot. Sin CONTACTO_SHARED_SECRET configurado
 // el chequeo se OMITE explícitamente (no corta la petición) — mismo criterio
-// que Turnstile arriba: `main` sigue siendo producción real vía Vercel
+// que Turnstile arriba: `main` sigue siendo producción real vía Netlify
 // (deploy automático), y un fail-cerrado tumbaría el formulario en vivo
 // antes de que Marco configure la env var real en Netlify (B3). Limitación
 // conocida y aceptada: el valor también viaja como

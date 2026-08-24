@@ -74,7 +74,7 @@ Trust signals bajo el hero (sin nombre del fundador): "+25 años de experiencia 
 ### Workflow de cambios de copy/estructura
 
 Discusión con Marco → decisión documentada en vault → W-ticket referenciando el Brief → ejecución →
-PR (nunca push directo a `main`) → validar Vercel Preview → merge.
+PR (nunca push directo a `main`) → validar Netlify Deploy Preview → merge.
 
 ## Stack y comandos
 
