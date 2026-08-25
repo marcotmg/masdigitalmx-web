@@ -65,9 +65,13 @@ jobs:
               FALLA=1
             fi
           done
-          # CSP va en Report-Only (fase 1) — se acepta cualquiera de las dos.
-          if echo "$H" | grep -qE "^content-security-policy(-report-only)?:"; then
-            echo "OK       content-security-policy (o su variante Report-Only)"
+          # Fase 2 (2026-08-24): la CSP ya es EFECTIVA. Report-Only ya no basta —
+          # aceptarlo dejaria pasar una regresion a un modo que no bloquea nada.
+          if echo "$H" | grep -q "^content-security-policy:"; then
+            echo "OK       content-security-policy (efectiva)"
+          elif echo "$H" | grep -q "^content-security-policy-report-only:"; then
+            echo "REGRESION  la CSP volvio a Report-Only: reporta pero NO bloquea"
+            FALLA=1
           else
             echo "AUSENTE  content-security-policy"
             FALLA=1
