@@ -12,8 +12,11 @@
 name: CI
 
 on:
+  # Sin filtro de rama base A PROPOSITO: filtrar por `branches: [main]` dejaba
+  # SIN VERIFICAR los PR apilados (uno cuya base es otra rama de trabajo).
+  # Detectado 2026-08-24 con el PR #3, apilado sobre el #2: GitHub reporto
+  # "no checks" y habria podido mergearse sin correr nada.
   pull_request:
-    branches: [main]
   push:
     branches: [main]
 
@@ -40,6 +43,11 @@ jobs:
 
       - name: Verificacion de tipos (TypeScript strict)
         run: pnpm typecheck
+
+      # La CSP lleva 'unsafe-inline' en script-src ⇒ NO cubre XSS inline.
+      # La proteccion real es que no haya donde inyectar: esto lo vigila.
+      - name: Superficie de inyeccion XSS (no debe crecer)
+        run: pnpm check:xss
 
       - name: Build de produccion
         run: pnpm build
