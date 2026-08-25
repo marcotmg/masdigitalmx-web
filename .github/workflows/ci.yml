@@ -1,0 +1,75 @@
+# CI — etapas 1-3 del ciclo de vida que exige ~/.claude/AGENTS.md
+#   "verificacion de codigo -> pruebas -> CI/CD -> pipeline a produccion
+#    -> monitoreo -> observabilidad"
+#
+# Antes del 2026-08-24 este repo tenia las tres primeras etapas AUSENTES:
+# sin script de verificacion, sin pruebas, sin workflow de CI. Netlify
+# publicaba desde `main` sin ninguna puerta de calidad previa.
+#
+# Este workflow es la puerta minima verificable hoy. Las pruebas (Playwright)
+# siguen pendientes de instalar con pre-install.sh (N14) — declarado, no omitido.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    name: Verificacion de codigo y build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificacion de tipos (TypeScript strict)
+        run: pnpm typecheck
+
+      - name: Build de produccion
+        run: pnpm build
+
+  cabeceras:
+    name: Cabeceras de seguridad HTTP en produccion
+    runs-on: ubuntu-latest
+    # Solo tras integrar a main: mide el sitio YA desplegado, no el build.
+    if: github.event_name == 'push'
+    steps:
+      - name: Verificar cabeceras exigidas por Checklist-SecDevOps-NIST-ISO seccion 3
+        run: |
+          set -uo pipefail
+          # Espera prudente a que Netlify publique el deploy de este push.
+          sleep 90
+          H=$(curl -sS -I -L --max-time 20 https://masdigitalmx.com | tr 'A-Z' 'a-z')
+          FALLA=0
+          for h in x-frame-options x-content-type-options referrer-policy permissions-policy; do
+            if echo "$H" | grep -q "^$h:"; then
+              echo "OK       $h"
+            else
+              echo "AUSENTE  $h"
+              FALLA=1
+            fi
+          done
+          # CSP va en Report-Only (fase 1) — se acepta cualquiera de las dos.
+          if echo "$H" | grep -qE "^content-security-policy(-report-only)?:"; then
+            echo "OK       content-security-policy (o su variante Report-Only)"
+          else
+            echo "AUSENTE  content-security-policy"
+            FALLA=1
+          fi
+          exit $FALLA
