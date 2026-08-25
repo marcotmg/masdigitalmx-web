@@ -86,7 +86,13 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
+            // `JSON.stringify` NO escapa `<` dentro de un <script>: un valor que
+            // contuviera `</script>` cerraria la etiqueta y lo que siguiera se
+            // interpretaria como HTML. Hoy `organizationSchema` es una constante
+            // del codigo y no hay vector — pero el escape cuesta cero y sigue
+            // valiendo el dia que alguien haga dinamico este objeto. Endurecer
+            // la superficie ahora es mas barato que recordar el matiz despues.
+            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
           }}
         />
         <Script
