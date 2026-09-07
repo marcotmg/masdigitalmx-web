@@ -238,8 +238,24 @@ Definidos en `app/globals.css` bajo `@theme`:
 
 ## Gotchas verificados
 
-- **`main` tiene branch protection** → NUNCA `git push origin main` directo; va por
-  PR. (REGLA-GIT-01, verificado 2026-06-27)
+- **`main` está protegida por el _ruleset_ `main-protection`** → NUNCA `git push origin main`
+  directo; va por PR. (REGLA-GIT-01) Activo desde el 2026-08-23, **sin bypass actors**; aplica
+  `deletion`, `non_fast_forward` y `pull_request` con resolución de hilos obligatoria y
+  **0 aprobaciones** requeridas (techo práctico con un solo operador).
+  ⚠️ **La API clásica dice lo contrario y hay que no creerle:**
+  `gh api repos/marcotmg/masdigitalmx-web/branches/main/protection` devuelve
+  **`404 Branch not protected`**, porque no conoce los rulesets — mientras `.protected` de la
+  rama sí dice `true`. **El endpoint autoritativo es**
+  `gh api repos/marcotmg/masdigitalmx-web/rules/branches/main`.
+  *(Corregido 2026-09-07: esta línea decía "branch protection" a secas —cierto en su día,
+  verificado 2026-06-27— y la protección se rehízo como ruleset al recrear el repo el 23-ago.
+  Una auditoría siguió el camino documentado y concluyó que el repo estaba desprotegido.)*
+- **El sitio estático anterior al Next.js ya no está en el repo** (`index.html`,
+  `aviso-privacidad.html`, `styles.css`, retirados 2026-09-07). Ninguno se servía —el sitio
+  publica `.next`— pero el repo es **público** y `aviso-privacidad.html` era un Aviso de
+  Privacidad completo v1.1 que se amparaba en la **LFPDPPP abrogada** y publicaba 8 veces el
+  número del MattIAs de demos, prohibido en documentos legales por este mismo archivo.
+  El original quedó archivado en el vault: `Documentos-Legales/_Publicados/`.
 - Existe la rama `draft/reposicionamiento-2026-06-sin-desplegar` (commit `a9674f0`,
   local, **no pusheada**): un rediseño completo de 2026-06-14 que nunca se integró,
   con auditoría propia 23/40 sin corregir. **Decisión de retomarlo o descartarlo
