@@ -778,9 +778,24 @@ const ENCABEZADO_NUMERADO = /^(\d+)\.\s+(.+)$/;
  *
  * @param fuente contenido del `.md`, tal cual lo devuelve `readFileSync`.
  * @param origen ruta del archivo, sólo para que los errores digan dónde mirar.
+ * @param rutaEsperada la ruta que publica la página que llama. Se contrasta con
+ *   el `ruta` del frontmatter: sin esto, `aviso-privacidad.md` podría declararse
+ *   `"/terminos"` y nadie se enteraría — metadato muerto en un archivo cuyo
+ *   principio es «gate, no router».
  */
-export function renderizarDocumentoLegal(fuente: string, origen: string): DocumentoLegal {
+export function renderizarDocumentoLegal(
+  fuente: string,
+  origen: string,
+  rutaEsperada: string,
+): DocumentoLegal {
   const { meta, cuerpo, desplazamiento } = extraerFrontmatter(fuente, origen);
+  if (meta.ruta !== rutaEsperada) {
+    throw new ErrorLegal(
+      origen,
+      null,
+      `el frontmatter declara \`ruta: "${meta.ruta}"\` pero lo publica la página de \`${rutaEsperada}\`.`,
+    );
+  }
   const ctx: Contexto = {
     origen,
     valores: {

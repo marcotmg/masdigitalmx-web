@@ -19,13 +19,19 @@ export const metadata: Metadata = {
  * La ruta va literal —no calculada por un helper compartido— para que se vea de
  * un vistazo qué documento publica esta página. La ruta es estática (`○` en el
  * build): el `.md` se lee al compilar, no en cada visita.
+ *
+ * `RUTA` se contrasta contra el frontmatter del `.md`: si algún día este
+ * archivo apuntara al documento equivocado, el build lo dice en vez de
+ * publicar el aviso de otro producto.
  */
+const RUTA = "/privacidad-hygieia";
 const ORIGEN = "content/legal/aviso-privacidad-hygieia.md";
 
 export default function PrivacidadHygieiaPage() {
   const documento = renderizarDocumentoLegal(
     readFileSync(join(process.cwd(), ORIGEN), "utf8"),
     ORIGEN,
+    RUTA,
   );
 
   return (
