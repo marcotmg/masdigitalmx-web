@@ -52,6 +52,15 @@ jobs:
       - name: Build de produccion
         run: pnpm build
 
+      # El build NO protege el texto legal: una pagina que compila, se ve bien y
+      # perdio una clausula pasaba en verde. Esto compara el texto que el build
+      # acaba de emitir contra la linea base congelada, token por token.
+      # Va DESPUES del build a proposito: lee .next/server/app/*.html, y falla
+      # ruidosamente si esos archivos no estan (un gate que pasa cuando no
+      # encuentra su propia entrada no protege nada).
+      - name: Identidad del texto legal publicado
+        run: pnpm check:legal
+
   cabeceras:
     name: Cabeceras de seguridad HTTP en produccion
     runs-on: ubuntu-latest
