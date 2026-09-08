@@ -591,10 +591,14 @@ function contenedorDirectiva(nombre: Directiva, clave: string, hijos: React.Reac
         </p>
       );
     case "nota":
+      /* `mb-4` iguala el ritmo vertical de los párrafos y las listas. Sin él, dos
+         `:::nota` seguidas quedaban pegadas y se leían como un solo bloque
+         saturado — reportado por Marco el 2026-09-07 sobre §3 de /privacidad,
+         y presente también en /terminos, que tiene otro par adyacente. */
       return (
         <div
           key={clave}
-          className="rounded-xl p-4 text-sm leading-relaxed"
+          className="rounded-xl p-4 text-sm leading-relaxed mb-4"
           style={{
             background: "var(--color-surface)",
             border: "1px solid var(--color-border)",
