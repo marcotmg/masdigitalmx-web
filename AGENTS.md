@@ -144,7 +144,10 @@ components/
 └── sections/                  ← Hero · Problemas · Productos · Sectores · Pricing · Paquetes · Contacto
 lib/
 ├── sectores.ts            ← datos de los 6 slugs de /sector/[slug]
-└── legal-data.ts          ← datos atómicos compartidos entre las 3 páginas legales (WEB-INDICE-LEGAL-01)
+├── legal-data.ts          ← datos atómicos compartidos entre las 3 páginas legales (WEB-INDICE-LEGAL-01)
+└── legal/markdown.tsx     ← renderizador del subconjunto de Markdown de content/legal/ (LEGAL-TEXTO-FUENTE-UNICA-01)
+content/legal/            ← EL TEXTO LEGAL. Los 3 .md + baseline-publicado.txt
+scripts/verificar-legal.mjs ← gate de CI: el texto publicado no cambia sin querer
 public/mati.webp          ← mascota Mati, ya integrada (Hero y 404) — no existe carpeta assets/
 design-system/           ← generado por skill ui-ux-pro-max
 PRODUCT.md               ← requerido por skill Impeccable (register: brand)
@@ -170,8 +173,13 @@ Corporativo v1.0 (uso del sitio, modelo por capas de `ADR-048`) — retira el re
 ### Páginas legales — índice navegable (`WEB-INDICE-LEGAL-01`, 2026-08-15)
 
 Las 3 páginas legales comparten `LegalDocLayout` (índice a la izquierda, documento a la derecha).
-Para agregar o mover una sección hay que tocar **dos** lugares del mismo archivo: el `<h2 id="sN">`
-y la constante `SECTIONS` de arriba. Si se desincronizan, el índice apunta a un ancla muerta.
+
+> ⚠️ **Desde `LEGAL-TEXTO-FUENTE-UNICA-01` (2026-09-07) el texto legal NO vive en los `.tsx`.**
+> Vive en `content/legal/*.md` y se lee en el build. Ver "Texto legal" abajo. Lo que decía este
+> párrafo —que para mover una sección había que tocar **dos** lugares (el `<h2 id="sN">` y la
+> constante `SECTIONS`), y que desincronizarlos dejaba el índice apuntando a un ancla muerta— **ya
+> no aplica y ya no se puede escribir**: el índice y las anclas se derivan de los `##` del `.md`,
+> y el renderizador exige que el número de la sección coincida con su ordinal.
 
 Cosas verificadas que no son obvias y conviene no volver a descubrir:
 
@@ -188,6 +196,35 @@ Cosas verificadas que no son obvias y conviene no volver a descubrir:
 - Los ids se quedan en `s1…sN`, no se migran a slugs legibles: las 3 páginas son `noindex/nofollow`
   y no hay ningún enlace profundo en el sitio, así que el slug no compra nada y obligaría a editar
   texto Intocable.
+
+### Texto legal — fuente única en `content/legal/` (`LEGAL-TEXTO-FUENTE-UNICA-01`, 2026-09-07)
+
+Las 1.561 líneas de prosa legal vinculante vivían **dentro** de los tres `page.tsx`. Para cualquier
+herramienta y cualquier agente eran front-end —este repo tiene 4 skills de rediseño que reescriben
+`.tsx` bajo `app/`— y el CI sólo corría *build*: **una página que compila, se ve bien y perdió una
+cláusula pasaba en verde**.
+
+| Artefacto | Qué es |
+|---|---|
+| `content/legal/*.md` | **El texto legal. Fuente única.** Markdown, sin archivo derivado ni paso de generación |
+| `content/legal/baseline-publicado.txt` | Línea base de tokens, capturada del sitio **en producción**. Generada, no editable a mano |
+| `lib/legal/markdown.tsx` | Renderizador propio, **cero dependencias npm**. Es un *gate*: ante sintaxis que no reconoce **rompe el build**, nunca la ignora |
+| `scripts/verificar-legal.mjs` | Gate de CI (`pnpm check:legal`). Compara el texto que emitió el build contra la línea base |
+| `app/*/page.tsx` | **Sólo diseño.** Cero prosa legal |
+
+Lo que hay que saber antes de tocar algo aquí:
+
+- **Cambiar el texto legal exige regenerar la línea base en el MISMO PR**
+  (`node scripts/verificar-legal.mjs capturar-build content/legal/baseline-publicado.txt`).
+  No hace los cambios imposibles: los hace **imposibles de hacer en silencio**.
+- **`lib/legal-data.ts` sigue siendo la fuente de los datos atómicos** (nombre, domicilio, fechas
+  del DOF, citas de artículos). En el `.md` van como `{{MARCADOR}}`. **Nunca congelar esos valores
+  dentro del `.md`**: es lo que hizo que retirar el domicilio particular fuera un cambio en un punto
+  y no en tres.
+- El renderizador soporta **sólo** lo que estos tres documentos usan: `#`/`##`/`###`, párrafos con
+  `**negrita**`, `*cursiva*` y `[enlaces](destino)`, listas, tablas y los bloques `:::subtitulo`,
+  `:::rotulo`, `:::nota`, `:::contacto`, `:::pie`. No es un parser de Markdown general.
+- Los separadores entre secciones **no se escriben**: se insertan solos antes de cada `##`.
 
 **Rutas NO construidas, y qué pasa con ellas:**
 - `/pricing` — enlazada en las páginas de sector; daba 404. Repuntada a `/#pricing`,
@@ -280,7 +317,9 @@ Sin autorización explícita de Marco:
   Precios REACTIVADOS y mergeados (PR #11). Ojo al actualizarlos:
   `Auditoria-SP-01-Catalogo-2026-08-13` documenta 8 funcionalidades que SP-01
   vende y no están construidas — 7 de ellas son diferenciadores del plan Pro.
-- **Textos legales** en `/privacidad` y `/terminos`
+- **Textos legales** — desde el 2026-09-07 viven en `content/legal/*.md`, no en los `.tsx`.
+  Tocarlos exige regenerar `content/legal/baseline-publicado.txt` en el mismo PR, o el CI falla
+  (`pnpm check:legal`). Ver "Texto legal — fuente única" arriba
 - **Design tokens** en `app/globals.css` — afectan todo el sitio
 - **`PRODUCT.md`** — documento estratégico requerido por skill Impeccable
 - **Copy del Hero** (headline, subheadline, CTAs) — spec exacta en "Gate de contenido" arriba. No
