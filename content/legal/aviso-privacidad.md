@@ -1,6 +1,6 @@
 ---
-version: "3.0"
-vigencia: "14 de agosto de 2026"
+version: "3.1"
+vigencia: "7 de septiembre de 2026"
 ruta: "/privacidad"
 ---
 
@@ -63,7 +63,11 @@ Según el canal de contacto, recabamos las siguientes categorías de datos:
 - Identificador de cliente asignado por cookie de analítica (Google Analytics)
 
 :::nota
-**No recabamos datos sensibles** (estado de salud, origen étnico, ideología política, preferencias sexuales, creencias religiosas, etc.) a través de los canales descritos en este aviso. Si por la naturaleza de una conversación compartes voluntariamente información de esa índole, su uso quedará estrictamente limitado a resolver tu consulta y no será almacenada en nuestros sistemas más allá del hilo de conversación.
+**A través de los canales descritos en este aviso no recabamos datos sensibles** (estado de salud, origen étnico, ideología política, preferencias sexuales, creencias religiosas, etc.). Si por la naturaleza de una conversación compartes voluntariamente información de esa índole, su uso quedará estrictamente limitado a resolver tu consulta y no será almacenada en nuestros sistemas más allá del hilo de conversación.
+:::
+
+:::nota
+**Algunos de nuestros productos sí tratan datos sensibles, y ese tratamiento no se rige por este aviso.** Es el caso de **HygieIA**, nuestro agente de voz para citas médicas, donde el motivo de consulta que menciones puede constituir un dato de salud; lo describe el [aviso de privacidad de HygieIA](/privacidad-hygieia). **MattIAs** no trata datos sensibles hoy; cuando incorpore el agendamiento de citas podrá hacerlo, y su aviso de privacidad específico se publicará y te será presentado antes de que esa funcionalidad esté disponible.
 :::
 
 ## 4. Finalidades del tratamiento
