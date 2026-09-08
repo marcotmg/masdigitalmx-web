@@ -80,7 +80,7 @@ PR (nunca push directo a `main`) → validar Netlify Deploy Preview → merge.
 
 | Capa | Tecnología | Notas |
 |------|-----------|-------|
-| Framework | Next.js 16.2.7 — App Router | TypeScript strict |
+| Framework | Next.js 16.2.11 — App Router | TypeScript strict |
 | CSS | Tailwind CSS v4 | `@theme` en `app/globals.css`, **sin** `tailwind.config.ts` |
 | Package manager | **pnpm** | NUNCA npm ni yarn |
 | Fuentes | Chakra Petch (400/600/700) + Barlow (400/500/600) | vía `next/font/google` — ver `app/layout.tsx` |
