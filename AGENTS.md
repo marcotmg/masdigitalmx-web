@@ -143,6 +143,29 @@ el stub de 66 líneas**, el más pobre de los tres. Quien seguía estas instrucc
 la peor auditoría y creía haber cumplido `N14`. No volver a copiar el script aquí: se
 referencia, no se duplica (`P12`).
 
+### Política de dependencias — DECLARADA 2026-09-08 (`SEC-DEPENDABOT-N14-SIN-PUENTE-01`)
+
+Dependabot abre PR de dependencias por su cuenta y `N14` exige auditar toda dependencia externa
+antes de instalarla. **No eran la misma clase de riesgo y ahora está escrito cuál es cuál:**
+
+| Qué entra | Régimen | Quién lo verifica |
+|---|---|---|
+| **Bump de versión** de un paquete que ya estaba | **Exento** de la auditoría completa | El gate de CI, mecánicamente |
+| **Nombre de paquete NUEVO** en `pnpm-lock.yaml` | `N14` **en su forma plena** | Persona + gate; el CI falla hasta declararlo |
+
+Lo hace cumplir **`scripts/verificar-deps-nuevas.mjs`** (`pnpm check:deps`), un paso del CI que
+compara los **nombres** de paquete contra la rama base y **falla** si aparece uno que no estaba.
+Corre **antes** de `pnpm install`: si entró algo sin auditar, no se instala.
+
+Para aprobar una dependencia nueva: auditarla con el canónico —leyendo la salida cruda— **más
+OSV.dev y GitHub Security Advisories**, que son las dos bases que `N14` pide y que el auditor no
+consulta; y anotarla en **`scripts/deps-auditadas.txt`** con la referencia de esa auditoría.
+
+⚠️ **El gate lleva control positivo y no es adorno.** Exige haber extraído ≥50 paquetes de cada
+lado antes de creerle al diff. La primera versión de este chequeo, hecha a mano el 2026-09-08,
+dijo *"0 nuevos, 0 retirados"* porque su expresión regular no casaba **nada** — una salida
+idéntica a "no hubo cambios". Un gate que pasa cuando está roto no protege nada.
+
 ⚠️ **El semáforo del canónico no es de fiar todavía** (`SECAUDIT-REPORTE-SEVERIDAD-FALSA-01`):
 calcula las severidades con `grep` de palabras sobre su propio log, así que puede marcar 🔴
 sin hallazgo o 🟢 con uno real. **Sus chequeos sustantivos sí sirven** — registry, licencia,

@@ -1,0 +1,15 @@
+# Dependencias nuevas ya auditadas — declaracion, no promesa.
+#
+# Lo lee `scripts/verificar-deps-nuevas.mjs`, el gate que FALLA cuando entra al
+# lockfile un nombre de paquete que no estaba en la rama base. Anotar uno aqui
+# es afirmar que se corrio su auditoria `N14`; la referencia dice donde consta.
+#
+# Formato:  <paquete><dos o mas espacios><referencia de la auditoria>
+# Una linea por paquete. `#` comenta.
+#
+# Un BUMP DE VERSION no va aqui: el gate compara NOMBRES, no versiones, asi que
+# subir un paquete que ya estaba nunca lo dispara. Esto es solo para nombres
+# que entran por primera vez.
+#
+# Ejemplo (no activo):
+# @playwright/test    08-Logs-Auditoria/2026-09-08-...-pre-install-audit.md
