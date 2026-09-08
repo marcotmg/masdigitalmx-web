@@ -321,6 +321,18 @@ Definidos en `app/globals.css` bajo `@theme`:
   local, no contenido del proyecto. No commitearlas. (verificado 2026-07-17)
 - Tailwind v4 **no usa `tailwind.config.ts`** — buscar configuración ahí es un
   callejón sin salida; todo vive en `@theme` dentro de `app/globals.css`.
+- 🪤 **Un `.next/` de un build interrumpido ROMPE el build siguiente, y el mensaje miente.**
+  Desde Next **16.3** el caché persistente de Turbopack en disco está **activo por defecto**. Si un
+  build se corta a medias (sin red para `next/font/google`, `Ctrl+C`, o hecho con otra versión de
+  `next`), el caché queda inconsistente y el build siguiente muere con
+  `TurbopackInternalError: Failed to write app endpoint /page` → `PostCssTransformedAsset::process`
+  → `creating new process` → `binding to a port` → `Operation not permitted (os error 1)`.
+  **El mensaje apunta a permisos de red y no es eso**: enlazar puertos funciona perfectamente
+  (comprobado con un `net.createServer().listen()` directo y desde subproceso). **Solución:
+  `rm -rf .next` y reconstruir.** ⚠️ Cuesta caro diagnosticarlo porque **es determinista y
+  sobrevive a reinstalar `node_modules`**, así que parece defecto de la versión: con `16.2.11` el
+  mismo checkout construye (ese caché no lo consume) y con `16.3.4` falla, lo que invita a culpar
+  al bump. **No es del bump.** Medido el 2026-09-08 al subir a 16.3.4 (PR #11).
 
 ## Intocables
 
