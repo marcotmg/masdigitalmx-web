@@ -123,10 +123,30 @@ dashboard.
 **Sin staging** — lo que se despliega va directo a producción. Verificar en
 móvil y desktop después de cada deploy.
 
-**Auditoría pre-instalación (N14):** correr `./pre-install.sh <paquete>` antes de
-cualquier `pnpm add` / `npx skills add`. Umbral propio de este repo: **no
-instalar paquetes con <1,000 descargas semanales** sin aprobación de Marco.
-Aplica también a skills en `.claude/skills/` — no son inocuos por defecto.
+**Auditoría pre-instalación (N14):** antes de cualquier `pnpm add` / `npx skills add`,
+correr el auditor **canónico**, que **no vive en este repo**:
+
+```bash
+cd ~/Documents/Trabajo/Desarrollos/Herramientas/IA/Claude/Skills/00-operativos/security-audit/scripts
+./pre-install.sh npm <paquete>          # también: pip | docker | github 'autor/repo'
+```
+
+Escribe su reporte en el vault (`08-Logs-Auditoría/`), que es lo que hace la
+auditoría citable. Umbral propio de este repo: **no instalar paquetes con <1,000
+descargas semanales** sin aprobación de Marco. Aplica también a skills en
+`.claude/skills/` — no son inocuos por defecto.
+
+⚠️ **Este repo tenía DOS copias viejas de ese script** (`pre-install.sh` de 66 líneas
+en la raíz y `scripts/pre-install.sh` de 134), retiradas el 2026-09-07. Este mismo
+párrafo mandaba `./pre-install.sh <paquete>` — forma **sin ecosistema que sólo aceptaba
+el stub de 66 líneas**, el más pobre de los tres. Quien seguía estas instrucciones corría
+la peor auditoría y creía haber cumplido `N14`. No volver a copiar el script aquí: se
+referencia, no se duplica (`P12`).
+
+⚠️ **El semáforo del canónico no es de fiar todavía** (`SECAUDIT-REPORTE-SEVERIDAD-FALSA-01`):
+calcula las severidades con `grep` de palabras sobre su propio log, así que puede marcar 🔴
+sin hallazgo o 🟢 con uno real. **Sus chequeos sustantivos sí sirven** — registry, licencia,
+antigüedad, `pnpm info`, Socket.dev. Leer la salida cruda, no el resumen.
 
 ## Arquitectura
 
@@ -151,7 +171,6 @@ scripts/verificar-legal.mjs ← gate de CI: el texto publicado no cambia sin que
 public/mati.webp          ← mascota Mati, ya integrada (Hero y 404) — no existe carpeta assets/
 design-system/           ← generado por skill ui-ux-pro-max
 PRODUCT.md               ← requerido por skill Impeccable (register: brand)
-pre-install.sh           ← auditoría de dependencias
 ```
 
 **Orden del Home:** Header → Hero (asimétrico: headline izq + chat mockup WhatsApp der)
@@ -381,7 +400,7 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 - [ ] Search Console — pendiente, no bloqueado por gate legal
 - [x] Integrar mascota Mati — ya está en `HeroSection.tsx` y en el 404 (`app/not-found.tsx`,
       PR #22). Imagen en `public/mati.webp`, no en `/assets/` (esa carpeta no existe)
-- [ ] Instalar Playwright para QA (con `pre-install.sh`)
+- [ ] Instalar Playwright para QA (con el auditor canónico — ver §N14 arriba, NO con un script local)
 - [ ] **Decisión de diseño:** retomar `draft/reposicionamiento-2026-06-sin-desplegar`
       corrigiendo su auditoría, o descartarlo — bloquea P2 de `WEB-SEO-TECNICO-01`
 - [x] Retirar el número de demos de los CTAs — **hecho 2026-08-16**: los 3 puntos vivos
