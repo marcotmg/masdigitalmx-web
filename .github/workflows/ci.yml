@@ -38,6 +38,21 @@ jobs:
           node-version: 24
           cache: pnpm
 
+      # `N14` prohibe instalar una dependencia externa sin auditarla antes, y un PR
+      # de Dependabot ES una dependencia que entra de fuera. Hasta el 2026-09-08 nada
+      # lo exigia: el ruleset pide PR pero con 0 aprobaciones. Esto separa las dos
+      # clases de riesgo por un criterio mecanico — un bump de version de algo ya
+      # auditado cruza solo; un NOMBRE nuevo en el lockfile rompe el build.
+      # Va ANTES de instalar: si entro algo sin auditar, no se instala.
+      - name: Dependencias nuevas sin auditar (N14)
+        if: github.event_name == 'pull_request'
+        run: |
+          # FETCH_HEAD y no `origin/<base>`: en un PR, actions/checkout configura un
+          # refspec propio para la ref del PR, asi que la rama remota puede no
+          # resolver. FETCH_HEAD siempre apunta a lo que se acaba de traer.
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          node scripts/verificar-deps-nuevas.mjs FETCH_HEAD
+
       - name: Instalar dependencias
         run: pnpm install --frozen-lockfile
 

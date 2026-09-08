@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "verify": "pnpm typecheck && pnpm check:xss && pnpm build && pnpm check:legal",
     "check:xss": "./scripts/check-xss-surface.sh",
-    "check:legal": "node scripts/verificar-legal.mjs verificar"
+    "check:legal": "node scripts/verificar-legal.mjs verificar",
+    "check:deps": "node scripts/verificar-deps-nuevas.mjs"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",
