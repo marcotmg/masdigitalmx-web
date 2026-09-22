@@ -1,6 +1,6 @@
 ---
-version: "3.1"
-vigencia: "7 de septiembre de 2026"
+version: "3.2"
+vigencia: "21 de septiembre de 2026"
 ruta: "/privacidad"
 ---
 
@@ -30,6 +30,10 @@ Este aviso aplica al tratamiento de datos personales derivado de:
 - La comunicación a través de nuestro **canal de WhatsApp Business**.
 - El contacto por **correo electrónico** con cualquiera de nuestras direcciones corporativas.
 - El proceso de **prospección y cotización** de cualquiera de nuestros servicios.
+
+:::nota
+**Origen del dato cuando no te lo pedimos directamente.** Para el proceso de prospección descrito arriba, en ocasiones identificamos tu negocio y tus datos de contacto por medios distintos a que tú nos los hayas entregado. Tratamos ese dato para las mismas finalidades de prospección y cotización descritas en este aviso. Si te contactamos así, te lo hacemos saber en ese primer contacto y puedes oponerte en cualquier momento escribiendo a [{{CORREO_PRIVACIDAD}}](mailto:{{CORREO_PRIVACIDAD}}). Si no recibimos respuesta, eliminamos tu información y conservamos únicamente tu dato de contacto con el solo fin de no volver a contactarte.
+:::
 
 :::nota
 **Aviso importante sobre nuestros productos:** Si utilizas alguno de nuestros productos o servicios (como HygieIA — agente de voz para citas médicas, o MattIAs — chatbot de atención por WhatsApp), el tratamiento de tus datos en el contexto de ese producto se rige por el aviso de privacidad específico de dicho producto, el cual te será presentado antes de iniciar su uso. Los avisos específicos por producto están disponibles en el sitio web de +Digital MX.
