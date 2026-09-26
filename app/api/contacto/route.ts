@@ -133,8 +133,18 @@ async function checkRateLimit(ip: string): Promise<boolean> {
     );
     return true;
   }
-  const { success } = await ratelimit.limit(ip);
-  return success;
+  try {
+    const { success } = await ratelimit.limit(ip);
+    return success;
+  } catch (err) {
+    // Mismo patrón fail-open que los otros 2 controles: un Upstash caído no
+    // debe tumbar el formulario completo con un 500 sin alerta — antes de
+    // este try/catch, un fallo aquí tronaba la función entera ANTES de
+    // llegar al fetch a Formspree, así que ni provider_error ni
+    // network_error se alcanzaban nunca y notifyFailure jamás corría.
+    console.error("[contacto] error de red al verificar rate-limit (Upstash)", err);
+    return true;
+  }
 }
 
 export async function POST(request: Request) {
