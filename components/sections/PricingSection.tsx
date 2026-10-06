@@ -111,7 +111,7 @@ const PRODUCTS: StandardProductData[] = [
     nombre: "Gestión Documental IA",
     tagline: "Tus documentos, procesados solos",
     basico: { setup: "$8,000",  mens: "$2,500", incluido: "200 docs/mes",   adicional: "$8.00/doc" },
-    pro:    { setup: "$15,000", mens: "$7,000", incluido: "1,000 docs/mes", adicional: "$5.00/doc" },
+    pro:    { setup: "$12,000", mens: "$4,500", incluido: "1,000 docs/mes", adicional: "$5.00/doc" },
     features: DOCS_FEATURES,
   },
 ];
