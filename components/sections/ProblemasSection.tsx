@@ -1,4 +1,4 @@
-import { Phone, MessageSquare, FileText, Cpu } from "lucide-react";
+import { Phone, MessageSquare, Cpu } from "lucide-react";
 
 const problemas = [
   {
@@ -21,15 +21,6 @@ const problemas = [
   },
   {
     numero: "03",
-    icon: FileText,
-    headline: "Documentos que fluyen solos",
-    body: "Cotizaciones, contratos, facturas — tu gestor documental los genera, envía y organiza sin intervención humana. Menos papeleo, más tiempo para lo que genera valor.",
-    stat: "80% menos tiempo",
-    statLabel: "en gestión de documentos",
-    color: "var(--color-cta)",
-  },
-  {
-    numero: "04",
     icon: Cpu,
     headline: "Adiós a tareas manuales",
     body: "Tu equipo se enfoca en lo que importa. El agente maneja lo repetitivo: agendas, confirmaciones, seguimientos.",
