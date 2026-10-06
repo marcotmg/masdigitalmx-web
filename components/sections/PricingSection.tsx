@@ -94,8 +94,8 @@ const PRODUCTS: StandardProductData[] = [
     kind: "standard",
     nombre: "Agente de Voz IA",
     tagline: "Tu teléfono, siempre atendido",
-    basico: { setup: "$12,000", mens: "$3,800", incluido: "200 min/mes", adicional: "$3.50/min" },
-    pro:    { setup: "$18,000", mens: "$5,500", incluido: "500 min/mes", adicional: "$2.80/min" },
+    basico: { setup: "$12,000", mens: "$3,800", incluido: "200 min/mes", adicional: "$1,500 por 100 min" },
+    pro:    { setup: "$18,000", mens: "$6,500", incluido: "400 min/mes", adicional: "$1,500 por 100 min" },
     features: VOZ_FEATURES,
   },
   {
@@ -153,17 +153,18 @@ function PlanCard({ label, data, features, pro }: {
       </div>
 
       {/* Prices */}
+      {/* La mensualidad es el precio que se ve primero y en grande; el setup (pago único) va debajo, más chico. */}
       <div className="mb-0.5">
         <span className="font-heading font-extrabold text-4xl" style={{ color: "var(--color-text-base)" }}>
-          {data.setup}
-        </span>
-        <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN setup</span>
-      </div>
-      <div className="mb-3">
-        <span className="font-heading font-bold text-2xl" style={{ color: "var(--color-primary-light)" }}>
           {data.mens}
         </span>
         <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN/mes</span>
+      </div>
+      <div className="mb-3">
+        <span className="font-heading font-semibold text-lg" style={{ color: "var(--color-primary-light)" }}>
+          + {data.setup}
+        </span>
+        <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN de setup, pago único</span>
       </div>
 
       {/* Unidades */}
