@@ -1,10 +1,12 @@
 "use client";
 
-// Repuntado a la sección de contacto (2026-08-16, autorización explícita de Marco).
-// Antes: wa.me/525652107460 — ese número corre el MattIAs de demos, hoy configurado
-// con el catálogo de un prospecto y con handoff a un teléfono ajeno a +Digital MX.
-// Vuelve a WhatsApp cuando exista el número comercial propio (MASDIGITAL-CHATBOT-PROPIO-01).
-const CONTACT_URL = "/#contacto";
+// 2026-08-16: se repuntó al formulario (#contacto) porque wa.me/525652107460 es el MattIAs de
+// DEMOS (catálogo de un prospecto, handoff a un teléfono ajeno a +Digital MX).
+// 2026-10-05, decisión de Marco: el MattIAs propio ya contesta (+Digital Comercial, +52 56 2080 8464,
+// WABA 1391654696264771, activo desde 2026-09-06; MASDIGITAL-CHATBOT-PROPIO-01) ⇒ el botón vuelve
+// a WhatsApp, ahora al número COMERCIAL, nunca al de demos.
+const WHATSAPP_URL =
+  "https://wa.me/525620808464?text=" + encodeURIComponent("Hola, quiero información sobre las soluciones de +Digital MX");
 
 function WhatsAppIcon() {
   return (
@@ -32,8 +34,10 @@ export default function WhatsAppButton() {
         .wa-pulse-btn { animation: wa-pulse 1.2s ease-out 2; }
       `}</style>
       <a
-        href={CONTACT_URL}
-        aria-label="Ir al formulario de contacto"
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Escribirnos por WhatsApp"
         className="wa-pulse-btn fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full text-white cursor-pointer transition-transform duration-200 hover:scale-110 w-12 h-12 md:w-14 md:h-14"
         style={{
           background: "#25D366",

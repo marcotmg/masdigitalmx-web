@@ -362,11 +362,12 @@ Definidos en `app/globals.css` bajo `@theme`:
 Sin autorización explícita de Marco:
 
 - **Destino de los CTAs de contacto** — desde el 2026-08-16 apuntan a `/#contacto`
-  (formulario), **no a WhatsApp**. Antes: `wa.me/525652107460`, que es el número del
-  **MattIAs de demos** — un bot configurado con el catálogo de un prospecto y con
-  `contacto_humano` apuntando a un teléfono ajeno a +Digital MX. Retirado por
-  autorización explícita de Marco. **No devolverlo a WhatsApp** hasta que exista el
-  número comercial propio (`MASDIGITAL-CHATBOT-PROPIO-01`).
+  (formulario). **Excepción desde el 2026-10-05 (decisión de Marco):** el botón flotante
+  `WhatsAppButton` vuelve a WhatsApp, pero **solo** al número **comercial**
+  (`wa.me/525620808464`, MattIAs propio activo desde 2026-09-06,
+  `MASDIGITAL-CHATBOT-PROPIO-01`). **Nunca** `wa.me/525652107460`: es el número del
+  **MattIAs de demos** — catálogo de un prospecto y `contacto_humano` apuntando a un
+  teléfono ajeno a +Digital MX. Los CTAs del `Header` y del `Footer` siguen en `/#contacto`.
 - **Precios en PricingSection** — fuente de verdad: SP-01 **v0.6** en el vault.
   Precios REACTIVADOS y mergeados (PR #11). Ojo al actualizarlos:
   `Auditoria-SP-01-Catalogo-2026-08-13` documenta 8 funcionalidades que SP-01
@@ -441,8 +442,8 @@ archivado, `VAULT-CLAUDEMD-LEGACY-01` resuelto.)*
 - [x] Retirar el número de demos de los CTAs — **hecho 2026-08-16**: los 3 puntos vivos
       (`WhatsAppButton`, `Header` ×2, `Footer`) apuntan a `/#contacto`; la línea
       "WhatsApp +52 56 5210 7460" salió del footer. Verificado: cero `wa.me` en el HTML generado
-- [ ] **Restituir un CTA de WhatsApp** cuando exista el número comercial propio
-      (`MASDIGITAL-CHATBOT-PROPIO-01`). Hoy el sitio no tiene canal WhatsApp
+- [x] **Restituir un CTA de WhatsApp** — hecho 2026-10-05 solo en el botón flotante, al
+      número comercial `+52 56 2080 8464` (`MASDIGITAL-CHATBOT-PROPIO-01`)
 - [ ] `WhatsAppButton.tsx` conserva **icono y verde de WhatsApp** pero lleva al formulario —
       decidir si se le cambia el icono o se retira el botón flotante
 - [ ] ⚠️ **Discrepancia sin resolver:** "Identidad visual" declara Facebook Page ID
