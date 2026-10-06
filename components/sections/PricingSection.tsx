@@ -94,8 +94,8 @@ const PRODUCTS: StandardProductData[] = [
     kind: "standard",
     nombre: "Agente de Voz IA",
     tagline: "Tu teléfono, siempre atendido",
-    basico: { setup: "$12,000", mens: "$3,800", incluido: "200 min/mes", adicional: "$3.50/min" },
-    pro:    { setup: "$18,000", mens: "$5,500", incluido: "500 min/mes", adicional: "$2.80/min" },
+    basico: { setup: "$12,000", mens: "$3,800", incluido: "200 min/mes", adicional: "$1,500 por 100 min" },
+    pro:    { setup: "$18,000", mens: "$6,500", incluido: "400 min/mes", adicional: "$1,500 por 100 min" },
     features: VOZ_FEATURES,
   },
   {
