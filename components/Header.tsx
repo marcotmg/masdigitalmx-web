@@ -14,6 +14,19 @@ const navLinks = [
 // Antes: wa.me/525652107460 — número del MattIAs de demos, ajeno a la marca.
 const CONTACT_URL = "/#contacto";
 
+// Logo → inicio. En la home, <Link href="/"> desde "/#contacto" solo quita el #hash y NO sube:
+// por defecto Link "mantiene la posición de scroll" mientras la página siga visible en el
+// viewport (nextjs.org/docs/app/api-reference/components/link, prop `scroll`). Se sube a mano;
+// scrollTo sin `behavior` respeta el scroll-behavior de globals.css (suave, o inmediato con
+// prefers-reduced-motion). En otras páginas (/terminos…) Link navega a "/" y arranca arriba.
+function irAlInicio(e: React.MouseEvent<HTMLAnchorElement>) {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return; // nueva pestaña: no tocar
+  if (window.location.pathname !== "/") return;
+  e.preventDefault();
+  window.history.replaceState(null, "", "/");
+  window.scrollTo({ top: 0 });
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +55,7 @@ export default function Header() {
     >
       <div className="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between">
         {/* Logo — Press Start 2P: pixel/bitmap, identidad robótica */}
-        <Link href="/" className="flex items-center gap-3 cursor-pointer">
+        <Link href="/" onClick={irAlInicio} className="flex items-center gap-3 cursor-pointer">
           <span
             className="leading-none"
             style={{
