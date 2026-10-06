@@ -51,32 +51,12 @@ const WA_FEATURES: Feature[] = [
   { text: "Reportes de conversaciones", basic: false },
 ];
 
-const DOCS_FEATURES: Feature[] = [
-  { text: "Recepción de documentos vía WhatsApp", basic: true },
-  { text: "Clasificación automática por tipo", basic: true },
-  { text: "Extracción de campos clave (OCR + LLM)", basic: true },
-  { text: "Almacenamiento estructurado", basic: true },
-  { text: "Dashboard de documentos procesados", basic: false },
-  { text: "Integración con sistemas contables/ERP", basic: false },
-  { text: "Exportación CSV/Excel", basic: false },
-  { text: "Reglas de negocio personalizadas", basic: false },
-];
-
-const TAREAS_FEATURES = [
-  "Diagnóstico y mapeo del proceso actual",
+const AUTOMATIZACION_FEATURES = [
   "Diseño del flujo de automatización",
-  "Integración con tus herramientas actuales",
+  "Integración con tus herramientas (CRM, ERP, facturación y más)",
   "Pruebas y ajustes incluidos",
+  "Monitoreo y mantenimiento mensual",
   "Documentación del proceso entregada",
-];
-
-const PROCESOS_FEATURES = [
-  "Diagnóstico profesional de sistemas actuales",
-  "Arquitectura multi-sistema diseñada a medida",
-  "Integración con CRM, ERP, facturación y más",
-  "Pruebas end-to-end y puesta en marcha",
-  "Monitoreo activo durante el primer mes",
-  "Soporte y mantenimiento mensual incluido",
 ];
 
 type PlanData = { setup: string; mens: string; incluido: string; adicional: string };
@@ -105,14 +85,6 @@ const PRODUCTS: StandardProductData[] = [
     basico: { setup: "$9,000",  mens: "$2,800", incluido: "800 conv/mes",   adicional: "$1.50/conv" },
     pro:    { setup: "$15,000", mens: "$4,800", incluido: "1,500 conv/mes", adicional: "$1.00/conv" },
     features: WA_FEATURES,
-  },
-  {
-    kind: "standard",
-    nombre: "Gestión Documental IA",
-    tagline: "Tus documentos, procesados solos",
-    basico: { setup: "$8,000",  mens: "$2,500", incluido: "200 docs/mes",   adicional: "$8.00/doc" },
-    pro:    { setup: "$12,000", mens: "$4,500", incluido: "1,000 docs/mes", adicional: "$5.00/doc" },
-    features: DOCS_FEATURES,
   },
 ];
 
@@ -236,110 +208,60 @@ function StandardProduct({ product }: { product: StandardProductData }) {
   );
 }
 
-/* ─── ProcessProduct — con feature lists para igualar altura ─── */
+/* ─── ProcessProduct — un solo producto: base + pasos + sistemas (SP-01 v1.0 §5.1) ─── */
 function ProcessProduct() {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const tareaHov = hovered === 0;
-  const procesosHov = hovered === 1;
+  const [hovered, setHovered] = useState(false);
 
   return (
     <>
       <p className="text-sm mb-4" style={{ color: "var(--color-text-muted)" }}>
-        Tus sistemas, conectados — sin importar la complejidad
+        Tus sistemas, conectados — el precio crece con el tamaño
       </p>
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* Tareas */}
-        <div
-          className="rounded-2xl p-7 flex flex-col cursor-default"
-          style={{
-            background: tareaHov ? "var(--color-surface-2)" : "var(--color-surface)",
-            border: `1px solid ${tareaHov ? "var(--color-border-strong)" : "var(--color-border)"}`,
-            boxShadow: tareaHov ? "var(--shadow-card-hover)" : "var(--shadow-card)",
-            transform: tareaHov ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
-            transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
-          }}
-          onMouseEnter={() => setHovered(0)}
-          onMouseLeave={() => setHovered(null)}
-        >
+      <div
+        className="rounded-2xl p-7 grid md:grid-cols-2 gap-8 cursor-default"
+        style={{
+          background: hovered ? "var(--color-surface-2)" : "var(--color-surface)",
+          border: `1px solid ${hovered ? "var(--color-border-strong)" : "var(--color-border)"}`,
+          boxShadow: hovered ? "var(--shadow-card-hover)" : "var(--shadow-card)",
+          transition: "background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* Precios */}
+        <div className="flex flex-col">
           <h3 className="font-heading font-bold text-xl mb-0.5" style={{ color: "var(--color-text-base)" }}>
-            Automatización de Tareas
+            Automatización
           </h3>
-          <p className="text-xs mb-4" style={{ color: "var(--color-text-caption)" }}>Simple — 1 a 3 pasos, implementación rápida</p>
+          <p className="text-xs mb-4" style={{ color: "var(--color-text-caption)" }}>Base: hasta 5 pasos y 2 sistemas</p>
 
           <div className="mb-0.5">
-            <span className="font-heading font-extrabold text-4xl" style={{ color: "var(--color-text-base)" }}>$3,500</span>
-            <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>– $6,000 MXN implementación</span>
+            <span className="font-heading font-extrabold text-4xl" style={{ color: "var(--color-text-base)" }}>$7,200</span>
+            <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN implementación</span>
           </div>
           <div className="mb-4">
-            <span className="font-heading font-bold text-2xl" style={{ color: "var(--color-primary-light)" }}>$800</span>
-            <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>– $1,500 MXN/mes mantenimiento</span>
+            <span className="font-heading font-bold text-2xl" style={{ color: "var(--color-primary-light)" }}>$1,200</span>
+            <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN/mes mantenimiento</span>
           </div>
 
-          <div className="mb-5 px-3 py-2 rounded-lg text-sm" style={{ background: "rgba(16,185,129,0.08)", color: "var(--color-success)" }}>
-            Diagnóstico: llamada informativa gratuita (30 min)
-          </div>
-
-          <ul className="space-y-3 flex-1">
-            {TAREAS_FEATURES.map((f) => (
-              <li key={f} className="flex items-start gap-2.5 text-sm" style={{ color: "var(--color-text-muted)" }}>
-                <CheckIcon />
-                <span>{f}</span>
-              </li>
-            ))}
+          <ul className="mb-4 space-y-1.5 text-sm px-3 py-2 rounded-lg" style={{ background: "rgba(27,110,243,0.06)", color: "var(--color-text-caption)" }}>
+            <li>Paso adicional: <span style={{ color: "var(--color-text-muted)" }}>$800 MXN</span></li>
+            <li>Sistema adicional: <span style={{ color: "var(--color-text-muted)" }}>$2,400 MXN + $400 MXN/mes</span></li>
+            <li>Ejemplo: 10 pasos entre 3 sistemas = $13,600 MXN + $1,600 MXN/mes</li>
           </ul>
 
-          <p className="text-xs mt-4 mb-1" style={{ color: "var(--color-text-caption)" }}>
-            Ejemplos: descarga de facturas, notificaciones, sincronización de datos.
-          </p>
-
-          <a
-            href="#contacto"
-            className="mt-5 inline-flex justify-center items-center px-5 py-3.5 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
-            style={{ border: "1px solid var(--color-border-strong)", color: "var(--color-primary-light)", background: "rgba(27,110,243,0.08)" }}
-          >
-            Agendar demo
-          </a>
-        </div>
-
-        {/* Procesos */}
-        <div
-          className="rounded-2xl p-7 flex flex-col cursor-default"
-          style={{
-            background: procesosHov ? "var(--color-surface-2)" : "var(--color-surface)",
-            border: `1px solid ${procesosHov ? "var(--color-border-strong)" : "var(--color-border)"}`,
-            boxShadow: procesosHov ? "var(--shadow-card-hover)" : "var(--shadow-card)",
-            transform: procesosHov ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
-            transition: "transform 220ms ease-out, background 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out",
-          }}
-          onMouseEnter={() => setHovered(1)}
-          onMouseLeave={() => setHovered(null)}
-        >
-          <div className="flex items-center justify-between mb-0.5">
-            <h3 className="font-heading font-bold text-xl" style={{ color: "var(--color-text-base)" }}>
-              Automatización de Procesos
-            </h3>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ background: "var(--color-cta)" }}>
-              Recomendado
+          <div className="px-3 py-2 rounded-lg text-sm" style={{ background: "rgba(16,185,129,0.08)", color: "var(--color-success)" }}>
+            Dentro de la base: llamada informativa gratuita (15 min).
+            <span style={{ color: "var(--color-text-caption)" }}>
+              {" "}Proyectos más grandes: diagnóstico profesional de $5,000 MXN, que se descuenta del setup al contratar.
             </span>
           </div>
-          <p className="text-xs mb-4" style={{ color: "var(--color-text-caption)" }}>Compleja — 3+ sistemas, impacto en toda la operación</p>
+        </div>
 
-          <div className="mb-0.5">
-            <span className="font-heading font-extrabold text-4xl" style={{ color: "var(--color-text-base)" }}>$10,000</span>
-            <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>– $25,000 MXN implementación</span>
-          </div>
-          <div className="mb-4">
-            <span className="font-heading font-bold text-2xl" style={{ color: "var(--color-primary-light)" }}>$2,500</span>
-            <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>– $5,000 MXN/mes mantenimiento</span>
-          </div>
-
-          <div className="mb-5 px-3 py-2 rounded-lg text-sm" style={{ background: "rgba(27,110,243,0.06)", color: "var(--color-text-caption)" }}>
-            <span style={{ color: "var(--color-primary-light)" }}>Diagnóstico profesional: $5,000 MXN</span>
-            {" "}— se descuenta del setup al contratar
-          </div>
-
+        {/* Qué incluye */}
+        <div className="flex flex-col">
           <ul className="space-y-3 flex-1">
-            {PROCESOS_FEATURES.map((f) => (
+            {AUTOMATIZACION_FEATURES.map((f) => (
               <li key={f} className="flex items-start gap-2.5 text-sm" style={{ color: "var(--color-text-muted)" }}>
                 <CheckIcon />
                 <span>{f}</span>
@@ -348,7 +270,7 @@ function ProcessProduct() {
           </ul>
 
           <p className="text-xs mt-4 mb-1" style={{ color: "var(--color-text-caption)" }}>
-            Ejemplos: cuentas por cobrar, onboarding, pipeline de leads con CRM.
+            Ejemplos: descarga de facturas, notificaciones, sincronización de datos, cuentas por cobrar, pipeline de leads con CRM.
           </p>
 
           <a
@@ -372,8 +294,7 @@ function ProcessProduct() {
 const TAB_LABELS = [
   "Agente de Voz IA",
   "Chatbot WhatsApp",
-  "Gestión Documental IA",
-  "Automatización de Procesos",
+  "Automatización",
 ];
 
 /* ─── main component ─── */
@@ -441,7 +362,7 @@ export default function PricingSection() {
 
         {/* Product content */}
         <div>
-          {active < 3 ? (
+          {active < PRODUCTS.length ? (
             <StandardProduct product={PRODUCTS[active]} />
           ) : (
             <ProcessProduct />

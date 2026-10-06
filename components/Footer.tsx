@@ -123,8 +123,7 @@ export default function Footer() {
             </p>
             <NavLink href="/#productos">Agente de Voz IA</NavLink>
             <NavLink href="/#productos">Chatbot WhatsApp</NavLink>
-            <NavLink href="/#productos">Gestión Documental IA</NavLink>
-            <NavLink href="/#productos">Automatización de Procesos</NavLink>
+            <NavLink href="/#productos">Automatización</NavLink>
           </div>
 
           {/* Col 3: Empresa */}

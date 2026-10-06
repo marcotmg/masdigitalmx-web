@@ -6,10 +6,10 @@ const PACKAGES = [
   {
     nombre: "Starter Digital",
     tag: "Para empezar",
-    incluye: ["Chatbot WhatsApp Básico", "1 automatización de tareas"],
-    setup: "$11,000",
-    mensualidad: "$2,800",
-    ahorro: "−$1,500 en setup",
+    incluye: ["Chatbot WhatsApp Básico", "Automatización base (hasta 5 pasos y 2 sistemas)"],
+    setup: "$14,000",
+    mensualidad: "$3,500",
+    ahorro: "−$2,200 setup · −$500/mes",
   },
   {
     nombre: "Negocio Completo",
@@ -23,10 +23,10 @@ const PACKAGES = [
   {
     nombre: "Suite IA",
     tag: "Máximo rendimiento",
-    incluye: ["Agente de Voz IA Pro", "Chatbot WhatsApp Pro", "Gestión Documental Básico"],
-    setup: "$38,000",
-    mensualidad: "$11,000",
-    ahorro: "−$7,000 setup · −$1,800/mes",
+    incluye: ["Agente de Voz IA Pro", "Chatbot WhatsApp Pro"],
+    setup: "$28,500",
+    mensualidad: "$9,900",
+    ahorro: "−$4,500 setup · −$1,400/mes",
   },
 ];
 
@@ -173,7 +173,7 @@ export default function PaquetesSection() {
             Precios en MXN. IVA no incluido. · Período mínimo: 3 meses. · Setup: pago único, no reembolsable.
           </p>
           <p className="text-xs" style={{ color: "var(--color-text-caption)" }}>
-            Contrato 6 meses: −10% en mensualidades. · Contrato 12 meses: −15%.
+            Contrato 6 meses: −10% en mensualidades; 12 meses: −15%. En Agente de Voz el descuento va al setup. · El precio de paquete no se suma al descuento por contrato.
           </p>
         </div>
       </div>

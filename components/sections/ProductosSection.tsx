@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PhoneCall, MessagesSquare, Zap, FileText } from "lucide-react";
+import { PhoneCall, MessagesSquare, Zap } from "lucide-react";
 
 const productos = [
   {
@@ -36,17 +36,6 @@ const productos = [
       "Inventario en tiempo real",
       "Notificaciones sin intervención",
       "Integración con tus herramientas",
-    ],
-  },
-  {
-    icon: FileText,
-    nombre: "Gestión Documental",
-    headline: "Tus documentos, procesados solos",
-    features: [
-      "Clasifica facturas y contratos",
-      "Extrae datos automáticamente",
-      "Sin captura manual",
-      "Integración a tus procesos",
     ],
   },
 ];
@@ -116,7 +105,7 @@ export default function ProductosSection() {
               textWrap: "balance",
             }}
           >
-            4 soluciones que funcionan juntas
+            3 soluciones que funcionan juntas
           </h2>
           <p
             className="text-base md:text-right whitespace-nowrap"
@@ -126,7 +115,7 @@ export default function ProductosSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-3 gap-5">
           {productos.map(({ icon: Icon, nombre, headline, features, badge }, i) => {
             const isHovered = hovered === i;
             return (
