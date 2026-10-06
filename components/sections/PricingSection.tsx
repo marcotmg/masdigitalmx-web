@@ -153,17 +153,18 @@ function PlanCard({ label, data, features, pro }: {
       </div>
 
       {/* Prices */}
+      {/* La mensualidad es el precio que se ve primero y en grande; el setup (pago único) va debajo, más chico. */}
       <div className="mb-0.5">
         <span className="font-heading font-extrabold text-4xl" style={{ color: "var(--color-text-base)" }}>
-          {data.setup}
-        </span>
-        <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN setup</span>
-      </div>
-      <div className="mb-3">
-        <span className="font-heading font-bold text-2xl" style={{ color: "var(--color-primary-light)" }}>
           {data.mens}
         </span>
         <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN/mes</span>
+      </div>
+      <div className="mb-3">
+        <span className="font-heading font-semibold text-lg" style={{ color: "var(--color-primary-light)" }}>
+          + {data.setup}
+        </span>
+        <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>MXN de setup, pago único</span>
       </div>
 
       {/* Unidades */}
