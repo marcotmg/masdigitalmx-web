@@ -71,18 +71,25 @@ export const sectores: Sector[] = [
     ],
   },
   {
+    // 2026-10-09 (Marco): RETIRADO de la web lo que el chatbot (MattIAs) todavía NO hace — agendar citas,
+    // tomar pedidos/reservas y menús interactivos. URGE construirlo (agendamiento: CORE-CONTEXTO-AGENDAR-01 +
+    // MATTIAS-CITAS-EVAL-01) y RESTABLECER aquí el texto retirado, citado en cada línea.
     slug: "comercio",
     nombre: "Comercio",
     subVerticals: "Restaurantes, retail, ecommerce",
-    problema: "Reservas y pedidos que se pierden fuera de horario",
-    solucion: "Chatbot 24/7 para reservas, pedidos y consultas. Tu negocio nunca cierra",
+    problema: "Clientes sin respuesta fuera de horario",
+    solucion: "Chatbot 24/7 que responde consultas con tus productos y precios. Tu negocio nunca cierra",
+    // Retirado (restablecer al construirlo): problema «Reservas y pedidos que se pierden fuera de horario»;
+    // solucion «Chatbot 24/7 para reservas, pedidos y consultas. Tu negocio nunca cierra».
     metrica: "+20% conversión",
     color: "#FBBF24",
     wide: true,
     descripcion:
-      "El comercio no duerme — tus clientes compran, reservan y preguntan a cualquier hora. Con +Digital tu negocio responde en segundos, toma pedidos y convierte leads sin intervención humana.",
+      "El comercio no duerme — tus clientes preguntan a cualquier hora. Con +Digital tu negocio responde en segundos con tus productos y precios, y le pasa la conversación a tu equipo cuando hace falta.",
+      // Retirado (restablecer al construirlo): «…tus clientes compran, reservan y preguntan a cualquier hora. Con
+      // +Digital tu negocio responde en segundos, toma pedidos y convierte leads sin intervención humana.»
     beneficios: [
-      "Toma de pedidos y reservas automatizada vía WhatsApp",
+      // Retirado (restablecer al construirlo): "Toma de pedidos y reservas automatizada vía WhatsApp",
       "Catálogo interactivo con respuestas instantáneas",
       "Seguimiento de pedidos y notificaciones de entrega",
       "Integración con plataformas de e-commerce",
