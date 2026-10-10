@@ -38,13 +38,16 @@ const VOZ_FEATURES: Feature[] = [
   { text: "Reportes mensuales de actividad", basic: false },
 ];
 
+// 2026-10-09 (Marco): RETIRADO de la web lo que el chatbot (MattIAs) todavía NO hace — agendar citas,
+// tomar pedidos/reservas y menús interactivos. URGE construirlo (agendamiento: CORE-CONTEXTO-AGENDAR-01 +
+// MATTIAS-CITAS-EVAL-01) y RESTABLECER aquí el texto retirado, citado en cada línea.
 const WA_FEATURES: Feature[] = [
   { text: "Respuesta automática 24/7 en WhatsApp", basic: true },
   { text: "Memoria conversacional", basic: true },
   { text: "Consulta de catálogo (Google Sheets)", basic: true },
   { text: "Clasificación de intención", basic: true },
   { text: "Escalamiento a humano", basic: true },
-  { text: "Menú interactivo (botones, listas)", basic: true },
+  // Retirado (restablecer al construirlo): { text: "Menú interactivo (botones, listas)", basic: true },
   { text: "Procesamiento de documentos adjuntos", basic: false },
   { text: "Integración con CRM/ERP", basic: false },
   { text: "Campañas outbound (con consentimiento)", basic: false },

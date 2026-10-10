@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { PhoneCall, MessagesSquare, Zap } from "lucide-react";
 
+// 2026-10-09 (Marco): RETIRADO de la web lo que el chatbot (MattIAs) todavía NO hace — agendar citas,
+// tomar pedidos/reservas y menús interactivos. URGE construirlo (agendamiento: CORE-CONTEXTO-AGENDAR-01 +
+// MATTIAS-CITAS-EVAL-01) y RESTABLECER aquí el texto retirado, citado en cada línea.
 const productos = [
   {
     icon: PhoneCall,
@@ -22,8 +25,8 @@ const productos = [
     badge: "Popular",
     features: [
       "Responde preguntas frecuentes",
-      "Toma pedidos y reservas",
-      "Menús interactivos",
+      "Responde con tus precios y servicios",
+      // Retirados (restablecer al construirlos): "Toma pedidos y reservas", "Menús interactivos".
       "Escala a humano cuando se necesita",
     ],
   },

@@ -1,17 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
 
+// 2026-10-09 (Marco): RETIRADO de la web lo que el chatbot (MattIAs) todavía NO hace — agendar citas,
+// tomar pedidos/reservas y menús interactivos. URGE construirlo (agendamiento: CORE-CONTEXTO-AGENDAR-01 +
+// MATTIAS-CITAS-EVAL-01) y RESTABLECER aquí el texto retirado, citado en cada línea.
 const chatMessages = [
-  { from: "user", text: "Hola, quiero agendar para mañana" },
+  { from: "user", text: "Hola, ¿cuánto cuesta la limpieza dental?" },
   {
     from: "bot",
-    text: "¡Hola! Tenemos disponibilidad a las 10am y a las 3pm. ¿Cuál prefiere?",
+    text: "¡Hola! La limpieza dental cuesta $650 e incluye revisión general. ¿Te comparto nuestro horario?",
   },
-  { from: "user", text: "Las 3pm, gracias" },
+  { from: "user", text: "Sí, por favor" },
   {
     from: "bot",
-    text: "✓ Cita confirmada para mañana a las 3pm. Le enviamos recordatorio 1 hora antes.",
+    text: "Atendemos de lunes a viernes de 9:00 a 18:00. Para tu cita, llámanos y con gusto te atendemos.",
   },
+  // Retirado (restablecer al construir el agendamiento): el diálogo en que el bot ofrecía horarios
+  // («Tenemos disponibilidad a las 10am y a las 3pm») y confirmaba la cita («✓ Cita confirmada para
+  // mañana a las 3pm. Le enviamos recordatorio 1 hora antes.»).
 ];
 
 export default function HeroSection() {
