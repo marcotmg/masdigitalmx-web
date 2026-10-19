@@ -59,7 +59,7 @@ tras la migración de `AIA-PROGRAMA-01` Frente 1. Ver `VAULT-CLAUDEMD-LEGACY-01`
 | CTA secundario | "Ver soluciones por sector" → `/#sectores` |
 
 Trust signals bajo el hero (sin nombre del fundador): "+25 años de experiencia en sectores exigentes" ·
-"Implementación en días, no meses" · "Sin contratos de largo plazo" · "Soporte 24/7"
+"Implementación en días, no meses" · "Sin contratos de largo plazo" *(el cuarto, «Soporte 24/7», se retiró el 2026-10-18 por decisión de Marco: el soporte humano es en horario laboral; lo que atiende 24/7 es el agente. El horario de soporte vive en las condiciones de servicio, no en el copy comercial)*
 
 ### Lenguaje — capacidades vs herramientas
 

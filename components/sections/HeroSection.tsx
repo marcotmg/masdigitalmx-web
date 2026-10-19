@@ -116,8 +116,6 @@ export default function HeroSection() {
             <span>Implementación en días, no meses</span>
             <span aria-hidden="true">·</span>
             <span>Sin contratos de largo plazo</span>
-            <span aria-hidden="true">·</span>
-            <span>Soporte 24/7</span>
           </div>
         </div>
 
