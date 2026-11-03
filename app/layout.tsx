@@ -3,7 +3,7 @@ import { Barlow, Chakra_Petch } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-/* Measurement ID de la propiedad GA4 "masdigitalmx.com" (cuenta marcotmg@gmail.com,
+/* Measurement ID de la propiedad GA4 "masdigitalmx.com" (cuenta personal de Marco,
    creada 2026-08-14). Google Signals y vinculación a Google Ads permanecen
    desactivados a propósito — condición que sostiene la redacción de §7 del
    Aviso de Privacidad (v3.0). Antes de activar cualquiera de las dos, ver el
