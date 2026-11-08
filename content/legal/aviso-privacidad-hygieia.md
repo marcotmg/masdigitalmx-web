@@ -1,6 +1,6 @@
 ---
-version: "1.1"
-vigencia: "15 de agosto de 2026"
+version: "1.2"
+vigencia: "7 de noviembre de 2026"
 ruta: "/privacidad-hygieia"
 ---
 
@@ -60,7 +60,7 @@ De conformidad con los {{ARCO_ARTICULOS_CITA}}, usted tiene derecho a:
 - **Cancelación:** solicitar la supresión de sus datos cuando considere que no son necesarios para las finalidades declaradas o haya transcurrido el periodo de conservación.
 - **Oposición:** oponerse al tratamiento de sus datos para finalidades secundarias (F4).
 
-Para ejercer cualquiera de estos derechos, envíe un correo a [{{CORREO_PRIVACIDAD}}](mailto:{{CORREO_PRIVACIDAD}}) con el asunto **"Derechos ARCO — HygieIA"** indicando: su nombre completo, número de teléfono con el que realizó la llamada, y la acción que solicita. **Plazo de respuesta:** 20 días hábiles para comunicarle nuestra determinación, y 15 días hábiles adicionales para hacerla efectiva. Este plazo es ampliable una sola vez por un periodo igual cuando las circunstancias lo justifiquen, conforme al artículo 31 de la LFPDPPP.
+Para ejercer cualquiera de estos derechos, envíe un correo a [{{CORREO_PRIVACIDAD}}](mailto:{{CORREO_PRIVACIDAD}}) con el asunto **"Derechos ARCO — HygieIA"** indicando su nombre completo, el número de teléfono con el que realizó la llamada y la acción que solicita, y adjuntando copia de su identificación oficial vigente (INE/IFE o pasaporte). **Plazo de respuesta:** 20 días hábiles para comunicarle nuestra determinación, y 15 días hábiles adicionales para hacerla efectiva. Este plazo es ampliable una sola vez por un periodo igual cuando las circunstancias lo justifiquen, conforme al artículo 31 de la LFPDPPP.
 
 ## 5. Datos sensibles
 

@@ -1,6 +1,6 @@
 ---
-version: "1.0"
-vigencia: "14 de agosto de 2026"
+version: "1.1"
+vigencia: "7 de noviembre de 2026"
 ruta: "/terminos"
 ---
 
@@ -57,6 +57,8 @@ El Sitio se proporciona **"tal cual"**, sin garantías de disponibilidad ininter
 Esta limitación aplica únicamente al Sitio como tal. El nivel de servicio (SLA) de cualquier producto contratado se establece de forma independiente en el contrato y términos específicos de ese producto.
 
 +Digital MX no es responsable por daños indirectos derivados del uso del Sitio, salvo en los casos en que la legislación mexicana aplicable no permita limitar dicha responsabilidad.
+
+Ninguna de las limitaciones de esta sección aplica a la responsabilidad que derive del dolo de +Digital MX.
 
 ## 7. Modificaciones a estos términos
 
