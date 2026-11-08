@@ -3,6 +3,11 @@
 import { useState } from "react";
 import Script from "next/script";
 import { Send, Lock } from "lucide-react";
+import {
+  RESPONSABLE_NOMBRE,
+  RESPONSABLE_DOMICILIO,
+  CORREO_PRIVACIDAD,
+} from "@/lib/legal-data";
 
 const API_URL = "/api/contacto";
 
@@ -386,9 +391,13 @@ export default function ContactoSection() {
             )}
 
             <p className="text-center text-xs" style={{ color: "var(--color-text-caption)" }}>
-              +Digital MX tratará tus datos para atender tu consulta. Consulta nuestro{" "}
+              {RESPONSABLE_NOMBRE}, con domicilio en {RESPONSABLE_DOMICILIO}, es responsable de tus datos. Usamos tu nombre, WhatsApp, correo, sector y, si lo escribes, tu mensaje para atender tu consulta, agendar tu demostración y darte seguimiento comercial. Si no te opones, también para enviarte novedades y elaborar estadística agregada; para negarte, escribe a{" "}
+              <a href={`mailto:${CORREO_PRIVACIDAD}`} style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
+                {CORREO_PRIVACIDAD}
+              </a>
+              . Consulta el{" "}
               <a href="/privacidad" style={{ color: "var(--color-primary)", textDecoration: "underline" }}>
-                Aviso de Privacidad
+                Aviso de Privacidad integral
               </a>
               . Al enviar, aceptas el tratamiento conforme a dicho aviso.
             </p>

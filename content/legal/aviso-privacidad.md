@@ -1,6 +1,6 @@
 ---
-version: "3.2"
-vigencia: "21 de septiembre de 2026"
+version: "3.3"
+vigencia: "7 de noviembre de 2026"
 ruta: "/privacidad"
 ---
 
@@ -104,7 +104,7 @@ Conservamos tus datos personales únicamente durante el tiempo necesario para cu
 | Conversaciones de WhatsApp Business | 12 meses desde el último mensaje | Continuidad de atención; purga al vencimiento del plazo |
 | Datos técnicos (IP, navegación) | 6 meses desde la interacción | Sin valor comercial tras ese período |
 
-Una vez vencido el plazo aplicable, procederemos a la cancelación (bloqueo y posterior supresión) de tus datos conforme al procedimiento establecido en los artículos 36 y 37 de la LFPDPPP, salvo que exista una obligación legal que exija su conservación por un período mayor.
+Una vez vencido el plazo aplicable, procederemos a la cancelación (bloqueo y posterior supresión) de tus datos, salvo que exista una obligación legal que exija su conservación por un período mayor.
 
 ## 6. Transferencias de datos personales
 
@@ -119,7 +119,7 @@ Una vez vencido el plazo aplicable, procederemos a la cancelación (bloqueo y po
 
 Estas transferencias son necesarias para la operación del servicio. Ninguno de estos proveedores está autorizado a usar tus datos para finalidades distintas a las aquí descritas.
 
-**Garantías para transferencias internacionales:** Cuando tus datos son transferidos a proveedores ubicados en países que no cuentan con un nivel de protección de datos equiparable al de México, +Digital MX implementa mecanismos contractuales adecuados conforme a los artículos 36 y 37 de la LFPDPPP. Específicamente, suscribimos con dichos proveedores Cláusulas Contractuales Tipo u otros mecanismos equivalentes reconocidos por la legislación aplicable, que obligan a estos terceros a proteger tus datos con un nivel sustancialmente similar al exigido por la ley mexicana. Puedes solicitar información sobre las garantías vigentes escribiendo a [{{CORREO_PRIVACIDAD}}](mailto:{{CORREO_PRIVACIDAD}}).
+**Garantías para transferencias internacionales:** Cuando tus datos son transferidos a proveedores ubicados en países que no cuentan con un nivel de protección de datos equiparable al de México, +Digital MX implementa mecanismos contractuales adecuados que obligan a estos terceros a proteger tus datos con un nivel sustancialmente similar al exigido por la ley mexicana. Puedes solicitar información sobre las garantías vigentes escribiendo a [{{CORREO_PRIVACIDAD}}](mailto:{{CORREO_PRIVACIDAD}}).
 
 **+Digital MX no vende, cede ni comercializa tus datos personales a terceros con fines publicitarios o de prospección propia.**
 
@@ -155,7 +155,7 @@ Envía una solicitud a la Unidad de Privacidad al correo [{{CORREO_PRIVACIDAD}}]
 
 +Digital MX se reserva el derecho de actualizar el presente Aviso de Privacidad para reflejar cambios en el servicio, en la legislación aplicable o en nuestras prácticas de tratamiento de datos.
 
-Cualquier modificación será publicada en [masdigitalmx.com/privacidad](/privacidad) con la fecha de actualización correspondiente. Para cambios sustanciales que afecten tus derechos como titular, te notificaremos directamente al correo que tengamos registrado con al menos **15 días de anticipación** a su entrada en vigor, conforme al artículo 18 de la LFPDPPP.
+Cualquier modificación será publicada en [masdigitalmx.com/privacidad](/privacidad) con la fecha de actualización correspondiente. Para cambios sustanciales que afecten tus derechos como titular, te notificaremos directamente al correo que tengamos registrado con al menos **15 días de anticipación** a su entrada en vigor.
 
 La versión vigente siempre será la disponible en esta página. Las versiones anteriores quedan archivadas y disponibles para consulta bajo solicitud dirigida a [{{CORREO_PRIVACIDAD}}](mailto:{{CORREO_PRIVACIDAD}}).
 
