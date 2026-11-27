@@ -12,10 +12,12 @@ import { Redis } from "@upstash/redis";
 // silenciar el error contra una URL rota.
 const FORMSPREE_URL = process.env.FORMSPREE_URL;
 
-// Webhook opcional (ej. un workflow de n8n) que recibe un aviso cuando el
-// envío a Formspree falla. El defecto de fondo del incidente de FormSubmit
-// fue que nadie se enteró de la falla — esto la hace ruidosa. Sin este env
-// var, la falla solo queda en los logs del hosting.
+// Webhook opcional (ej. un workflow de n8n) que recibe dos clases de aviso,
+// distinguidas por el campo `reason`: fallas del envío a Formspree y leads
+// nuevos (`lead_nuevo`, solo con el sector). El defecto de fondo del
+// incidente de FormSubmit fue que nadie se enteró de la falla — esto la hace
+// ruidosa. Sin este env var, la falla solo queda en los logs del hosting y
+// el aviso de lead nuevo se omite.
 const ALERT_WEBHOOK_URL = process.env.CONTACTO_ALERT_WEBHOOK_URL;
 
 // W-FORM-01: verificación server-side de Cloudflare Turnstile. Preparado
@@ -59,14 +61,25 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
 // Turnstile).
 const CONTACTO_SHARED_SECRET = process.env.CONTACTO_SHARED_SECRET;
 
-async function notifyFailure(reason: string, context: Record<string, unknown>) {
+// Avisa al webhook de alerta (fallas de envío y leads nuevos). Nunca lanza ni
+// cambia la respuesta al visitante: cualquier error solo queda en los logs, y
+// el tope de 3 s evita que un webhook colgado lo deje esperando.
+async function notifyAlert(reason: string, context: Record<string, unknown>) {
   if (!ALERT_WEBHOOK_URL) return;
   try {
-    await fetch(ALERT_WEBHOOK_URL, {
+    const res = await fetch(ALERT_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ source: "contacto-form", reason, ...context }),
+      signal: AbortSignal.timeout(3000),
     });
+    // fetch no lanza ante HTTP 4xx/5xx: hay que revisarlo a mano.
+    if (!res.ok) {
+      console.error("[contacto] el webhook de alerta respondió error", {
+        status: res.status,
+        reason,
+      });
+    }
   } catch (alertErr) {
     console.error("[contacto] fallo al notificar el webhook de alerta", alertErr);
   }
@@ -141,7 +154,7 @@ async function checkRateLimit(ip: string): Promise<boolean> {
     // debe tumbar el formulario completo con un 500 sin alerta — antes de
     // este try/catch, un fallo aquí tronaba la función entera ANTES de
     // llegar al fetch a Formspree, así que ni provider_error ni
-    // network_error se alcanzaban nunca y notifyFailure jamás corría.
+    // network_error se alcanzaban nunca y notifyAlert jamás corría.
     console.error("[contacto] error de red al verificar rate-limit (Upstash)", err);
     return true;
   }
@@ -218,7 +231,7 @@ export async function POST(request: Request) {
   // una URL rota o vacía. Se notifica igual que un fallo de envío.
   if (!FORMSPREE_URL) {
     console.error("[contacto] FORMSPREE_URL no configurado — no se puede enviar el lead");
-    await notifyFailure("missing_config", { ip });
+    await notifyAlert("missing_config", { ip });
     return NextResponse.json({ ok: false, error: "server_config" }, { status: 500 });
   }
 
@@ -241,6 +254,8 @@ export async function POST(request: Request) {
     });
 
     if (res.ok) {
+      // Sin datos personales: al aviso de lead nuevo solo viaja el sector.
+      await notifyAlert("lead_nuevo", { sector });
       return NextResponse.json({ ok: true });
     }
 
@@ -248,12 +263,12 @@ export async function POST(request: Request) {
     // en logs de servidor y se notifica al webhook de alerta si existe.
     const data = await res.json().catch(() => ({}));
     console.error("[contacto] Formspree respondió error", { status: res.status, data });
-    await notifyFailure("provider_error", { status: res.status, ip });
+    await notifyAlert("provider_error", { status: res.status, ip });
 
     return NextResponse.json({ ok: false, error: "provider_error" }, { status: 502 });
   } catch (err) {
     console.error("[contacto] error de red al contactar Formspree", err);
-    await notifyFailure("network_error", { ip });
+    await notifyAlert("network_error", { ip });
 
     return NextResponse.json({ ok: false, error: "network_error" }, { status: 500 });
   }
